@@ -2889,7 +2889,7 @@ div.tocify {
 <p>Vectors are a list-like structure that contain items of the same data type.</p>
 <p>You can check the type of elements in a vector by using typeof(vector_name)</p>
 <p>You can check the length of a vector by using length(vector_name)</p>
-<p>You can access individual elements in the vector by using <a href="#section"></a> and placing the element position inside the brackets</p>
+<p>You can access individual elements in the vector by using [] and placing the element position inside the brackets</p>
 <p>Note: In R, you start counting elements at position one, not zero.</p>
 </div>
 <div id="conditionals" class="section level1">
@@ -3974,9 +3974,8 @@ div.tocify {
 <p>Let’s say we have three tables: Orders (id:1,2,3…), Customers (id:1,2,3…), Products (id:1,2,3…) and each Table row contains information describing the Ordern, the Customer and the Product associated with each id.</p>
 <p>Let say we want to know more about Order1, so if we look at the Table order we see that Order:1 is from Customer:3 for the Product:2, so in order to know more about each one of these variable, we need to go to each corresponding table and look for the corresponding row. This would take a lot of time.</p>
 </div>
-</div>
-<div id="inner-join-i" class="section level1">
-<h1>Inner Join I</h1>
+<div id="inner-join-i" class="section level2">
+<h2>Inner Join I</h2>
 <p>It is easy to do this kind of matching for one row, but hard to do it for multiple rows. Luckily, dplyr can efficiently do this for the entire table using the inner_join() method.</p>
 <p>The inner_join() method looks for columns that are common between two data frames and then looks for rows where those columns’ values are the same. It then combines the matching rows into a single row in a new table. We can call the inner_join() method with two data frames like this:</p>
 <div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1"><span class="co">#joined_df &lt;- orders %&gt;%</span></a>
@@ -4109,6 +4108,7 @@ div.tocify {
 </tbody>
 </table>
 <p>Notice the funtion automatically joined by = “month”, because is the only common column among the tables. What if there are many common collumns? We’ll se this in the following section “Join on Specific Columns I”</p>
+</div>
 <div id="inner-join-ii" class="section level2">
 <h2>Inner Join II</h2>
 <p>In addition to using inner_join() to join two data frames together, we can use the pipe %&gt;% to join multiple data frames together at once. Going back into our three tables example from previus section, the following command would join orders with customers, and then join the resulting data frame with products:</p>
@@ -4404,8 +4404,34 @@ div.tocify {
 </div>
 <div id="variance" class="section level1">
 <h1>Variance</h1>
-<div id="section" class="section level2">
-<h2></h2>
+<div id="distance-from-mean" class="section level2">
+<h2>Distance From Mean</h2>
+<p>Now that you have learned the importance of describing the spread of a dataset, let’s figure out how to mathematically compute this number. How would you attempt to capture the spread of the data in a single number?</p>
+<p>Let’s start with our intuition — we want the variance of a dataset to be a large number if the data is spread out, and a small number if the data is close together. A lot of people may initially consider using the range of the data. But that only considers two points in your entire dataset. Instead, we can include every point in our calculation by finding the difference between every data point and the mean.</p>
+<p>If the data is close together, then each data point will tend to be close to the mean, and the difference will be small. If the data is spread out, the difference between every data point and the mean will be larger. Mathematically, we can write this comparison as:</p>
+<p><span class="math display">\[
+difference = x - \mu
+\]</span></p>
+<p>Where <span class="math inline">\(x\)</span> is a single data point and the Greek letter mu <span class="math inline">\(\mu\)</span> is the mean.</p>
+</div>
+<div id="average-distances" class="section level2">
+<h2>Average Distances</h2>
+<p>Once we have all our differences, we can sum them and divide between the number of observations in order to obtain an average distance:</p>
+<p><span class="math display">\[
+\sum^n_i difference_i = \sum^n_i x_i - \mu
+\]</span> Do you think this sum accurately captures the spread of your data?</p>
+</div>
+<div id="square-the-differences" class="section level2">
+<h2>Square the Differences</h2>
+<p>This summ of differences has a little problem. Consider this very small dataset: c(-5, 5)</p>
+<p>The mean of this dataset is 0, so when we find the difference between each point and the mean we get -5 - 0 = -5 and 5 - 0 = 5. When we take the average of -5 and 5 to get the variance, we get 0: <span class="math inline">\(\frac{-5+5}{2}=0\)</span></p>
+<p>Now think about what would happen if the dataset were c(-200, 200). We’d get the same result! That can’t possibly be right — the dataset with 200 is much more spread out than the dataset with 5, so the variance should be much larger!</p>
+<p>The problem here is with negative numbers. Because one of our data points was 5 units below the mean and the other was 5 units above the mean, they canceled each other out!</p>
+<p>When calculating variance, if a data point was above or below the mean — all we care about is how far away it was. To get rid of those pesky negative numbers, we’ll square the difference between each data point and the mean.</p>
+<p>Our equation for finding the difference between a data point and the mean now looks like this:</p>
+<p><span class="math display">\[
+\sum^n_i (difference_i)^2 = \sum^n_i (x_i - \mu )^2
+\]</span></p>
 </div>
 </div>
 <div class="footnotes">
