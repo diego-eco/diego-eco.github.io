@@ -1,0 +1,194 @@
+---
+title: "Calculadora de pruebas de hipótesis"
+author:
+- Diego López Tamayo ^[El Colegio de México, diego.lopez@colmex.mx]
+- Rafael Canales Medina^[El Colegio de México, rcanales@colmex.mx]
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    df_print: paged
+    highlight: tango
+    theme: simplex
+    toc: yes
+    toc_depth: 3
+    toc_float: yes
+header:
+- \usepackage{amsmath}
+- \usepackage[spanish]{babel}
+- \selectlanguage{spanish}
+---
+\renewcommand{\tablename}{Tabla} 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE}
+pacman::p_load(tidyverse,
+               jtools,
+               knitr,
+               kableExtra,
+               MASS,
+               stargazer,
+               wooldridge)
+```
+
+# Definir variables
+
+```{r}
+#Si se requieren Vectores aleatorios los definimos aquí
+#Si se requiere replicar definimos seed
+set.seed(1)
+va_n = 100                 
+va_n_mu <- c(1,0,2)          
+va_n_sigma <- matrix(c(0.8,0.4,-0.2,0.4,1.0,-0.8,-0.2,-0.8,2.0),nrow=3,ncol=3)
+va <- mvrnorm(va_n,va_n_mu,va_n_sigma)
+```
+
+
+```{r}
+#Definimos las variables con las que trabajaremos.
+Y= va[,1]
+x1= va[,2]
+x2= va[,3]
+x3=0
+x4=0
+
+n=length(Y)
+#Defiminos k (número de variables explicativas, recordar que es el número de Xs + constante)
+k=3
+
+#Agregamos las X que se requieran, las demás podemos dejarlas en 0
+x=matrix(c(rep(1,n),x1,x2),nrow = n)
+```
+
+# Estimadores MCO
+```{r}
+#obtenemos el vector de estimadores b_mco
+bmco=solve(t(x)%*%x)%*%t(x)%*%Y
+bmco
+```
+
+# Estimador de varianza de errores
+
+```{r}
+#Obtenemos Y estimada para obtener los errores
+Yhat=c(rep(0,n))
+for (j in 1:n) {
+  for (i in 1:k) {
+    Yhat[j]=Yhat[j]+bmco[i]*x[j,i]
+  }
+}
+
+#Obtenemos los errores
+U=Y-Yhat
+
+#Obtenemos la varianza de errores sigma^2_u
+sig2u=((1/(n-k))*t(U)%*%U)[1,1]
+sig2u
+```
+
+# Matriz X'X y su inversa
+
+```{r}
+#Obtenemos la matrix X'X
+xtx=t(x)%*%x
+#Y su inversa
+xtxinv=solve(xtx)
+xtxinv
+```
+
+#  Prueba t dos colas para un estimador individual b_iMCO
+
+$$
+Prob \left[\bigl\vert \frac{\hat b_{iMCO}-b_i}{\hat \sigma_{uMCO} \sqrt{(X'X)^{-1}_{i,i}}}\bigl\vert > t_{\frac{\alpha}{2},(n-k)}  \right] = \alpha
+$$
+
+```{r}
+#Prueba t dos colas (igual o distinto a un valor) para un estimador b_iMCO
+#denominador t
+bi=3 #definir cuál bi quieres i=1,2,...,k
+Denomt=sqrt(sig2u)*sqrt(xtxinv[bi,bi])
+
+#numerador t
+b0=1.2 #defnir valor de la hipótesis a probar b*
+Numt=bmco[bi]-b0
+
+#Estadístico t
+Est_t=Numt/Denomt
+Est_t
+```
+```{r}
+#Prueba Ho de t:
+alphat=.05 #definir nivel de significancia alpha
+c_t=abs(qt(alphat/2,n-k))
+#Comprobamos si el estadístico cae dentro del intervalo (T Aceptamos H0) (F Rechazamos H0)
+Ho_t=abs(Est_t)<c_t
+Ho_t
+```
+
+#  Prueba t dos colas para una restricción c'b_mco
+
+$$
+Prob \left[\bigl\vert \frac{c^t \hat b_{MCO}-c^tb}{\hat \sigma_{uMCO} \sqrt{c^t(X'X)^{-1}c}} > t_{\frac{\alpha}{2},(n-k)}  \right] = \alpha
+$$
+
+```{r}
+#Prueba t dos colas (igual o distinto a un valor) para una sola restricción lineal c'b
+#denominador C
+C=c(1,0,1) #definir vector de restricción (debe ser compatible con b para el producto)
+DenomC=(sqrt(sig2u)*sqrt(C%*%xtxinv%*%C))[1,1]
+
+#Numerador C
+boC=1  #definir valor de la hipótesis a probar
+NumC= (C%*%bmco-boC)[1,1]
+
+#estadístico C
+Est_C=NumC/DenomC
+Est_C
+```
+```{r}
+#prueba Ho de C:
+alphaC=.05 #definir nivel de significancia alpha
+c_C=abs(qt(alphaC/2,n-k))
+#Comprobamos si el estadístico cae dentro del intervalo (T Aceptamos H0) (F Rechazamos H0)
+Ho_C=abs(Est_C)<c_C
+Ho_C
+```
+
+#  Prueba F a una cola para múltilpes restricciones Rb=r
+
+$$
+Prob \left[\frac{(R \hat b_{MCO}-Rb)^t[R(X^tX)^{-1}R^t]^{-1}(R \hat b_{MCO}-Rb)}{q \cdot \hat \sigma_{uMCO}^2 } > F_{\frac{\alpha}{2},[q,(n-k)]} \right] = \alpha
+$$
+
+```{r}
+#Prueba R una cola para múltiplres restrucciones Rb=r
+#denominador R
+q=3 #definir q (número de restricciones o número de filas de R)
+DenomR=q*sig2u
+
+#numerador R
+#definir R por filas (Número de columnas deben coincidir con dim b )
+R=matrix(c(1,0,0,0,1,0,0,0,1),nrow=q,byrow = TRUE) 
+#definir r (valor de la hipótesis a probar)
+r=c(0,0.5,1) 
+NumR=(t(R%*%bmco-r)%*%solve(R%*%xtxinv%*%t(R))%*%(R%*%bmco-r))[1,1]
+
+#Estadístico R
+Est_R=NumR/DenomR
+Est_R
+```
+```{r}
+#prueba Ho de R:
+alphaR=0.05 #definir nivel de significancia alpha
+#Comprobamos si el estadístico cae dentro del intervalo (T Aceptamos H0) (F Rechazamos H0)
+c_R=qf(1-alphaR,q,n-k)
+Ho_R=Est_R<c_R
+Ho_R
+```
+
+

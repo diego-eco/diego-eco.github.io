@@ -1,0 +1,178 @@
+---
+title: "Valuación de opción de compra Call Americano"
+author:
+  - Diego López Tamayo ^[El Colegio de México, diego.lopez@colmex.mx]
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    theme: simplex
+    highlight: tango
+    df_print: paged
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+header:
+- \usepackage{amsmath}
+- \usepackage[spanish]{babel}
+- \selectlanguage{spanish}
+---
+\renewcommand{\tablename}{Tabla} 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+pacman::p_load(tidyverse,
+               knitr,
+               kableExtra,
+               readxl,
+               jtools,
+               ggplot2,
+               derivmkts,
+               )
+```
+
+# Planteamiento y desarrollo
+
+Utilizaremos el método del árbol binomial para explicar el precio $P=\$80$ de un activo y evaluar una opción de compra sobre él con precio de ejercicio (Strike Price "K") $K=\$76.00$ (Los valores son arbitrarios, pueden modificarlos en el ejercicio.)
+
+
+Supongamos que tenemos un activo con un spot price inicial $S_0$, la intuición detrás del arbol binomial es tener en cada periodo $(t+\delta t)$ una probabilidad $p$ de que el precio suba $S_u$, consecuentemente una probabilidad $(1-p)$ que el precio baje $S_d$.
+
+
+A continuación utilizaremos el modelo de árbol binomial a un paso para una acción. Es importante destacar lo siguiente:
+
+\begin{itemize}
+    \item Precio de la acción: es el precio de mercado de una acción al día de hoy.
+    \item Precio de ejercicio: es el precio al que se pacta comprar/vender la acción a fecha futura.
+    \item Precio futuro de la opción: es el precio esperado de la acción en una fecha futura.
+\end{itemize}
+
+Una opción Call es utilizada para que un comprador de activos esté protegido ante variaciones en le precio futuro de la acción Por este derecho se pagará un monto denominado prima que otorga el derecho de comprar al precio de ejercicio sin importar el precio futuro.
+
+El valor de la prima se determina con la diferencia entre el valor del activo subyacente en el futuro menos el precio de ejercicio, traída a valor presente. En caso de una diferencia negativa se considera una prima 0.
+
+A continuación desarrollaremos el modelo binomial a un periodo para después generalizar a n periodos.Consideremos una opción Call con pagos
+
+$$C_u=[0,uS_0K]$$
+$$C_d=[0,dS_0K]$$
+
+Sea $\lambda$ el número o proporción de acciones con el que debe contar la persona interesada en vender la opción call formando un portafolio, construído con la venta del call y $\lambda$ acciones.
+
+El método binomial requiere formar un portafolio de réplica (libre de riesgo) que nos gener el mismo valor sin importar el resultado (i.e. $C_u$ ó $C_d$). Por lo tanto añadimos la cantidad $\lambda$ del activo subyacente para obtener la siguiente igualdad.
+
+$$-C_u+\lambda uS_0=-C_d+\lambda dS_0$$
+
+
+Es importante aclarar que el valor de la opción Call se resta ya que para el vendedor de la opción Call (una aseguradora, por ejemplo) representa un pasivo.
+
+El valor de $\lambda$ se puede calcular como
+
+$$\lambda=\frac{C_u-C_d}{(u-d)S_0}$$
+
+Una vez obtenido $\lambda$ podemos obtener el precio del portafolio destacando que no existen oportunidades de arbitraje (comprar a precio menor del de mercado o vender a precio mayor del de ejecución), por lo tanto el portafolio libre de riesgo debe generar un rendimiento equivalente al de una tasa libre de riesgo entre $d<e^{r\delta t}<u$ para evitar el aribtraje.
+
+$$-C_u+\lambda uS_0=e^{r\delta t}(-C+\lambda S_0)$$
+
+Sustituyendo $\lambda$ y despejando para C obtenemos
+
+$$C = \dfrac{C_u - C_d}{(u-d)S_0}S_0 + e^{-r.dt}(C_u - \dfrac{C_u - C_d}{(u-d)S_0}uS_0)$$
+
+$$C = \dfrac{C_u - C_d}{(u-d)} + e^{-r.dt}(C_u - \dfrac{C_u - C_d}{(u-d)}u)$$
+
+Simplificando
+
+$$C = e^{-r.dt}(e^{r.dt}\dfrac{C_u}{(u-d)} - e^{r.dt}\dfrac{C_d}{(u-d)} + \dfrac{uC_u}{u-d} - \dfrac{dC_u}{u-d} - \dfrac{uC_u}{(u-d)} + \dfrac{uC_d}{(u-d)})$$
+
+$$C = e^{-r.dt}(e^{r.dt}\dfrac{C_u}{(u-d)} - \dfrac{dC_u}{u-d} + \dfrac{uC_d}{(u-d)} - e^{r.dt}\dfrac{C_d}{(u-d)})$$
+
+$$C = e^{-r.dt}(\dfrac{e^{r.dt}-d}{u-d}C_u + \dfrac{u - e^{r.dt}}{(u-d)}C_d)$$
+
+Definiendo
+
+$$p = \dfrac{e^{r.dt}-d}{u-d}$$
+
+Las variables $p$ y $(1 –p)$ pueden ser interpretadas como las probabilidades riesgo neutral de movimientos al alza o a la baja, respectivamente. El valor de un derivado es su resultado esperado en un mundo neutral al riesgo descontado al tipo de interés libre de riesgo.
+
+El valor de la opción es 
+
+$$C=e^{-r\delta t}[pC_u+(1-p)C_d]$$
+
+Para el arbol binomial de n, en los nodos terminales (vencimiento) se calcula el pago de la opción:
+
+$$C_{n,j}=[0,S_{n,j}K]$$
+
+Donde $S_{n,j}$ es el precio final del activo en el estado $j$. Luego, cada paso hacia atrás se calcula como el valor de la expectativa descontada de sus próximos pasos.
+
+$$C_{i,j} = e^{-r.dt}(pC_{i+1,j+1} + (1-p)C_{i+1,j})$$
+
+Se reitera el proceso hasta que el nodo inicial y el nodo final nos arrojen el precio de la opción. 
+
+\
+
+A continuación se desarrolla el modelo binomial para valuar un Call americano de un activo con precio de mercado \$ 80 y precio de ejercicio $K=\$76$ y tasa de interés de 5\% a 1 y 3 pasos con los siguientes parámetros:
+
+\begin{itemize}
+    \item Precio de la acción $s=80$
+    \item Precio de ejercicio $k=76$
+    \item Volatilidad de la acción (desviación estándar anualizada del rendimiento compuesto contínuamente) $v=0.30$
+    \item Tasa de interés anual libre de riesgo compuesta continuamente $r=0.05$
+    \item Tiempo de madurez en años (periodos) $tt=0.25$ Cada paso es un trimestre
+     \item Rendimiento de dividendos, anualizado, compuesto continuo $d=0$
+      \item Número de pasos binomiales $nstep=1$ y $nstep=3$
+\end{itemize}
+
+Notas:
+
+Para ajustar la volatilidad, se espefician los movimientos up,down de la forma Cox, Ross, and Rubinstein $(r-d)*h$ es y $(v*h)$
+
+$$u = exp(v\sqrt{tt})$$
+$$d = exp-(v\sqrt{tt})$$
+
+El modelo para 3 pasos se desarrolla a través de la librería derivmkts por Robert McDonald con la función binom: Binomial option pricing.
+
+A continuación se presentan los resultados de los modelos a 1, 3 y 5 pasos con su gráfica correspondiente. Obsérvese que la gráfica presente los precios en cada nodo, la linea horizontal muestra el precio de ejercicio de la opción. En cada nodo se muestra la valuación del activo y el tamaño del círculo representa la probabilidad de estar en cada nodo. Si la opción se ejerce de manera óptima aparece en verde, en caso contrario en rojo.
+
+\newpage
+
+## Precio de la opción a 1 paso 
+
+**Precio $ 8.4407723**
+```{r}
+binomopt(80, 76, 0.3, 0.05, 0.25, 0, nstep = 1, american = TRUE, 
+         crr=TRUE, up=1.5, dn=0.5, returnparams=F)
+
+binomplot(80, 76, 0.3, 0.05, 0.25, 0, 1, american=TRUE, 
+          plotvalues=TRUE, plotarrows=TRUE, drawstrike=TRUE,pointsize=4, ylimval=c(0,0), 
+          crr=TRUE, titles=TRUE, specifyupdn=FALSE,up=1.5, dn=0.5, returnprice=F)
+```
+\newpage
+
+## Precio de la opción a 3 pasos 
+
+**Precio $ 7.65584519**
+
+```{r}
+binomopt(80, 76, 0.3, 0.05, 0.25, 0, nstep = 3, 
+         american = TRUE, crr=TRUE, up=1.5, dn=0.5, returnparams=F)
+
+binomplot(80, 76, 0.3, 0.05, 0.25, 0, 3, american=TRUE, 
+          plotvalues=TRUE, plotarrows=TRUE, drawstrike=TRUE,pointsize=4, ylimval=c(0,0), 
+          crr=TRUE, titles=TRUE, specifyupdn=FALSE,up=1.5, dn=0.5, returnprice=F)
+```
+  
+\newpage
+
+## Precio de la opción a 5 pasos 
+
+**Precio $ 7.49409**
+```{r}
+binomopt(80, 76, 0.3, 0.05, 0.25, 0, nstep = 5, 
+         american = TRUE, crr=TRUE, up=1.5, dn=0.5, returnparams=F)
+
+binomplot(80, 76, 0.3, 0.05, 0.25, 0, 5, american=TRUE, 
+          plotvalues=TRUE, plotarrows=TRUE, drawstrike=TRUE,pointsize=4, ylimval=c(0,0), 
+          crr=TRUE, titles=TRUE, specifyupdn=FALSE,up=1.5, dn=0.5, returnprice=F)
+```

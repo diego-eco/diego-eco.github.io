@@ -2859,6 +2859,7 @@ div.tocify {
 <blockquote>
 <p>“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” — Martin Fowler.</p>
 </blockquote>
+<div style="page-break-after: always;"></div>
 <div id="r-data-types" class="section level1">
 <h1>R data types:</h1>
 <ul>
@@ -4533,7 +4534,7 @@ difference = x - \mu
 <a class="sourceLine" id="cb155-3" data-line-number="3">example_set &lt;-<span class="st"> </span><span class="kw">sort</span>(example_set)</a>
 <a class="sourceLine" id="cb155-4" data-line-number="4">example_set</a></code></pre></div>
 <pre><code>## [1] -108    4    8   15   16   23   42</code></pre>
-<p>In this example, Q2 is 15. To find Q1, we take all of the data points smaller than Q2 and find the median of those points. In this case, the points smaller than Q2 are c(−108,4,8) The median of that smaller dataset is 4. That’s Q1!</p>
+<p>In this example, Q2 is 15. To find Q1, we take all of the data points smaller than Q2 and find the median of those points. In this case, the points smaller than Q2 are c(-108,4,8) The median of that smaller dataset is 4. That’s Q1!</p>
 <p>To find Q3, do the same process using the points that are larger than Q2. We have the following points: c(16, 23, 42)c(16,23,42) The median of those points is 23. That’s Q3! We now have three points that split the original dataset into groups of four equal sizes.</p>
 </div>
 <div id="method-two-including-q2" class="section level2">
@@ -4671,14 +4672,14 @@ difference = x - \mu
 <a class="sourceLine" id="cb174-4" data-line-number="4"><span class="co"># calculate population mean here:</span></a>
 <a class="sourceLine" id="cb174-5" data-line-number="5">population_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(population)</a>
 <a class="sourceLine" id="cb174-6" data-line-number="6"><span class="kw">cat</span>(<span class="st">&quot;The population mean is:&quot;</span>, population_mean)</a></code></pre></div>
-<pre><code>## The population mean is: 65.33718</code></pre>
+<pre><code>## The population mean is: 64.73625</code></pre>
 <p>Let’s look at how the means of different samples can vary within the same population.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="co"># generate sample 1</span></a>
 <a class="sourceLine" id="cb176-2" data-line-number="2">sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
 <a class="sourceLine" id="cb176-3" data-line-number="3"><span class="co"># calculate sample 1 mean</span></a>
 <a class="sourceLine" id="cb176-4" data-line-number="4">sample_<span class="dv">1</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb176-5" data-line-number="5">sample_<span class="dv">1</span>_mean</a></code></pre></div>
-<pre><code>## [1] 66.50468</code></pre>
+<pre><code>## [1] 65.05009</code></pre>
 <p>Look at the population mean and the sample means. Are they all the same? All different? Why?</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="co"># generate samples 2,3,4 and 5</span></a>
 <a class="sourceLine" id="cb178-2" data-line-number="2">sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
@@ -4687,16 +4688,16 @@ difference = x - \mu
 <a class="sourceLine" id="cb178-5" data-line-number="5">sample_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
 <a class="sourceLine" id="cb178-6" data-line-number="6">sample_<span class="dv">2</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb178-7" data-line-number="7">sample_<span class="dv">2</span>_mean</a></code></pre></div>
-<pre><code>## [1] 65.20912</code></pre>
+<pre><code>## [1] 64.19319</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">sample_<span class="dv">3</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb180-2" data-line-number="2">sample_<span class="dv">3</span>_mean</a></code></pre></div>
-<pre><code>## [1] 63.94589</code></pre>
+<pre><code>## [1] 63.65882</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">sample_<span class="dv">4</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb182-2" data-line-number="2">sample_<span class="dv">4</span>_mean</a></code></pre></div>
-<pre><code>## [1] 65.42478</code></pre>
+<pre><code>## [1] 64.75793</code></pre>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">sample_<span class="dv">5</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb184-2" data-line-number="2">sample_<span class="dv">5</span>_mean</a></code></pre></div>
-<pre><code>## [1] 64.6022</code></pre>
+<pre><code>## [1] 65.10766</code></pre>
 </div>
 <div id="sample-mean-and-population-mean---ii" class="section level2">
 <h2>Sample Mean and Population Mean - II</h2>
@@ -4941,7 +4942,7 @@ difference = x - \mu
 <h1>Thank you.</h1>
 <p>If you have made it so far (or mayble you just skipped until this section to see what’s about), I hope you have now a better understanding of the basic functions of R. Academics and statisticians have developed R over two decades. R has now one of the richest ecosystems to perform data analysis. There are around 12000 packages available in CRAN (open-source repository). It is possible to find a library for whatever the analysis you want to perform. The rich variety of library makes R the first choice for statistical analysis, especially for specialized analytical work.</p>
 <p>The cutting-edge difference between R and the other statistical products is the output. R has fantastic tools to communicate the results. Rstudio comes with the library knitr. This very own html document has been made in R using knitr library.</p>
-<p>There are many more things to learn about this language and many others than may help you in your activities as an student, economist, quant or any other science. Share this with others and give us your feedback. <strong>Thank you.</strong></p>
+<p>There are many more things to learn about this language that may help you in your activities as an student, economist, quant or any other science. Share this with others and all your feedback is welcome. <strong>Thank you. Sincerely Diego López Tamayo</strong></p>
 </div>
 <div class="footnotes">
 <hr />

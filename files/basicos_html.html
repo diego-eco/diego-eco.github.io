@@ -2856,6 +2856,10 @@ div.tocify {
 
 
 <hr />
+<blockquote>
+<p>“Any fool can write code that a computer can understand. Good programmers write code that humans can understand.” — Martin Fowler.</p>
+</blockquote>
+<div style="page-break-after: always;"></div>
 <div id="introduction-to-html" class="section level1">
 <h1>Introduction to HTML</h1>
 <p>HTML is the skeleton of all web pages. HTML provides structure to the content appearing on a website, such as images, text, or videos. Right-click on any page on the internet, choose “Inspect,” and you’ll see HTML in a panel of your screen. HTML stands for <em>HyperText Markup Language</em>:</p>
@@ -3233,7 +3237,889 @@ Add eggs and vanilla extract to bowl.
 <div id="introduction-to-tables" class="section level2">
 <h2>Introduction to Tables</h2>
 <p>There are many websites on the Internet that display information like stock prices, sports scores, invoice data, and more. This data is naturally tabular in nature, meaning that a table is often the best way of presenting the data.</p>
+<p>In this part, we’ll learn how to use the HTML &lt;table&gt; element to present information in a two-dimensional table to the users.</p>
 </div>
+<div id="create-a-table" class="section level2">
+<h2>Create a table</h2>
+<p>Before displaying data, we must first create the table that will contain the data by using the &lt;table&gt; element.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="co"># &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co"># &lt;/table&gt;</span></a></code></pre></div>
+</div>
+<div id="table-rows" class="section level2">
+<h2>Table Rows</h2>
+<p>In many programs that use tables, the table is already predefined for you, meaning that it contains the rows, columns, and cells that will hold data. In HTML, all of these components must be created.</p>
+<p>The first step in entering data into the table is to add rows using the table row element: &lt;tr&gt;. In the example above, two rows have been added to the table.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+</div>
+<div id="table-data" class="section level2">
+<h2>Table Data</h2>
+<p>Rows aren’t sufficient to add data to a table. Each cell element must also be defined. In HTML, you can add data using the table data element: &lt;td&gt;.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">#      &lt;td&gt;73&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#      &lt;td&gt;81&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<p>In the example above, two data points (73 and 81) were entered in the one row that exists. By adding two data points, we created two cells of data.</p>
+</div>
+<div id="table-headings" class="section level2">
+<h2>Table Headings</h2>
+<p>Table data doesn’t make much sense without titles to describe what the data represents.</p>
+<p>To add titles to rows and columns, you can use the table heading element: &lt;th&gt;. The table heading element is used just like a table data element, except with a relevant title. Just like table data, a table heading must be placed within a table row.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#      &lt;th&gt;&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#      &lt;th scope=&quot;col&quot;&gt;Saturday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#      &lt;th scope=&quot;col&quot;&gt;Sunday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb33-8" data-line-number="8"><span class="co">#      &lt;th scope=&quot;row&quot;&gt;Temperature&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co">#      &lt;td&gt;73&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb33-10" data-line-number="10"><span class="co">#      &lt;td&gt;81&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<p>Example:</p>
+<table>
+<tr>
+<th>
+</th>
+<th scope="col">
+Saturday
+</th>
+<th scope="col">
+Sunday
+</th>
+</tr>
+<tr>
+<th scope="row">
+Temperature
+</th>
+<td>
+73
+</td>
+<td>
+81
+</td>
+</tr>
+</table>
+<p>What happened in the code above? First, a new row was added to hold the three headings: a blank heading, a Saturday heading, and a Sunday heading. The blank heading creates the extra table cell necessary to align the table headings correctly over the data they correspond to. In the second row, one table heading was added as a row title: Temperature.</p>
+<p>Note, also, the use of the scope attribute, which can take one of two values:</p>
+<ul>
+<li>row this value makes it clear that the heading is for a row.</li>
+<li>col this value makes it clear that the heading is for a column.</li>
+</ul>
+<p>HTML code for tables may look a little strange at first, but analyzing it piece by piece helps make the code more understandable.</p>
+</div>
+<div id="table-borders" class="section level2">
+<h2>Table Borders</h2>
+<p>So far, the tables you’ve created have been a little difficult to read because they have no borders. In older versions of HTML, a border could be added to a table using the border attribute and setting it equal to an integer. This integer would represent the thickness of the border.</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co">#  &lt;table border=&quot;1&quot;&gt;</span></a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co">#      &lt;td&gt;73&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co">#      &lt;td&gt;81&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<p>The code in the example above is following is deprecated, so please don’t use it. It’s meant to illustrate older conventions you may come across when reading other developers’ code.</p>
+<p>The browser will likely still interpret your code correctly if you use the border attribute, but that doesn’t mean the attribute should be used. We use CSS <a href="https://en.wikipedia.org/wiki/Cascading_Style_Sheets">Cascading Style Sheets</a> to add style to HTML documents, because it helps us to separate the structure of a page from how it looks. You can achieve the same table border effect using CSS.</p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co">#  table, td {</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="co">#    border: 1px solid black;</span></a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="co">#  }</span></a></code></pre></div>
+<p>The code in the example above uses CSS instead of HTML to show table borders.</p>
+<p>What if the table contains data that spans multiple columns? For example, a personal calendar could have events that span across multiple hours, or even multiple days. Data can span columns using the <strong>colspan</strong> attribute. The attributes accepts an integer (greater than or equal to 1) to denote the number of columns it spans across.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co">#      &lt;th&gt;Monday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4"><span class="co">#      &lt;th&gt;Tuesday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co">#      &lt;th&gt;Wednesday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb36-7" data-line-number="7"><span class="co">#    &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb36-8" data-line-number="8"><span class="co">#      &lt;td colspan=&quot;2&quot;&gt;Out of Town&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb36-9" data-line-number="9"><span class="co">#      &lt;td&gt;Back in Town&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb36-10" data-line-number="10"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb36-11" data-line-number="11"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<table>
+<tr>
+<th>
+Monday
+</th>
+<th>
+Tuesday
+</th>
+<th>
+Wednesday
+</th>
+</tr>
+<tr>
+<td colspan="2">
+Out of Town
+</td>
+<td>
+Back in Town
+</td>
+</tr>
+</table>
+<p>In the example above, the data Out of Town spans the Monday and Tuesday table headings using the value 2 (two columns). The data Back in Town appear only under the Wednesday heading.</p>
+</div>
+<div id="spanning-rows." class="section level2">
+<h2>Spanning Rows.</h2>
+<p>Data can also span multiple rows using the <strong>rowspan</strong> attribute. The rowspan attribute is used for data that spans multiple rows (perhaps an event goes on for multiple hours on a certain day). It accepts an integer (greater than or equal to 1) to denote the number of rows it spans across.</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co">#    &lt;tr&gt; &lt;!-- Row 1 --&gt;</span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#      &lt;th&gt;&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co">#      &lt;th&gt;Saturday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5"><span class="co">#      &lt;th&gt;Sunday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb37-7" data-line-number="7"><span class="co">#    &lt;tr&gt; &lt;!-- Row 2 --&gt;</span></a>
+<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co">#      &lt;th&gt;Morning&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-9" data-line-number="9"><span class="co">#      &lt;td rowspan=&quot;2&quot;&gt;Work&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb37-10" data-line-number="10"><span class="co">#      &lt;td rowspan=&quot;3&quot;&gt;Relax&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb37-11" data-line-number="11"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb37-12" data-line-number="12"><span class="co">#    &lt;tr&gt; &lt;!-- Row 3 --&gt;</span></a>
+<a class="sourceLine" id="cb37-13" data-line-number="13"><span class="co">#      &lt;th&gt;Afternoon&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-14" data-line-number="14"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb37-15" data-line-number="15"><span class="co">#    &lt;tr&gt; &lt;!-- Row 4 --&gt;</span></a>
+<a class="sourceLine" id="cb37-16" data-line-number="16"><span class="co">#      &lt;th&gt;Evening&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb37-17" data-line-number="17"><span class="co">#      &lt;td&gt;Dinner&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb37-18" data-line-number="18"><span class="co">#    &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb37-19" data-line-number="19"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<table>
+<tr>
+<th>
+</th>
+<th>
+Saturday
+</th>
+<th>
+Sunday
+</th>
+</tr>
+<tr>
+<th>
+Morning
+</th>
+<td rowspan="2">
+Work
+</td>
+<td rowspan="3">
+Relax
+</td>
+</tr>
+<tr>
+<th>
+Afternoon
+</th>
+</tr>
+<tr>
+<th>
+Evening
+</th>
+<td>
+Dinner
+</td>
+</tr>
+</table>
+<p>In the example above, there are four rows:</p>
+<ol style="list-style-type: decimal">
+<li>The first row contains an empty cell and the two column headings.</li>
+<li>The second row contains the Morning row heading, along with Work, which spans two rows under the Saturday column. The “Relax” entry spans three rows under the Sunday column.</li>
+<li>The third row only contains the Afternoon row heading.</li>
+<li>The fourth row only contains the Dinner entry, since “Relax” spans into the cell next to it.</li>
+</ol>
+</div>
+<div id="table-body" class="section level2">
+<h2>Table Body</h2>
+<p>Over time, a table can grow to contain a lot of data and become very long. When this happens, the table can be sectioned off so that it is easier to manage. Long tables can be sectioned off using the table body element: <strong>&lt;tbody&gt;</strong>. The &lt;tbody&gt; element should contain all of the table’s data, excluding the table headings (more on this in a later exercise).</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="co">#    &lt;tbody&gt;</span></a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co">#        &lt;th&gt;&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="co">#        &lt;th&gt;Saturday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="co">#        &lt;th&gt;Sunday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-7" data-line-number="7"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb38-9" data-line-number="9"><span class="co">#        &lt;th&gt;Morning&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-10" data-line-number="10"><span class="co">#        &lt;td rowspan=&quot;2&quot;&gt;Work&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb38-11" data-line-number="11"><span class="co">#        &lt;td rowspan=&quot;3&quot;&gt;Relax&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb38-12" data-line-number="12"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb38-13" data-line-number="13"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb38-14" data-line-number="14"><span class="co">#       &lt;th&gt;Afternoon&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-15" data-line-number="15"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb38-16" data-line-number="16"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb38-17" data-line-number="17"><span class="co">#        &lt;th&gt;Evening&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb38-18" data-line-number="18"><span class="co">#        &lt;td&gt;Dinner&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb38-19" data-line-number="19"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb38-20" data-line-number="20"><span class="co">#    &lt;/tbody&gt;</span></a>
+<a class="sourceLine" id="cb38-21" data-line-number="21"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<p>In the example above, all of the table data is contained within a table body element. Note, however, that the headings were also kept in the table’s body.</p>
+</div>
+<div id="table-head" class="section level2">
+<h2>Table Head</h2>
+<p>In the last exercise, the table’s headings were kept inside of the table’s body. When a table’s body is sectioned off, however, it also makes sense to section off the table’s column headings using the <strong>&lt;thead&gt;</strong> element.</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co">#    &lt;thead&gt;</span></a>
+<a class="sourceLine" id="cb39-3" data-line-number="3"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb39-4" data-line-number="4"><span class="co">#        &lt;th&gt;&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#        &lt;th scope=&quot;col&quot;&gt;Saturday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="co">#        &lt;th scope=&quot;col&quot;&gt;Sunday&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-7" data-line-number="7"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb39-8" data-line-number="8"><span class="co">#    &lt;/thead&gt;</span></a>
+<a class="sourceLine" id="cb39-9" data-line-number="9"><span class="co">#    &lt;tbody&gt;</span></a>
+<a class="sourceLine" id="cb39-10" data-line-number="10"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb39-11" data-line-number="11"><span class="co">#        &lt;th scope=&quot;row&quot;&gt;Morning&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-12" data-line-number="12"><span class="co">#        &lt;td rowspan=&quot;2&quot;&gt;Work&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb39-13" data-line-number="13"><span class="co">#        &lt;td rowspan=&quot;3&quot;&gt;Relax&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb39-14" data-line-number="14"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb39-15" data-line-number="15"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb39-16" data-line-number="16"><span class="co">#       &lt;th scope=&quot;row&quot;&gt;Afternoon&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-17" data-line-number="17"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb39-18" data-line-number="18"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb39-19" data-line-number="19"><span class="co">#        &lt;th scope=&quot;row&quot;&gt;Evening&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb39-20" data-line-number="20"><span class="co">#        &lt;td&gt;Dinner&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb39-21" data-line-number="21"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb39-22" data-line-number="22"><span class="co">#    &lt;/tbody&gt;</span></a>
+<a class="sourceLine" id="cb39-23" data-line-number="23"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<p>In the example above, the only new element is <strong>&lt;thead&gt;</strong>. The table headings are contained inside of this element. Note that the table’s head still requires a row in order to contain the table headings.</p>
+<p>Additionally, only the column headings go under the &lt;thead&gt; element. We can use the scope attribute on &lt;th&gt; elements to indicate whether a &lt;th&gt; element is being used as a “row” heading or a “col” heading. Notice that all of these is for code purpose only, it does not change visually the table.</p>
+</div>
+<div id="table-footer" class="section level2">
+<h2>Table Footer</h2>
+<p>The bottom part of a long table can also be sectioned off using the <strong>&lt;tfoot&gt;</strong> element.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="co">#  &lt;table&gt;</span></a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="co">#    &lt;thead&gt;</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4"><span class="co">#        &lt;th&gt;Quarter&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="co">#        &lt;th&gt;Revenue&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="co">#        &lt;th&gt;Costs&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb40-8" data-line-number="8"><span class="co">#    &lt;/thead&gt;</span></a>
+<a class="sourceLine" id="cb40-9" data-line-number="9"><span class="co">#    &lt;tbody&gt;</span></a>
+<a class="sourceLine" id="cb40-10" data-line-number="10"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb40-11" data-line-number="11"><span class="co">#        &lt;th&gt;Q1&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-12" data-line-number="12"><span class="co">#        &lt;td&gt;$10M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-13" data-line-number="13"><span class="co">#        &lt;td&gt;$7.5M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-14" data-line-number="14"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb40-15" data-line-number="15"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb40-16" data-line-number="16"><span class="co">#        &lt;th&gt;Q2&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-17" data-line-number="17"><span class="co">#        &lt;td&gt;$12M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-18" data-line-number="18"><span class="co">#        &lt;td&gt;$5M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-19" data-line-number="19"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb40-20" data-line-number="20"><span class="co">#    &lt;/tbody&gt;</span></a>
+<a class="sourceLine" id="cb40-21" data-line-number="21"><span class="co">#    &lt;tfoot&gt;</span></a>
+<a class="sourceLine" id="cb40-22" data-line-number="22"><span class="co">#      &lt;tr&gt;</span></a>
+<a class="sourceLine" id="cb40-23" data-line-number="23"><span class="co">#        &lt;th&gt;Total&lt;/th&gt;</span></a>
+<a class="sourceLine" id="cb40-24" data-line-number="24"><span class="co">#        &lt;td&gt;$22M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-25" data-line-number="25"><span class="co">#        &lt;td&gt;$12.5M&lt;/td&gt;</span></a>
+<a class="sourceLine" id="cb40-26" data-line-number="26"><span class="co">#      &lt;/tr&gt;</span></a>
+<a class="sourceLine" id="cb40-27" data-line-number="27"><span class="co">#    &lt;/tfoot&gt;</span></a>
+<a class="sourceLine" id="cb40-28" data-line-number="28"><span class="co">#  &lt;/table&gt;</span></a></code></pre></div>
+<table>
+<thead>
+<tr>
+<th>
+Quarter
+</th>
+<th>
+Revenue
+</th>
+<th>
+Costs
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>
+Q1
+</th>
+<td>
+$10M
+</td>
+<td>
+$7.5M
+</td>
+</tr>
+<tr>
+<th>
+Q2
+</th>
+<td>
+$12M
+</td>
+<td>
+$5M
+</td>
+</tr>
+</tbody>
+<tfoot>
+<tr>
+<th>
+Total
+</th>
+<td>
+$22M
+</td>
+<td>
+$12.5M
+</td>
+</tr>
+</tfoot>
+</table>
+<p>In the example above, the footer contains the totals of the data in the table. Footers are often used to contain sums, differences, and other data results.</p>
+</div>
+<div id="styling-with-css" class="section level2">
+<h2>Styling with CSS</h2>
+<p>Tables, by default, are very bland. They have no borders, the font color is black, and the typeface is the same type used for other HTML elements. You can use CSS to style tables. Specifically, you can style the various aspects mentioned above.</p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="co">#  table, th, td {</span></a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#    border: 1px solid black;</span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#    font-family: Arial, sans-serif;</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"><span class="co">#    text-align: center;</span></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5"><span class="co">#  }</span></a></code></pre></div>
+<p>The code in the example above demonstrates just some of the various table aspects you can style using CSS properties.</p>
+<p>Let’s review what we’ve learned so far:</p>
+<ul>
+<li>The &lt;table&gt; element creates a table.</li>
+<li>The &lt;tr&gt; element adds rows to a table.</li>
+<li>To add data to a row, you can use the &lt;td&gt; element.</li>
+<li>Table headings clarify the meaning of data. Headings are added with the &lt;th&gt; element.</li>
+<li>Table data can span columns using the colspan attribute.</li>
+<li>Table data can span rows using the rowspan attribute.</li>
+<li>Tables can be split into three main sections: a head, a body, and a footer.</li>
+<li>A table’s head is created with the &lt;thead&gt; element.</li>
+<li>A table’s body is created with the &lt;tbody&gt; element.</li>
+<li>A table’s footer is created with the &lt;tfoot&gt; element.</li>
+<li>All the CSS properties you learned about in this course can be applied to tables and their data.</li>
+</ul>
+</div>
+</div>
+<div id="html-forms" class="section level1">
+<h1>HTML Forms</h1>
+<div id="introduction" class="section level2">
+<h2>Introduction</h2>
+<p>Forms are a part of everyday life. When we use a physical form in real life, we write down information and give it to someone to process. Think of the times you’ve had to fill out information for various applications like a job, or a bank account, or dropped off a completed suggestion card — each instance is a form!</p>
+<p>Just like a physical form, an HTML <strong>&lt;form&gt;</strong> element is responsible for collecting information to send somewhere else. Every time we browse the internet we come into contact with many forms and we might not even realize it. There’s a good chance that if you’re typing into a text field or providing an input, the field that you’re typing into is part of a <strong>&lt;form&gt;</strong>!</p>
+<p>In this section, we’ll go over the structure and syntax of a &lt;form&gt; and the many elements that populate it.</p>
+</div>
+<div id="how-a-form-works" class="section level2">
+<h2>How a Form Works</h2>
+<p>We can think of the internet as a network of computers which send and receive information. Computers need an HTTP request to know how to communicate. The HTTP request instructs the receiving computer how to handle the incoming information. More information can be found in this article about <a href="https://www.codecademy.com/articles/http-requests">HTTP requests</a>.</p>
+<p>The &lt;form&gt; element is a great tool for collecting information, but then we need to send that information somewhere else for processing. We need to supply the &lt;form&gt; element with both the location of where the &lt;form&gt;‘s information goes and what HTTP request to make. Take a look at the sample &lt;form&gt; below:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<p>In the above example, we’ve created the skeleton for a &lt;form&gt; that will send information to example.html as a POST request:</p>
+<ul>
+<li>The action attribute determines where the information is sent.</li>
+<li>The method attribute is assigned a HTTP verb that is included in the HTTP request.</li>
+</ul>
+<p>Note: HTTP verbs like POST do not need to be capitalized for the request to work, but it’s done so out of convention. In the example above we could have written method=“post” and it would still work.</p>
+<p>The &lt;form&gt; element can also contain child elements. For instance, it would be helpful to provide a header so that users know what this &lt;form&gt; is about. We could also add a paragraph to provide even more detail. Let’s see an example of this in code:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co">#    &lt;h1&gt;Creating a form&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="co">#    &lt;p&gt;Looks like you want to learn how to create an HTML form. Well, the best way to learn is to play around with it.&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb43-4" data-line-number="4"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+</div>
+<div id="text-input" class="section level2">
+<h2>Text Input</h2>
+<p>If we want to create an input field in our &lt;form&gt;, we’ll need the help of the <strong>&lt;input&gt;</strong> element. The &lt;input&gt; element has a type attribute which determines how it renders on the web page and what kind of data it can accept.</p>
+<p>The first value for the type attribute we’re going to explore is “text”. When we create an &lt;input&gt; element with type=“text”, it renders a text field that users can type into. It’s also important that we include a name attribute for the &lt;input&gt; — without the name attribute, information in the &lt;input&gt; won’t be sent when the &lt;form&gt; is submitted.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="co">#    &lt;input type=&quot;text&quot; name=&quot;first-text-field&quot;&gt;</span></a>
+<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<p>Look how this looks:</p>
+<form action="https://diego-eco.github.io/files/basicos_html.html#text_input" method="POST">
+<input type="text" name="first-text-field">
+</form>
+<p>After users type into the &lt;input&gt; element, the value of the value attribute becomes what is typed into the text field. The value of the value attribute is paired with the value of the name attribute and sent as text when the form is submitted.</p>
+<p>For instance, if a user typed in “important details” in the text field created by our &lt;input&gt; element. When the form is submitted, the text: “first-text-field=important details” is sent to /example.html because the value of the name attribute is “first-text-field” and the value of value is “important details”.</p>
+<p>We could also assign a default value for the value attribute so that users have a pre-filled text field when they first see the rendered form like so:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="co"># &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co">#   &lt;input type=&quot;text&quot; name=&quot;first-text-field&quot; value=&quot;username&quot;&gt;</span></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="co"># &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#text_input" method="POST">
+<input type="text" name="first-text-field" value="username">
+</form>
+</div>
+<div id="adding-a-label" class="section level2">
+<h2>Adding a Label</h2>
+<p>In the previous exercise we created an &lt;input&gt; element but we didn’t include anything to explain what the &lt;input&gt; is used for. For a user to properly identify an &lt;input&gt; we use the appropriately named <strong>&lt;label&gt;</strong> element.</p>
+<p>The &lt;label&gt; element has an opening and closing tag and displays text that is written between the opening and closing tags. To associate a &lt;label&gt; and an &lt;input&gt;, the &lt;input&gt; needs an id attribute. We then assign the <strong>for</strong> attribute of the &lt;label&gt; element with the value of the id attribute of &lt;input&gt;, like so:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;meal&quot;&gt;What do you want to eat?&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="co">#    &lt;input type=&quot;text&quot; name=&quot;food&quot; id=&quot;meal&quot;&gt;</span></a>
+<a class="sourceLine" id="cb46-5" data-line-number="5"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<p>The code above renders:</p>
+<form action="https://diego-eco.github.io/files/basicos_html.html#adding_a_label" method="POST">
+<label for="meal">Label for the form</label> <br> <input type="text" name="food" id="meal">
+</form>
+<p>Now users know what the &lt;input&gt; element is for! Another benefit for using the &lt;label&gt; element is when this element is clicked, the corresponding &lt;input&gt; is highlighted/selected.</p>
+</div>
+<div id="password-input" class="section level2">
+<h2>Password Input</h2>
+<p>Think about all those times we have to put sensitive information, like a password or PIN, into a &lt;form&gt;. We wouldn’t want our information to be seen by anyone peeking over our shoulder! Luckily, we have the type=“password” attribute for &lt;input&gt;!</p>
+<p>An &lt;input type =“password”&gt; element will replace input text with another character like an asterisk (*) or a dot (•). The code below provides an example of how to create a password field:</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb47-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;user-password&quot;&gt;Password: &lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb47-3" data-line-number="3"><span class="co">#    &lt;input type=&quot;password&quot; id=&quot;user-password&quot; name=&quot;user-password&quot;&gt;</span></a>
+<a class="sourceLine" id="cb47-4" data-line-number="4"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#password_input" method="POST">
+<label for="user-password">Password: </label> <input type="password" id="user-password" name="user-password">
+</form>
+<p>Even though the password field obscures the text of the password, when the form is submitted, the value of the text is sent. In other words, if “hunter2” is typed into the password field, “user-password=hunter2” is sent along with the other information on the form. Including some type of encription is beyond the scope of this notes.</p>
+<p>All together looks something like this:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb48-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;username&quot;&gt;Username:&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb48-3" data-line-number="3"><span class="co">#       &lt;input type=&quot;text&quot; name=&quot;username&quot; id=&quot;username&quot;&gt;</span></a>
+<a class="sourceLine" id="cb48-4" data-line-number="4"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb48-5" data-line-number="5"><span class="co">#    &lt;label for=&quot;user-pw&quot;&gt;Password:&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb48-6" data-line-number="6"><span class="co">#       &lt;input type=&quot;password&quot; id=&quot;user-pw&quot; name=&quot;user-pw&quot;&gt;</span></a>
+<a class="sourceLine" id="cb48-7" data-line-number="7"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#password_input" method="POST">
+<label for="username">Username:</label> <input type="text" name="username" id="username"> <br> <label for="user-pw">Password:</label> <input type="password" id="user-pw" name="user-pw">
+</form>
+</div>
+<div id="number-input" class="section level2">
+<h2>Number Input</h2>
+<p>We’ve now gone over two type attributes for &lt;input&gt; related to text. But, we might want our users to type in a number — in which case we can set the type attribute to “number”.</p>
+<p>By setting <strong>type=“number”</strong> for an &lt;input&gt; we can restrict what users type into the input field to just numbers (and a few special characters like -, +, and .). We can also provide a <strong>step</strong> attribute which creates arrows inside the input field to increase or decrease by the value of the step attribute. Below is the code needed to render an input field for numbers:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb49-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;years&quot;&gt; Years of experience: &lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb49-3" data-line-number="3"><span class="co">#    &lt;input id=&quot;years&quot; name=&quot;years&quot; type=&quot;number&quot; step=&quot;1&quot;&gt;</span></a>
+<a class="sourceLine" id="cb49-4" data-line-number="4"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#number_input" method="POST">
+<label for="years"> Years of experience: </label> <input id="years" name="years" type="number" step="1">
+</form>
+</div>
+<div id="range-input" class="section level2">
+<h2>Range Input</h2>
+<p>Using an &lt;input type=“number”&gt; is great if we want to allow users to type in any number of their choosing. But, if we wanted to limit what numbers our users could type we might consider using a different type value. Another option we could use is setting <strong>&lt;input type=“range”&gt;</strong> which creates a slider.</p>
+<p>To set the minimum and maximum values of the slider we assign values to the min and max attribute of the &lt;input&gt;. We could also control how smooth and fluid the slider works by assigning the step attribute a value. Smaller step values will make the slider more fluidly, whereas larger step values will make the slider move more noticeably. Take a look at the code to create a slider:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb50-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;volume&quot;&gt; Volume Control&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb50-3" data-line-number="3"><span class="co">#     &lt;span&gt;Min&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb50-4" data-line-number="4"><span class="co">#    &lt;input id=&quot;volume&quot; name=&quot;volume&quot; type=&quot;range&quot; min=&quot;0&quot; max=&quot;100&quot; step=&quot;1&quot;&gt;</span></a>
+<a class="sourceLine" id="cb50-5" data-line-number="5"><span class="co">#     &lt;span&gt;Max&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb50-6" data-line-number="6"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#range_input" method="POST">
+<label for="volume"> Volume Control</label> <br> <span>Min</span> <input id="volume" name="volume" type="range" min="0" max="100" step="1"> <span>Max</span>
+</form>
+</div>
+<div id="checkbox-input" class="section level2">
+<h2>Checkbox Input</h2>
+<p>So far the types of inputs we’ve allowed were all single choices. But, what if we presented multiple options to users and allow them to select any number of options? Sounds like we could use checkboxes! In a &lt;form&gt; we would use the &lt;input&gt; element and set type=“checkbox”. Examine the code used to create multiple checkboxes:</p>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb51-2" data-line-number="2"><span class="co">#    &lt;p&gt;Choose your pizza toppings:&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb51-3" data-line-number="3"><span class="co">#    &lt;label for=&quot;cheese&quot;&gt;Extra cheese&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb51-4" data-line-number="4"><span class="co">#    &lt;input id=&quot;cheese&quot; name=&quot;topping&quot; type=&quot;checkbox&quot; value=&quot;cheese&quot;&gt;</span></a>
+<a class="sourceLine" id="cb51-5" data-line-number="5"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb51-6" data-line-number="6"><span class="co">#    &lt;label for=&quot;pepperoni&quot;&gt;Pepperoni&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb51-7" data-line-number="7"><span class="co">#    &lt;input id=&quot;pepperoni&quot; name=&quot;topping&quot; type=&quot;checkbox&quot; value=&quot;pepperoni&quot;&gt;</span></a>
+<a class="sourceLine" id="cb51-8" data-line-number="8"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb51-9" data-line-number="9"><span class="co">#    &lt;label for=&quot;anchovy&quot;&gt;Anchovy&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb51-10" data-line-number="10"><span class="co">#    &lt;input id=&quot;anchovy&quot; name=&quot;topping&quot; type=&quot;checkbox&quot; value=&quot;anchovy&quot;&gt;</span></a>
+<a class="sourceLine" id="cb51-11" data-line-number="11"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<p>
+Choose your pizza toppings:
+</p>
+<label for="cheese">Extra cheese</label> <input id="cheese" name="topping" type="checkbox" value="cheese"> <br> <label for="pepperoni">Pepperoni</label> <input id="pepperoni" name="topping" type="checkbox" value="pepperoni"> <br> <label for="anchovy">Anchovy</label> <input id="anchovy" name="topping" type="checkbox" value="anchovy">
+</form>
+<p>Notice in the example provided:</p>
+<ul>
+<li>There are assigned values to the value attribute of the checkboxes. These values are not visible on the form itself, that’s why it is important that we use an associated &lt;label&gt; to identify the checkbox.</li>
+<li>Each &lt;input&gt; has the same value for the name attribute. Using the same name for each checkbox groups the &lt;input&gt;s together. However, each &lt;input&gt; has a unique id to pair with a &lt;label&gt;.</li>
+</ul>
+</div>
+<div id="radio-button-input" class="section level2">
+<h2>Radio Button Input</h2>
+<p>Checkboxes work well if we want to present users with multiple options and let them choose one or more of the options. However, there are cases where we want to present multiple options and only allow for one selection — like asking users if they agree or disagree with the terms and conditions. Let’s look over the code used to create radio buttons:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb52-2" data-line-number="2"><span class="co">#    &lt;span&gt;Would you like to add cheese?&lt;/span&gt;</span></a>
+<a class="sourceLine" id="cb52-3" data-line-number="3"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb52-4" data-line-number="4"><span class="co">#    &lt;input type=&quot;radio&quot; id=&quot;yes&quot; name=&quot;cheese&quot; value=&quot;yes&quot;&gt;</span></a>
+<a class="sourceLine" id="cb52-5" data-line-number="5"><span class="co">#    &lt;label for=&quot;yes&quot;&gt;Yes&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb52-6" data-line-number="6"><span class="co">#    &lt;input type=&quot;radio&quot; id=&quot;no&quot; name=&quot;cheese&quot; value=&quot;no&quot;&gt;</span></a>
+<a class="sourceLine" id="cb52-7" data-line-number="7"><span class="co">#    &lt;label for=&quot;no&quot;&gt;No&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb52-8" data-line-number="8"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<span>Would you like to add cheese?</span> <br> <input type="radio" id="yes" name="cheese" value="yes"> <label for="yes">Yes</label> <input type="radio" id="no" name="cheese" value="no"> <label for="no">No</label>
+</form>
+<p>Notice from the code example, radio buttons (like checkboxes) do not display their value. We have an associated &lt;label&gt; to represent the value of the radio button. To group radio buttons together, we assign them the same name and only one radio button from that group can be selected.</p>
+</div>
+<div id="dropdown-list" class="section level2">
+<h2>Dropdown list</h2>
+<p>Radio buttons are great if we want our users to pick one option out of a few visible options, but imagine if we have a whole list of options! This situation could quickly lead to a lot of radio buttons to keep track of. An alternative solution is to use a dropdown list to allow our users to choose one option from an organized list. Here’s the code to create a dropdown menu:</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb53-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;lunch&quot;&gt;What's for lunch?&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb53-3" data-line-number="3"><span class="co">#    &lt;select id=&quot;lunch&quot; name=&quot;lunch&quot;&gt;</span></a>
+<a class="sourceLine" id="cb53-4" data-line-number="4"><span class="co">#      &lt;option value=&quot;pizza&quot;&gt;Pizza&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb53-5" data-line-number="5"><span class="co">#      &lt;option value=&quot;curry&quot;&gt;Curry&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb53-6" data-line-number="6"><span class="co">#      &lt;option value=&quot;salad&quot;&gt;Salad&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb53-7" data-line-number="7"><span class="co">#      &lt;option value=&quot;ramen&quot;&gt;Ramen&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb53-8" data-line-number="8"><span class="co">#      &lt;option value=&quot;tacos&quot;&gt;Tacos&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb53-9" data-line-number="9"><span class="co">#    &lt;/select&gt;</span></a>
+<a class="sourceLine" id="cb53-10" data-line-number="10"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<label for="lunch">What’s for lunch?</label> <select id="lunch" name="lunch"> <option value="pizza">Pizza</option> <option value="curry">Curry</option> <option value="salad">Salad</option> <option value="ramen">Ramen</option> <option value="tacos">Tacos</option> </select>
+</form>
+<p>Notice in the code that we’re using the element <strong>&lt;select&gt;</strong> to create the dropdown list. To populate the dropdown list, we add multiple <strong>&lt;option&gt;</strong> elements, each with a value attribute. By default, only one of these options can be selected.</p>
+<p>The text rendered is the text included between the opening and closing &lt;option&gt; tags. However, it is the value of the value attribute that is used in &lt;form&gt; submission (notice the difference in the text and value capitalization). When the &lt;form&gt; is submitted, the information from this input field will be sent using the name of the &lt;select&gt; and the value of the chosen &lt;option&gt;. For instance, if a user selected Pizza from the dropdown list, the information would be sent as “lunch=pizza”.</p>
+</div>
+<div id="datalist-input" class="section level2">
+<h2>Datalist Input</h2>
+<p>Even if we have an organized dropdown list, if the list has a lot of options, it could be tedious for users to scroll through the entire list to locate one option. That’s where using the <strong>&lt;datalist&gt;</strong> element comes in handy.</p>
+<p>The &lt;datalist&gt; is used with an &lt;input type=“text”&gt; element. The &lt;input&gt; creates a text field that users can type into and filter options from the &lt;datalist&gt;. Let’s go over a concrete example:</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb54-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;city&quot;&gt;Ideal city to visit?&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb54-3" data-line-number="3"><span class="co">#    &lt;input type=&quot;text&quot; list=&quot;cities&quot; id=&quot;city&quot; name=&quot;city&quot;&gt;</span></a>
+<a class="sourceLine" id="cb54-4" data-line-number="4"><span class="co">#    &lt;datalist id=&quot;cities&quot;&gt;</span></a>
+<a class="sourceLine" id="cb54-5" data-line-number="5"><span class="co">#      &lt;option value=&quot;New York City&quot;&gt;&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb54-6" data-line-number="6"><span class="co">#      &lt;option value=&quot;Tokyo&quot;&gt;&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb54-7" data-line-number="7"><span class="co">#      &lt;option value=&quot;Barcelona&quot;&gt;&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb54-8" data-line-number="8"><span class="co">#      &lt;option value=&quot;Mexico City&quot;&gt;&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb54-9" data-line-number="9"><span class="co">#      &lt;option value=&quot;Melbourne&quot;&gt;&lt;/option&gt;</span></a>
+<a class="sourceLine" id="cb54-10" data-line-number="10"><span class="co">#      &lt;option value=&quot;Other&quot;&gt;&lt;/option&gt;  </span></a>
+<a class="sourceLine" id="cb54-11" data-line-number="11"><span class="co">#    &lt;/datalist&gt;</span></a>
+<a class="sourceLine" id="cb54-12" data-line-number="12"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<label for="city">Ideal city to visit?</label> <input type="text" list="cities" id="city" name="city"> <datalist id="cities"> <option value="New York City"></option> <option value="Tokyo"></option> <option value="Barcelona"></option> <option value="Mexico City"></option> <option value="Melbourne"></option> <option value="Other"></option><br />
+</datalist>
+</form>
+<p>Notice, in the code above, we have an &lt;input&gt; that has a list attribute. The &lt;input&gt; is associated to the &lt;datalist&gt; via the &lt;input&gt;‘s list attribute and the id of the &lt;datalist&gt;.</p>
+<p>While &lt;select&gt; and &lt;datalist&gt; share some similarities, there are some major differences. In the associated &lt;input&gt; element, users can type in the input field to search for a particular option. If none of the &lt;option&gt;s match, the user can still use what they typed in. When the form is submitted, the value of the &lt;input&gt;‘s name and the value of the option selected, or what the user typed in, is sent as a pair.</p>
+</div>
+<div id="textarea-element" class="section level2">
+<h2>Textarea element</h2>
+<p>An &lt;input&gt; element with type=“text” creates a single row input field for users to type in information. However, there are cases where users need to write in more information, like a blog post. In such cases, instead of using an &lt;input&gt;, we could use &lt;textarea&gt;.</p>
+<p>The &lt;textarea&gt; element is used to create a bigger text field for users to write more text. We can add the attributes rows and cols to determine the amount of rows and columns for the &lt;textarea&gt;. Take a look:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb55-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;blog&quot;&gt;New Blog Post: &lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb55-3" data-line-number="3"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb55-4" data-line-number="4"><span class="co">#    &lt;textarea id=&quot;blog&quot; name=&quot;blog&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;</span></a>
+<a class="sourceLine" id="cb55-5" data-line-number="5"><span class="co">#    &lt;/textarea&gt;</span></a>
+<a class="sourceLine" id="cb55-6" data-line-number="6"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<label for="blog">New Blog Post: </label> <br>
+<textarea id="blog" name="blog" rows="5" cols="30">
+</textarea>
+</form>
+<p>In the code above, an empty &lt;textarea&gt; that is 5 rows by 30 columns is rendered to the page. If we wanted an even bigger text field, we could click and drag on the bottom right corner to expand it.</p>
+<p>When we submit the form, the value of &lt;textarea&gt; is the text written inside the box. If we want to add a default value to text to &lt;textarea&gt; we would include it within the opening and closing tags like so:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="co">#  &lt;textarea&gt;Adding default text&lt;/textarea&gt;</span></a></code></pre></div>
+<p>This code will render a &lt;textarea&gt; that contains pre-filled text: “Adding default text”.</p>
+</div>
+<div id="submit-form" class="section level2">
+<h2>Submit Form</h2>
+<p>Remember, the purpose of a form is to collect information that will be submitted. That’s the role of the submit button — users click on it when they are finished with filling out information in the &lt;form&gt; and they’re ready to send it off. Now that we’ve gone over how to create various input elements, let’s now go over how to create a submit button!</p>
+<p>To make a submit button in a &lt;form&gt;, we’re going to use the reliable &lt;input&gt; element and set the type to “submit”. For instance:</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="co">#  &lt;form&gt;</span></a>
+<a class="sourceLine" id="cb57-2" data-line-number="2"><span class="co">#    &lt;input type=&quot;submit&quot; value=&quot;Send&quot;&gt;</span></a>
+<a class="sourceLine" id="cb57-3" data-line-number="3"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form>
+<input type="submit" value="Send">
+</form>
+<p>Notice in the code snippet that the value assigned to the &lt;input&gt; shows up as text on the submit button. If there isn’t a value attribute, the default text, Submit shows up on the button.</p>
+</div>
+<div id="review-of-the-form-element." class="section level2">
+<h2>Review of the &lt;form&gt; element.</h2>
+<p>In this lesson we went over:</p>
+<ul>
+<li>The purpose of a &lt;form&gt; is to allow users to input information and send it.</li>
+<li>The &lt;form&gt;‘s action attribute determines where the form’s information goes.</li>
+<li>The &lt;form&gt;‘s method attribute determines how the information is sent and processed.</li>
+<li>To add fields for users to input information we use the &lt;input&gt; element and set the type attribute to a field of our choosing:</li>
+<li>Setting type to “text” creates a single row field for text input.</li>
+<li>Setting type to “password” creates a single row field that censors text input.</li>
+<li>Setting type to “number” creates a single row field for number input.</li>
+<li>Setting type to “range” creates a slider to select from a range of numbers.</li>
+<li>Setting type to “checkbox” creates a single checkbox which can be paired with other checkboxes.</li>
+<li>Setting type to “radio” creates a radio button that can be paired with other radio buttons.</li>
+<li>Setting type to “list” will pair the &lt;input&gt; with a &lt;datalist&gt; element if the id of both are the same.</li>
+<li>Setting type to “submit” creates a submit button.</li>
+<li>A &lt;select&gt; element is populated with &lt;option&gt; elements and renders a dropdown list selection.</li>
+<li>A &lt;datalist&gt; element is populated with &lt;option&gt; elements and works with an &lt;input&gt; to search through choices.</li>
+<li>A &lt;textarea&gt; element is a text input field that has a customizable area.</li>
+<li>When a &lt;form&gt; is submitted, the name of the fields that accept input and the value of those fields are sent as name=value pairs.</li>
+<li>Using the &lt;form&gt; element in conjunction with the other elements listed above allows us to create sites that take into consideration the wants and needs of our users.</li>
+</ul>
+</div>
+</div>
+<div id="form-validation" class="section level1">
+<h1>Form validation</h1>
+<div id="introduction-1" class="section level2">
+<h2>Introduction</h2>
+<p>Ever wonder how a login page actually works? Or why the combination of a username and password grants you access to a website? The answers lie in validation. Validation is the concept of checking user provided data against the required data.</p>
+<p>There are different types of validation. One type is server-side validation, this happens when data is sent to another machine (typically a server) for validation. An example of this type of validation is the usage of a login page. The form on the login page accepts username and password input, then sends the data to a server that checks that the pair matches up correctly.</p>
+<p>On the other hand, we use client-side validation if we want to check the data on the browser (the client). This validation occurs before data is sent to the server. Different browsers implement client-side validation differently, but it leads to the same outcome.</p>
+<p>Shared among the different browsers are the benefits of using HTML5’s built-in client-side validation. It saves us time from having to send information to the server and wait for the server to send back confirmation or rejection of the data. This can also help us protect our server from malicious code or data from a malicious user. It also allows us to quickly give feedback to users for specific fields rather than having them fill in a form again if the data they input into the form was rejected.</p>
+</div>
+<div id="requiring-an-input" class="section level2">
+<h2>Requiring an Input</h2>
+<p>Sometimes we have fields in our &lt;form&gt;s which are not optional, i.e. there must be information provided before we can submit it. To enforce this rule, we can add the <strong>required</strong> attribute to an &lt;input&gt; element.</p>
+<p>Example (try pressing “Submit” without filling the form)</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb58-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;allergies&quot;&gt;Do you have any dietary restrictions?&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb58-3" data-line-number="3"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb58-4" data-line-number="4"><span class="co">#    &lt;input id=&quot;allergies&quot; name=&quot;allergies&quot; type=&quot;text&quot; required&gt;</span></a>
+<a class="sourceLine" id="cb58-5" data-line-number="5"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb58-6" data-line-number="6"><span class="co">#    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;</span></a>
+<a class="sourceLine" id="cb58-7" data-line-number="7"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<form action="https://diego-eco.github.io/files/basicos_html.html#requiring_an_input" method="POST">
+<label for="allergies">Do you have any dietary restrictions?</label> <br> <input id="allergies" name="allergies" type="text" required> <br> <input type="submit" value="Submit">
+</form>
+<p>The styling of the message varies from browser to browser.</p>
+</div>
+<div id="set-a-minimum-and-maximum" class="section level2">
+<h2>Set a Minimum and Maximum</h2>
+<p>Another built-in validation we can use is to assign a minimum or maximum value for a number field, e.g. &lt;input type=“number”&gt; and &lt;input type=“range”&gt;. To set a minimum acceptable value, we use the min attribute and assign a value. On the flip side, to set a maximum acceptable value, we assign the max attribute a value. Let’s see this in code:</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb59-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;guests&quot;&gt;Enter # of guests:&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb59-3" data-line-number="3"><span class="co">#    &lt;input id=&quot;guests&quot; name=&quot;guests&quot; type=&quot;number&quot; min=&quot;1&quot; max=&quot;4&quot;&gt;</span></a>
+<a class="sourceLine" id="cb59-4" data-line-number="4"><span class="co">#    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;</span></a>
+<a class="sourceLine" id="cb59-5" data-line-number="5"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<p>Try to submit an input that is less than 1, a warning will appear. A similar message will appear if a user tries to input a number greater than 4.</p>
+<form action="https://diego-eco.github.io/files/basicos_html.html#set_a_minimum_and_a_maximum" method="POST">
+<label for="guests">Enter # of guests:</label> <input id="guests" name="guests" type="number" min="1" max="4"> <input type="submit" value="Submit">
+</form>
+</div>
+<div id="checking-text-length" class="section level2">
+<h2>Checking Text Length</h2>
+<p>In the previous exercise, we were able to use min and max to set acceptable minimum and maximum values in a number field. But what about text fields? There are certainly cases where we wouldn’t want our users typing more than a certain number of characters (think about the character cap for messages on Twitter). We might even want to set a minimum number of characters. Conveniently, there are built-in HTML5 validations for these situations.</p>
+<p>To set a minimum number of characters for a text field, we add the minlength attribute and a value to set a minimum value. Similarly, to set the maximum number of characters for a text field, we use the maxlength attribute and set a maximum value. Let’s take a look at these attributes in code:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb60-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;summary&quot;&gt;Summarize your feelings in less than 10 characters&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb60-3" data-line-number="3"><span class="co">#    &lt;input id=&quot;summary&quot; name=&quot;summary&quot; type=&quot;text&quot; minlength=&quot;5&quot; maxlength=&quot;10&quot; required&gt;</span></a>
+<a class="sourceLine" id="cb60-4" data-line-number="4"><span class="co">#    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;</span></a>
+<a class="sourceLine" id="cb60-5" data-line-number="5"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+<p>Try typing less than 5 or more than 10 characters:</p>
+<form action="https://diego-eco.github.io/files/basicos_html.html#checking_text_lenght" method="POST">
+<label for="summary">Summarize your feelings in less than 10 characters</label> <input id="summary" name="summary" type="text" minlength="5" maxlength="10" required> <input type="submit" value="Submit">
+</form>
+</div>
+<div id="matching-a-pattern" class="section level2">
+<h2>Matching a Pattern</h2>
+<p>In addition to checking the length of a text, we could also add a validation to check how the text was provided. For cases when we want user input to follow specific guidelines, we use the pattern attribute and assign it a <strong>regular expression</strong>, or <strong>regex</strong>. Regular expressions are a sequence of characters that make up a search pattern. If the input matches the regex, the form can be submitted.</p>
+<p>Let’s say we wanted to check for a valid credit card number (a 14 to 16 digit number). We could use the regex: [0-9]{14,16} which checks that the user provided only numbers and that they entered at least 14 digits and at most 16 digits.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="co">#  &lt;form action=&quot;/example.html&quot; method=&quot;POST&quot;&gt;</span></a>
+<a class="sourceLine" id="cb61-2" data-line-number="2"><span class="co">#    &lt;label for=&quot;payment&quot;&gt;Credit Card Number (no spaces):&lt;/label&gt;</span></a>
+<a class="sourceLine" id="cb61-3" data-line-number="3"><span class="co">#    &lt;br&gt;</span></a>
+<a class="sourceLine" id="cb61-4" data-line-number="4"><span class="co">#    &lt;input id=&quot;payment&quot; name=&quot;payment&quot; type=&quot;text&quot; required pattern=&quot;[0-9]{14,16}&quot;&gt;</span></a>
+<a class="sourceLine" id="cb61-5" data-line-number="5"><span class="co">#    &lt;input type=&quot;submit&quot; value=&quot;Submit&quot;&gt;</span></a>
+<a class="sourceLine" id="cb61-6" data-line-number="6"><span class="co">#  &lt;/form&gt;</span></a></code></pre></div>
+With the pattern in place, users can’t submit the
+<form>
+<p>with a number that doesn’t follow the regex. When they try, they’ll see a validation message like so: (try with 1234567)</p>
+<form action="https://diego-eco.github.io/files/basicos_html.html#matching_a_pattern" method="POST">
+<label for="payment">Credit Card Number (no spaces):</label> <br> <input id="payment" name="payment" type="text" required pattern="[0-9]{14,16}"> <input type="submit" value="Submit">
+</form>
+<p>We might also want to limit usernames to only letters and numbers (and not special characters like ! or @). To add this validation, add a pattern attribute and set it to: “[a-zA-Z0-9]+” in the &lt;input&gt; element.</p>
+<p>If you want to find out more about Regex, read more at <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_Expressions">MDN’s regex article</a>.</p>
+</div>
+<div id="review-of-form-validation." class="section level2">
+<h2>Review of form validation.</h2>
+<ul>
+<li>Client-side validations happen in the browser before information is sent to a server.</li>
+<li>Adding the required attribute to an input related element will validate that the input field has information in it.</li>
+<li>Assigning a value to the min attribute of a number input element will validate an acceptable minimum value.</li>
+<li>Assigning a value to the max attribute of a number input element will validate an acceptable maximum value.</li>
+<li>Assigning a value to the minlength attribute of a text input element will validate an acceptable minimum number of characters.</li>
+<li>Assigning a value to the maxlength attribute of a text input element will validate an acceptable maximum number of characters.</li>
+<li>Assigning a regex to pattern matches the input to the provided regex.</li>
+<li>If validations on a &lt;form&gt; do not pass, the user gets a message explaining why and the
+<form>
+cannot be submitted.</li>
+<li>These quick checks help ensure that input data is correct and safe for our servers. It also helps give users immediate feedback on what they need to fix instead of having to wait for a server to send back that information.</li>
+</ul>
+</div>
+</div>
+<div id="semantic-html" class="section level1">
+<h1>Semantic HTML</h1>
+<div id="introduction-2" class="section level2">
+<h2>Introduction</h2>
+<p>When building web pages, we use a combination of non-semantic HTML and Semantic HTML. The word semantic means <em>“relating to meaning”</em>, so semantic elements provide information about the content between the opening and closing tags.</p>
+<p>By using Semantic HTML, we select HTML elements based on their meaning, not on how they are presented. Elements such as &lt;div&gt; and <span> are not semantic elements since they provide no context as to what is inside of those tags.</p>
+<p>For example, instead of using a &lt;div&gt; element to contain our header information, we could use a &lt;header&gt; element, which is used as a heading section. By using a &lt;header&gt; tag instead of a &lt;div&gt;, we provide context as to what information is inside of the opening and closing tag.</p>
+<p>Why use Semantic HTML?</p>
+<ul>
+<li><p>Accessibility: Semantic HTML makes webpages accessible for mobile devices and for people with disabilities as well. This is because screen readers and browsers are able to interpret the code better.</p></li>
+<li><p>SEO: It improves the website SEO, or Search Engine Optimization, which is the process of increasing the number of people that visit your webpage. With better SEO, search engines are better able to identify the content of your website and weight the most important content appropriately.</p></li>
+<li><p>Easy to Understand: Semantic HTML also makes the website’s source code easier to read for other web developers.</p></li>
+</ul>
+<p>To better understand this, you can think of comparing non-semantic HTML to going into a store with no signs on the aisles. Since the aisles aren’t labeled, you don’t know what products are in those aisles. However, stores that do have signs for each aisle make it a lot easier to find the items you need, just like Semantic HTML.</p>
+<p><img src="data:image/png;base64,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" width="50%" style="display: block; margin: auto;" /></p>
+</div>
+<div id="header-and-nav" class="section level2">
+<h2>Header and Nav</h2>
+<p>Let’s take a look at some semantic elements that assist in the structure of a web page. A &lt;header&gt; is a container usually for either navigational links or introductory content containing &lt;h1&gt; to &lt;h6&gt; headings.</p>
+<p>Example:</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="co">#  &lt;header&gt;</span></a>
+<a class="sourceLine" id="cb62-2" data-line-number="2"><span class="co">#    &lt;h1&gt;</span></a>
+<a class="sourceLine" id="cb62-3" data-line-number="3"><span class="co">#       Welcome to my website!</span></a>
+<a class="sourceLine" id="cb62-4" data-line-number="4"><span class="co">#    &lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb62-5" data-line-number="5"><span class="co">#  &lt;/header&gt;</span></a></code></pre></div>
+<p>This can be compared to the code below which uses a &lt;div&gt; tag instead of a &lt;header&gt; tag:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="co">#  &lt;div id=&quot;header&quot;&gt;</span></a>
+<a class="sourceLine" id="cb63-2" data-line-number="2"><span class="co">#    &lt;h1&gt;</span></a>
+<a class="sourceLine" id="cb63-3" data-line-number="3"><span class="co">#      Welcome to my website!</span></a>
+<a class="sourceLine" id="cb63-4" data-line-number="4"><span class="co">#    &lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb63-5" data-line-number="5"><span class="co">#  &lt;/div&gt;</span></a></code></pre></div>
+<p>By using a &lt;header&gt; tag, our code becomes easier to read. It is much easier to identify what is inside of the &lt;h1&gt;‘s parent tags, as opposed to a &lt;div&gt; tag which would provide no details as to what was inside of the tag.</p>
+<p>A <strong>&lt;nav&gt;</strong> is used to define a block of navigation links such as menus and tables of contents. It is important to note that &lt;nav&gt; can be used inside of the &lt;header&gt; element but can also be used on its own.</p>
+<p>Let’s take a look at the example below:</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="co">#  &lt;header&gt; </span></a>
+<a class="sourceLine" id="cb64-2" data-line-number="2"><span class="co">#    &lt;nav&gt;</span></a>
+<a class="sourceLine" id="cb64-3" data-line-number="3"><span class="co">#      &lt;ul&gt;</span></a>
+<a class="sourceLine" id="cb64-4" data-line-number="4"><span class="co">#        &lt;li&gt;&lt;a href=&quot;#home&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;</span></a>
+<a class="sourceLine" id="cb64-5" data-line-number="5"><span class="co">#        &lt;li&gt;&lt;a href=&quot;#about&quot;&gt;About&lt;/a&gt;&lt;/li&gt;      </span></a>
+<a class="sourceLine" id="cb64-6" data-line-number="6"><span class="co">#      &lt;/ul&gt;</span></a>
+<a class="sourceLine" id="cb64-7" data-line-number="7"><span class="co">#    &lt;/nav&gt;</span></a>
+<a class="sourceLine" id="cb64-8" data-line-number="8"><span class="co">#  &lt;/header&gt;</span></a></code></pre></div>
+<p>By using &lt;nav&gt; as a way to label our navigation links, it will be easier for not only us, but also for web browsers and screen readers to read the code.</p>
+</div>
+<div id="main-and-footer" class="section level2">
+<h2>Main and Footer</h2>
+<p>Two more structural elements are <strong>&lt;main&gt;</strong> and <strong>&lt;footer&gt;</strong>. These elements along with &lt;nav&gt; and &lt;header&gt; help describe where an element is located based on conventional web development standards.</p>
+<p>The element &lt;main&gt; is used to encapsulate the dominant content within a webpage. This tag is separate from the &lt;footer&gt; and the &lt;nav&gt; of a web page since these elements don’t contain the principal content. By using &lt;main&gt; as opposed to a &lt;div&gt; element, screen readers and web browsers are better able to identify that whatever is inside of the tag is the bulk of the content.</p>
+<p>So how does &lt;main&gt; look when incorporated into our code?</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="co">#  &lt;main&gt;</span></a>
+<a class="sourceLine" id="cb65-2" data-line-number="2"><span class="co">#    &lt;header&gt;</span></a>
+<a class="sourceLine" id="cb65-3" data-line-number="3"><span class="co">#      &lt;h1&gt;Types of Sports&lt;/h1&gt;</span></a>
+<a class="sourceLine" id="cb65-4" data-line-number="4"><span class="co">#    &lt;/header&gt;</span></a>
+<a class="sourceLine" id="cb65-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb65-6" data-line-number="6"><span class="co">#    &lt;article&gt;</span></a>
+<a class="sourceLine" id="cb65-7" data-line-number="7"><span class="co">#      &lt;h3&gt;Baseball&lt;/h3&gt;</span></a>
+<a class="sourceLine" id="cb65-8" data-line-number="8"><span class="co">#      &lt;p&gt;</span></a>
+<a class="sourceLine" id="cb65-9" data-line-number="9"><span class="co">#        The first game of baseball was played in Cooperstown, New York in the summer of 1839.</span></a>
+<a class="sourceLine" id="cb65-10" data-line-number="10"><span class="co">#      &lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb65-11" data-line-number="11"><span class="co">#    &lt;/article&gt;</span></a>
+<a class="sourceLine" id="cb65-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb65-13" data-line-number="13"><span class="co">#  &lt;/main&gt;</span></a></code></pre></div>
+<p>As we see above, &lt;main&gt; contains an &lt;article&gt; and &lt;header&gt; tag with child elements that hold the most important information related to the page.</p>
+<p>The content at the bottom of the subject information is known as the footer, indicated by the &lt;footer&gt; element. The footer contains information such as:</p>
+<ul>
+<li>Contact information</li>
+<li>Copyright information</li>
+<li>Terms of use</li>
+<li>Site Map</li>
+<li>Reference to top of page links</li>
+</ul>
+<p>For example:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="co">#  &lt;footer&gt;</span></a>
+<a class="sourceLine" id="cb66-2" data-line-number="2"><span class="co">#    &lt;p&gt;Email me at diego.lopez@colmex.mx&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb66-3" data-line-number="3"><span class="co">#  &lt;/footer&gt;</span></a></code></pre></div>
+<p>In the example above, the footer is used to contain contact information. The &lt;footer&gt; tag is separate from the &lt;main&gt; element and typically located at the bottom of the content.</p>
+</div>
+<div id="article-and-section" class="section level2">
+<h2>Article and Section</h2>
+<p>Now that we covered the body of Semantic HTML, let’s focus on what can go in the body. The two elements we’re going to focus on now are <strong>&lt;section&gt;</strong> and <strong>&lt;article&gt;</strong>.</p>
+<p>&lt;section&gt; defines elements in a document, such as chapters, headings, or any other area of the document with the same theme. For example, content with the same theme such as articles about some common theme can go under a single &lt;section&gt;. A website’s home page could be split into sections for the introduction, news items, and contact information.</p>
+<p>Here is an example of how to use &lt;section&gt;:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="co">#  &lt;section&gt;</span></a>
+<a class="sourceLine" id="cb67-2" data-line-number="2"><span class="co">#    &lt;h2&gt;Section of my website (Contact) &lt;/h2&gt; </span></a>
+<a class="sourceLine" id="cb67-3" data-line-number="3"><span class="co">#  &lt;/section&gt;</span></a></code></pre></div>
+<p>In the code above we created a &lt;section&gt; element to encapsulate the code. In &lt;section&gt; we added a &lt;h2&gt; element as a heading.</p>
+<p>The &lt;article&gt; element holds content that makes sense on its own. &lt;article&gt; can hold content such as articles, blogs, comments, magazines, etc. An &lt;article&gt; tag would help someone using a screen reader understand where the article content (that might contain a combination of text, images, audio, etc.) begins and ends.</p>
+<p>Here is an example of how to use &lt;article&gt;:</p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="co">#  &lt;section&gt;</span></a>
+<a class="sourceLine" id="cb68-2" data-line-number="2"><span class="co">#    &lt;h2&gt;Fun Facts About Cricket&lt;/h2&gt;</span></a>
+<a class="sourceLine" id="cb68-3" data-line-number="3"><span class="co">#    &lt;article&gt;</span></a>
+<a class="sourceLine" id="cb68-4" data-line-number="4"><span class="co">#      &lt;p&gt;A single match of cricket can last up to 5 days.&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb68-5" data-line-number="5"><span class="co">#    &lt;/article&gt;</span></a>
+<a class="sourceLine" id="cb68-6" data-line-number="6"><span class="co">#  &lt;/section&gt;</span></a></code></pre></div>
+<p>In the code above, the &lt;article&gt; element containing a fact about cricket was placed inside of the &lt;section&gt; element. It is important to note that a &lt;section&gt; element could also be placed in an &lt;article&gt; element depending on the context.</p>
+</div>
+</div>
+<div id="the-aside-element" class="section level1">
+<h1>The Aside Element</h1>
+<p>The &lt;aside&gt; element is used to mark additional information that can enhance another element but isn’t required in order to understand the main content. This element can be used alongside other elements such as &lt;article&gt; or &lt;section&gt;. Some common uses of the &lt;aside&gt; element are for:</p>
+<ul>
+<li>Bibliographies</li>
+<li>Endnotes</li>
+<li>Comments</li>
+<li><a href="https://en.wikipedia.org/wiki/Pull_quote">Pull quotes</a></li>
+<li>Editorial sidebars -Additional information</li>
+</ul>
+<p>Here’s an example of &lt;aside&gt; being used alongside &lt;article&gt;:</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1"><span class="co">#  &lt;article&gt;</span></a>
+<a class="sourceLine" id="cb69-2" data-line-number="2"><span class="co">#    &lt;p&gt;The first World Series was played between Pittsburgh and Boston in 1903 and was a nine-game series.&lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb69-3" data-line-number="3"><span class="co">#  &lt;/article&gt;</span></a>
+<a class="sourceLine" id="cb69-4" data-line-number="4"><span class="co">#  &lt;aside&gt;</span></a>
+<a class="sourceLine" id="cb69-5" data-line-number="5"><span class="co">#    &lt;p&gt;</span></a>
+<a class="sourceLine" id="cb69-6" data-line-number="6"><span class="co">#     Babe Ruth once stated, “Heroes get remembered, but legends never die.” </span></a>
+<a class="sourceLine" id="cb69-7" data-line-number="7"><span class="co">#    &lt;/p&gt;</span></a>
+<a class="sourceLine" id="cb69-8" data-line-number="8"><span class="co">#  &lt;/aside&gt;</span></a></code></pre></div>
+<p>As shown above, the information within the &lt;article&gt; is the important content. Meanwhile the information within the &lt;aside&gt; enhances the information in &lt;article&gt; but is not required in order to understand it.</p>
+</div>
+<div id="figure-and-figcaption" class="section level1">
+<h1>Figure and Figcaption</h1>
+<p>With &lt;aside&gt;, we learned that we can put additional information next to a main piece of content, but what if we wanted to add an image or illustration? That is where &lt;figure&gt; and &lt;figcaption&gt; come in. &lt;figure&gt; is an element used to encapsulate media such as an image, illustration, diagram, code snippet, etc, which is referenced in the main flow of the document.</p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="co">#  &lt;figure&gt;</span></a>
+<a class="sourceLine" id="cb70-2" data-line-number="2"><span class="co">#    &lt;img src=&quot;image.jpg&quot;/&gt;</span></a>
+<a class="sourceLine" id="cb70-3" data-line-number="3"><span class="co">#    &lt;figcaption&gt;This picture shows ...&lt;/figcaption&gt;</span></a>
+<a class="sourceLine" id="cb70-4" data-line-number="4"><span class="co">#  &lt;/figure&gt;</span></a></code></pre></div>
+<p>In this code, we created a &lt;figure&gt; element so that we can encapsulate our &lt;img&gt; tag. In &lt;figure&gt; we used the &lt;img&gt; tag to insert an image onto the webpage. We used the <strong>src</strong> attribute within the &lt;img&gt; tag so that we can link the source of the image.</p>
+<p>It’s possible to add a caption to the image by using &lt;figcaption&gt;. &lt;figcaption&gt; is an element used to describe the media in the &lt;figure&gt; tag. Usually, &lt;figcaption&gt; will go inside &lt;figure&gt;. This is different than using a &lt;p&gt; element to describe the content; if we decide to change the location of &lt;figure&gt;, the paragraph tag may get displaced from the figure while a &lt;figcaption&gt; will move with the figure. This is useful for grouping an image with a caption.</p>
+<p>In the example above, we added a &lt;figcaption&gt; into the &lt;figure&gt; element to describe the image from the previous example. This helps group the &lt;figure&gt; content with the &lt;figcaption&gt; content.</p>
+<p>While the content in &lt;figure&gt; is related to the main flow of the document, its position is independent. This means that you can remove it or move it somewhere else without affecting the flow of the document.</p>
+<div id="audio-and-attributes" class="section level2">
+<h2>Audio and Attributes</h2>
+<p>Now that we learned about text-based content, let us dig into &lt;audio&gt;. The &lt;audio&gt; element is used to embed audio content into a document. Like &lt;video&gt;, &lt;audio&gt; uses src to link the audio source.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="co">#  &lt;audio&gt;</span></a>
+<a class="sourceLine" id="cb71-2" data-line-number="2"><span class="co">#    &lt;source src=&quot;audiofile.mp3&quot; type=&quot;audio/mp3&quot;&gt;</span></a>
+<a class="sourceLine" id="cb71-3" data-line-number="3"><span class="co">#  &lt;/audio&gt;</span></a></code></pre></div>
+<p>In this example, we created an &lt;audio&gt; element. Then we created a &lt;source&gt; element to encapsulate our audio link. In this case, audiofile.mp3 is our audio file. Then we specified the type by using type and named what kind of audio it is. Although not always necessary, it’s recommended that we state the type of audio as it helps the browser identify it more easily and determine if that type of audio file is supported by the browser.</p>
+<p>We linked our audio file into the browser but now we need to give it controls. This is where attributes come in. Attributes provide additional information about an element. Attributes allow us to do many different things to our audio file. There are many attributes for &lt;audio&gt; but today we’re going to be focusing on <strong>controls</strong> and <strong>src</strong>.</p>
+<ul>
+<li>controls: automatically displays the audio controls into the browser such as play and mute.</li>
+<li>src: specifies the URL of the audio file.</li>
+</ul>
+<p>As you might have noticed, we already used the src attribute. Most attributes go in the opening tag of &lt;audio&gt;. For example, here’s how we could add both autoplay functionality and audio controls:</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="co"># &lt;audio autoplay controls&gt;</span></a></code></pre></div>
+<p>You can find other attributes here: <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/audio#Attributes">Useful attributes</a></p>
+</div>
+<div id="video-and-embed" class="section level2">
+<h2>Video and Embed</h2>
+<p>As demonstrated in the previous exercise, media content can be a useful addition to a website. By using a &lt;video&gt; element, we can add videos to our website. The <strong>&lt;video&gt;</strong> element makes it clear that a developer is attempting to display a video to the user.</p>
+<p>Some attributes that can alter a video playback include:</p>
+<ul>
+<li>controls: When added in, a play/pause button will be added onto the video along with volume control and a fullscreen option.</li>
+<li>autoplay: The attribute which results in a video automatically playing as soon as the page is loaded.</li>
+<li>loop: This attribute results in the video continuously playing on repeat.</li>
+</ul>
+<p>Below is an example of &lt;video&gt; being used with the controls attribute:</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1"><span class="co">#  &lt;video src=&quot;coding.mp4&quot; controls&gt;Video not supported&lt;/video&gt;</span></a></code></pre></div>
+<p>In the code above, a video file named coding.mp4 is being played. The “Video not supported” will only show up if the browser is unable to display the video.</p>
+<p>Another tag that can be used to incorporate media content into a page is the <strong>&lt;embed&gt;</strong> tag, which can embed any media content including videos, audio files, and gifs from an external source. This means that websites that have an embed button have some form of media content that can be added to other websites. The &lt;embed&gt; tag is a self-closing tag, unlike the &lt;video&gt; element.</p>
+<p>Below we’ll take a look at &lt;embed&gt;:</p>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="co">#  &lt;embed src=&quot;download.gif&quot;/&gt;</span></a></code></pre></div>
+<p>In the example above, &lt;embed&gt; is being used to add in a gif from a local file known as download.gif. Embed can be used to add local files as well as media content straight from some other websites.</p>
+</div>
+<div id="review-of-semantic-html." class="section level2">
+<h2>Review of semantic HTML.</h2>
+<p>Now that you know the benefits of Semantic HTML and how to use it, you can incorporate semantic elements into your website to make it more accessible and to make the code easier to read.</p>
+<ul>
+<li>Semantic HTML introduces meaning to a page through specific elements that provide context as to what is in between the tags.</li>
+<li>Semantic HTML is a modern standard and makes a website accessible for people who use screen readers to translate the webpage and improves your website’s SEO.</li>
+<li>&lt;header&gt;, &lt;nav&gt; , &lt;main&gt; and &lt;footer&gt; create the basic structure of the webpage.</li>
+<li>&lt;section&gt; defines elements in a document, such as chapters, headings, or any other area of the document with the same theme.</li>
+<li>&lt;article&gt; holds content that makes sense on its own such as articles, blogs, comments, etc.</li>
+<li>&lt;aside&gt; contains information that is related to the main content, but not required in order to understand the dominant information.</li>
+<li>&lt;figure&gt; encapsulates all types of media.</li>
+<li>&lt;figcaption&gt; is used to describe the media in &lt;figure&gt;.</li>
+<li>&lt;video&gt;, &lt;embed&gt;, and &lt;audio&gt; elements are used for media files.</li>
+</ul>
+</div>
+</div>
+<div id="thank-you." class="section level1">
+<h1>Thank you.</h1>
+<p>If you have made it so far (or mayble you just skipped until this section to see what’s about), I hope you have now a better understanding of the basic structure of HTML. The aim of this small course is to give you the tools needed to understand more complex HTML code and be able to modify templates on your own. We have not covered styling with CSS but that requires a more technical approach. Still, you now are able to modify complex and stylished templates with a CSS file embeded without problem.</p>
+<p>There are many more things to learn about this language that may help you in your activities as an student, economist, quant or any other science. Share this with others and all your feedback is welcome. <strong>Thank you. Sincerely Diego López Tamayo</strong></p>
 </div>
 <div class="footnotes">
 <hr />
