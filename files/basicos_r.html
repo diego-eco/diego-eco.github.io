@@ -4672,14 +4672,14 @@ difference = x - \mu
 <a class="sourceLine" id="cb174-4" data-line-number="4"><span class="co"># calculate population mean here:</span></a>
 <a class="sourceLine" id="cb174-5" data-line-number="5">population_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(population)</a>
 <a class="sourceLine" id="cb174-6" data-line-number="6"><span class="kw">cat</span>(<span class="st">&quot;The population mean is:&quot;</span>, population_mean)</a></code></pre></div>
-<pre><code>## The population mean is: 64.73625</code></pre>
+<pre><code>## The population mean is: 65.00003</code></pre>
 <p>Let’s look at how the means of different samples can vary within the same population.</p>
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="co"># generate sample 1</span></a>
 <a class="sourceLine" id="cb176-2" data-line-number="2">sample_<span class="dv">1</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
 <a class="sourceLine" id="cb176-3" data-line-number="3"><span class="co"># calculate sample 1 mean</span></a>
 <a class="sourceLine" id="cb176-4" data-line-number="4">sample_<span class="dv">1</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb176-5" data-line-number="5">sample_<span class="dv">1</span>_mean</a></code></pre></div>
-<pre><code>## [1] 65.05009</code></pre>
+<pre><code>## [1] 64.53313</code></pre>
 <p>Look at the population mean and the sample means. Are they all the same? All different? Why?</p>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="co"># generate samples 2,3,4 and 5</span></a>
 <a class="sourceLine" id="cb178-2" data-line-number="2">sample_<span class="dv">2</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
@@ -4688,16 +4688,16 @@ difference = x - \mu
 <a class="sourceLine" id="cb178-5" data-line-number="5">sample_<span class="dv">5</span> &lt;-<span class="st"> </span><span class="kw">sample</span>(population, <span class="dt">size=</span><span class="dv">30</span>)</a>
 <a class="sourceLine" id="cb178-6" data-line-number="6">sample_<span class="dv">2</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb178-7" data-line-number="7">sample_<span class="dv">2</span>_mean</a></code></pre></div>
-<pre><code>## [1] 64.19319</code></pre>
+<pre><code>## [1] 64.89986</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1">sample_<span class="dv">3</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb180-2" data-line-number="2">sample_<span class="dv">3</span>_mean</a></code></pre></div>
-<pre><code>## [1] 63.65882</code></pre>
+<pre><code>## [1] 65.36941</code></pre>
 <div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1">sample_<span class="dv">4</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb182-2" data-line-number="2">sample_<span class="dv">4</span>_mean</a></code></pre></div>
-<pre><code>## [1] 64.75793</code></pre>
+<pre><code>## [1] 64.6777</code></pre>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1">sample_<span class="dv">5</span>_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(sample_<span class="dv">5</span>)</a>
 <a class="sourceLine" id="cb184-2" data-line-number="2">sample_<span class="dv">5</span>_mean</a></code></pre></div>
-<pre><code>## [1] 65.10766</code></pre>
+<pre><code>## [1] 65.53966</code></pre>
 </div>
 <div id="sample-mean-and-population-mean---ii" class="section level2">
 <h2>Sample Mean and Population Mean - II</h2>
@@ -4936,6 +4936,25 @@ difference = x - \mu
 <li>Two Sample T-Tests indicate whether there is a significant difference between two datasets</li>
 <li>ANOVA (Analysis of Variance) allows you to detect if there is a significant difference between one of multiple datasets</li>
 </ul>
+</div>
+</div>
+<div id="importing-data-from-github" class="section level1">
+<h1>Importing Data from Github</h1>
+<p>In general, we need to write:</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" data-line-number="1"><span class="co"># df &lt;- read.file_type(https://raw.github.com/user/repository/branch/file.type)</span></a></code></pre></div>
+<div id="importing-csv" class="section level2">
+<h2>Importing csv</h2>
+<ul>
+<li>Go to the github repository link where you have the CSV file</li>
+<li>Click on the raw option present on the top right of the data</li>
+<li>This will open a new window in the browser</li>
+<li>The link should be like <a href="https://raw.githubusercontent.com/" class="uri">https://raw.githubusercontent.com/</a>..</li>
+<li>You have to use this link to download csv file from the Github</li>
+</ul>
+<p>You will need the <em>readr</em> library, which is inside the <em>tidyverse</em> package. If you don’t have it, install it.</p>
+<p>In general <strong>mydata&lt;-read_csv(url(urlfile))</strong></p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="kw">library</span>(tidyverse)</a>
+<a class="sourceLine" id="cb209-2" data-line-number="2">jobs_time_series &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/df_jobs.csv&quot;</span>)</a></code></pre></div>
 </div>
 </div>
 <div id="thank-you." class="section level1">
