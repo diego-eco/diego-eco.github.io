@@ -3310,8 +3310,8 @@ div.tocify {
 <a class="sourceLine" id="cb107-6" data-line-number="6"></a>
 <a class="sourceLine" id="cb107-7" data-line-number="7">dads_age<span class="op">=</span>calculate_age (<span class="dv">2020</span>,<span class="dv">1965</span>)</a>
 <a class="sourceLine" id="cb107-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb107-9" data-line-number="9"><span class="bu">print</span>(<span class="st">&quot;I am&quot;</span> <span class="op">+</span> <span class="st">&quot; &quot;</span> <span class="op">+</span> <span class="bu">str</span>(my_age) <span class="op">+</span> <span class="st">&quot; &quot;</span> <span class="op">+</span> <span class="st">&quot;years old and my dad is&quot;</span> <span class="op">+</span> <span class="st">&quot; &quot;</span> <span class="op">+</span> <span class="bu">str</span>(dads_age) <span class="op">+</span> <span class="st">&quot; &quot;</span> <span class="op">+</span> <span class="st">&quot;years old&quot;</span>)</a></code></pre></div>
-<pre><code>## I am 25 years old and my dad is 55 years old</code></pre>
+<a class="sourceLine" id="cb107-9" data-line-number="9"><span class="bu">print</span>(<span class="st">&quot;I am &quot;</span> <span class="op">+</span> <span class="bu">str</span>(my_age) <span class="op">+</span> <span class="st">&quot; years old and my dad is &quot;</span> <span class="op">+</span> <span class="bu">str</span>(dads_age) <span class="op">+</span> <span class="st">&quot; years old.&quot;</span>)</a></code></pre></div>
+<pre><code>## I am 25 years old and my dad is 55 years old.</code></pre>
 </div>
 <div id="multiple-return-values" class="section level2">
 <h2>Multiple Return Values</h2>
@@ -3394,17 +3394,1006 @@ div.tocify {
 </div>
 <div id="boolean-expressions" class="section level2">
 <h2>Boolean Expressions</h2>
+<p>In order to build control flow into our program, we want to be able to check if something is true or not. A boolean expression is a statement that can either be True or False.</p>
+<p>Let’s go back to the ‘waking up’ example. The first question, “Is today a weekday?” can be written as a boolean expression:</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># Today is a weekday.</span></a></code></pre></div>
+<p>This expression can be True if today is Tuesday, or it can be False if today is Saturday. There are no other options.</p>
+<p>Consider the phrase:</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="co"># Friday is the best day of the week.</span></a></code></pre></div>
+<p>Is this a boolean expression?</p>
+<p>No, this statement is an opinion and is not objectively True or False. Someone else might say that “Wednesday is the best weekday,” and their statement would be no less True or False than the one above.</p>
+<p>How about the phrase:</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="co"># Sunday starts with the letter 'C'.</span></a></code></pre></div>
+<p>This expression can only be True or False, which makes it a boolean expression. Even though the statement itself is false (Sunday starts with the letter ‘C’), it is still a boolean expression.</p>
 </div>
+<div id="relational-operators" class="section level2">
+<h2>Relational Operators</h2>
+<p>Now that we understand what boolean expressions are, let’s learn to create them in Python. We can create a boolean expression by using relational operators. Relational operators compare two items and return either True or False. For this reason, you will sometimes hear them called <em>comparators</em>.</p>
+<p>The two boolean operators we’ll cover first are:</p>
+<ul>
+<li>Equals: ==</li>
+<li>Not equals: !=</li>
+</ul>
+<p>These operators compare two items and return True or False if they are equal or not.</p>
+<p>We can create boolean expressions by comparing two values using these operators:</p>
+<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="dv">1</span> <span class="op">==</span> <span class="dv">1</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="dv">2</span> <span class="op">!=</span> <span class="dv">4</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="dv">3</span> <span class="op">==</span> <span class="dv">5</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb131-1" data-line-number="1"><span class="co">'7'</span> <span class="op">==</span> <span class="dv">7</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<p>Why is the last statement false? The ’’ marks in ‘7’ make it a string, which is different from the integer value 7, so they are not equal. When using relational operators it is important to always be mindful of type.</p>
+<p>Note that some Python consoles use <strong>&gt;&gt;&gt;</strong> as the prompt when you run Python in your terminal, which you can then use to evaluate simple expressions, such as these.</p>
+</div>
+<div id="boolean-variables" class="section level2">
+<h2>Boolean Variables</h2>
+<p>Before we go any further, let’s talk a little bit about <strong>True</strong> and <strong>False</strong>. You may notice that when you type them in the code editor (with uppercase T and F), they appear in a different color than variables or strings. This is because True and False are their own special type: bool.</p>
+<p>True and False are the only bool types, and any variable that is assigned one of these values is called a boolean variable. Boolean variables can be created in several ways. The easiest way is to simply assign True or False to a variable:</p>
+<div class="sourceCode" id="cb133"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb133-1" data-line-number="1">set_to_true <span class="op">=</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb133-2" data-line-number="2">set_to_false <span class="op">=</span> <span class="va">False</span></a></code></pre></div>
+<p>You can also set a variable equal to a boolean expression.</p>
+<div class="sourceCode" id="cb134"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb134-1" data-line-number="1">bool_one <span class="op">=</span> <span class="dv">5</span> <span class="op">!=</span> <span class="dv">7</span> </a>
+<a class="sourceLine" id="cb134-2" data-line-number="2">bool_two <span class="op">=</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">!=</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb134-3" data-line-number="3">bool_three <span class="op">=</span> <span class="dv">3</span> <span class="op">*</span> <span class="dv">3</span> <span class="op">==</span> <span class="dv">9</span></a></code></pre></div>
+<p>These variables now contain boolean values, so when you reference them they will only return the True or False values of the expression they were assigned.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb135-1" data-line-number="1">bool_one </a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb137-1" data-line-number="1">bool_two </a></code></pre></div>
+<pre><code>## False</code></pre>
+<div class="sourceCode" id="cb139"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb139-1" data-line-number="1">bool_three </a></code></pre></div>
+<pre><code>## True</code></pre>
+<p>Example:</p>
+<p>Setting my_baby_bool equal to “true” and checking it’s type with type() function:</p>
+<div class="sourceCode" id="cb141"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb141-1" data-line-number="1">my_baby_bool<span class="op">=</span> <span class="st">&quot;true&quot;</span></a>
+<a class="sourceLine" id="cb141-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">type</span>(my_baby_bool))</a></code></pre></div>
+<pre><code>## &lt;class 'str'&gt;</code></pre>
+<p>It’s not a boolean variable! Boolean values True and False always need to be capitalized and do not have quotation marks.</p>
+<p>Check this out:</p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb143-1" data-line-number="1">my_baby_bool_two <span class="op">=</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">type</span>(my_baby_bool_two))</a></code></pre></div>
+<pre><code>## &lt;class 'bool'&gt;</code></pre>
+</div>
+<div id="if-statements" class="section level2">
+<h2>If Statements</h2>
+<p>Understanding boolean variables and expressions is essential because they are the building blocks of <strong>conditional statements</strong>.</p>
+<p>Recall the waking-up example from the beginning of this lesson. The decision-making process of “Is it raining? If so, bring an umbrella” is a conditional statement. Here it is phrased in a different way: <strong>If it is raining then bring an umbrella.</strong></p>
+<p>Can you pick out the boolean expression here? If <strong>“it is raining” == True</strong> then the rest of the conditional statement will be executed and you will bring an umbrella.</p>
+<p>This is the form of a conditional statement: <strong>If [it is raining] then [bring an umbrella]</strong> In Python, it looks very similar:</p>
+<div class="sourceCode" id="cb145"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="co"># if is_raining:</span></a>
+<a class="sourceLine" id="cb145-2" data-line-number="2"><span class="co">#   bring_umbrella()</span></a></code></pre></div>
+<p>You’ll notice that instead of “then” we have a <strong>colon, :</strong>. That tells the computer that what’s coming next is what should be executed if the condition is met. Let’s take a look at another conditional statement</p>
+<div class="sourceCode" id="cb146"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="cf">if</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span> <span class="op">-</span> <span class="dv">2</span>: </a>
+<a class="sourceLine" id="cb146-2" data-line-number="2">  <span class="bu">print</span>(<span class="st">&quot;apple&quot;</span>)</a></code></pre></div>
+<pre><code>## apple</code></pre>
+<p>Will this code print apple to the terminal? Yes, because the condition of the if statement, 2 == 4 - 2 is True.</p>
+<p>Another example: my coworker Dave kept using my computer without permission and he is a real doofus. It takes user_name as an input and if the user is Dave it tells him to stay off my computer. Dave got around my security and has been logging onto my computer using our coworker Angela’s user name, <em>Angela.</em></p>
+<div class="sourceCode" id="cb148"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="kw">def</span> dave_check(user_name):</a>
+<a class="sourceLine" id="cb148-2" data-line-number="2">  <span class="cf">if</span> user_name <span class="op">==</span> <span class="st">&quot;Diego&quot;</span>:</a>
+<a class="sourceLine" id="cb148-3" data-line-number="3">    <span class="cf">return</span> <span class="st">&quot;Get off my computer Dave!&quot;</span></a>
+<a class="sourceLine" id="cb148-4" data-line-number="4">  <span class="cf">if</span> user_name <span class="op">==</span> <span class="st">&quot;Angela&quot;</span>:</a>
+<a class="sourceLine" id="cb148-5" data-line-number="5">    <span class="cf">return</span> <span class="st">&quot;I know it is you Diego! Go away!&quot;</span></a>
+<a class="sourceLine" id="cb148-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb148-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb148-8" data-line-number="8"><span class="co"># Enter a user name here, make sure to make it a string</span></a>
+<a class="sourceLine" id="cb148-9" data-line-number="9">user_name <span class="op">=</span> <span class="st">&quot;Angela&quot;</span></a>
+<a class="sourceLine" id="cb148-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb148-11" data-line-number="11"><span class="bu">print</span>(dave_check(user_name))</a></code></pre></div>
+<pre><code>## I know it is you Diego! Go away!</code></pre>
+</div>
+<div id="relational-operators-ii" class="section level2">
+<h2>Relational Operators II</h2>
+<p>Now that we’ve added conditional statements to our toolkit for building control flow, let’s explore more ways to create boolean expressions. So far we know two relational operators, equals and not equals, but there are a ton (well, four) more:</p>
+<ul>
+<li>Greater than: &gt;</li>
+<li>Less than: &lt;</li>
+<li>Greater than or equal to: &gt;=</li>
+<li>Less than or equal to: &lt;=</li>
+</ul>
+<p>Let’s say we’re running a movie streaming platform and we want to write a function that checks if our users are over 13 when showing them a PG-13 movie. We could write something like:</p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">def</span> age_check(age):</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2">  <span class="cf">if</span> age <span class="op">&gt;=</span> <span class="dv">13</span>:</a>
+<a class="sourceLine" id="cb150-3" data-line-number="3">    <span class="cf">return</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb150-4" data-line-number="4">age <span class="op">=</span> <span class="dv">24</span></a>
+<a class="sourceLine" id="cb150-5" data-line-number="5"><span class="bu">print</span>(age_check(age))</a></code></pre></div>
+<pre><code>## True</code></pre>
+<p>Another example: A function called greater_than that takes two integer inputs, x and y and returns the value that is greater. If x and y are equal, return the string “These numbers are the same”</p>
+<div class="sourceCode" id="cb152"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb152-1" data-line-number="1"><span class="kw">def</span> greater_than(x,y):</a>
+<a class="sourceLine" id="cb152-2" data-line-number="2">  <span class="cf">if</span> x<span class="op">&gt;</span>y:</a>
+<a class="sourceLine" id="cb152-3" data-line-number="3">     <span class="cf">return</span> x</a>
+<a class="sourceLine" id="cb152-4" data-line-number="4">  <span class="cf">if</span> x<span class="op">&lt;</span>y:</a>
+<a class="sourceLine" id="cb152-5" data-line-number="5">     <span class="cf">return</span> y</a>
+<a class="sourceLine" id="cb152-6" data-line-number="6">  <span class="cf">if</span> x<span class="op">==</span>y:</a>
+<a class="sourceLine" id="cb152-7" data-line-number="7">     <span class="cf">return</span> <span class="st">&quot;These numbers are the same&quot;</span></a>
+<a class="sourceLine" id="cb152-8" data-line-number="8"><span class="bu">print</span>(greater_than(<span class="dv">4</span>,<span class="dv">4</span>))</a></code></pre></div>
+<pre><code>## These numbers are the same</code></pre>
+</div>
+<div id="boolean-operators-and" class="section level2">
+<h2>Boolean Operators: and</h2>
+<p>Often, the conditions you want to check in your conditional statement will require more than one boolean expression to cover. In these cases, you can build larger boolean expressions using boolean operators. These operators (also known as logical operators) combine smaller boolean expressions into larger boolean expressions.</p>
+<p>There are three boolean operators that we will cover:</p>
+<ul>
+<li>and</li>
+<li>or</li>
+<li>not</li>
+</ul>
+<p>Let’s start with <strong>and</strong>. and combines two boolean expressions and evaluates as True if both its components are True, but False otherwise.</p>
+<p>Consider the example: <em>Oranges are a fruit and carrots are a vegetable.</em></p>
+<p>This boolean expression is comprised of two smaller expressions, oranges are a fruit and carrots are a vegetable, both of which are True and connected by the boolean operator and, so the entire expression is True.</p>
+<p>Let’s look at an example of some AND statements in Python:</p>
+<div class="sourceCode" id="cb154"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb154-1" data-line-number="1">(<span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">2</span>) <span class="kw">and</span> (<span class="dv">2</span> <span class="op">+</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb154-2" data-line-number="2"><span class="co">#True</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb156"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb156-1" data-line-number="1">(<span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">2</span>) <span class="kw">and</span> (<span class="dv">2</span> <span class="op">&lt;</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb156-2" data-line-number="2"><span class="co">#False</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<div class="sourceCode" id="cb158"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb158-1" data-line-number="1">(<span class="dv">1</span> <span class="op">&gt;</span> <span class="dv">9</span>) <span class="kw">and</span> (<span class="dv">5</span> <span class="op">!=</span> <span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb158-2" data-line-number="2"><span class="co">#False</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<div class="sourceCode" id="cb160"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb160-1" data-line-number="1">(<span class="dv">0</span> <span class="op">==</span> <span class="dv">10</span>) <span class="kw">and</span> (<span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">1</span>) </a>
+<a class="sourceLine" id="cb160-2" data-line-number="2"><span class="co">#False</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<p>Notice that in the second and third examples, even though part of the expression is True, the entire expression as a whole is False because the other statement is False. The fourth statement is also False because both components are False.</p>
+<p>Example: In a College 120 credits aren’t the only graduation requirement, you also need to have a GPA of 2.0 or higher.</p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="kw">def</span> graduation_reqs(gpa,credits):</a>
+<a class="sourceLine" id="cb162-2" data-line-number="2">  <span class="cf">if</span> credits <span class="op">&gt;=</span> <span class="dv">120</span> <span class="kw">and</span> gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>:</a>
+<a class="sourceLine" id="cb162-3" data-line-number="3">    <span class="cf">return</span> <span class="st">&quot;You meet the requirements to graduate!&quot;</span></a>
+<a class="sourceLine" id="cb162-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb162-5" data-line-number="5"><span class="bu">print</span>(graduation_reqs(<span class="dv">2</span>,<span class="dv">120</span>))</a></code></pre></div>
+<pre><code>## You meet the requirements to graduate!</code></pre>
+</div>
+<div id="boolean-operators-or" class="section level2">
+<h2>Boolean Operators: or</h2>
+<p>The boolean operator or combines two expressions into a larger expression that is True if either component is True.</p>
+<p>Consider the statement <em>“Oranges are a fruit or apples are a vegetable.”</em></p>
+<p>This statement is composed of two expressions: oranges are a fruit which is True and apples are a vegetable which is False. Because the two expressions are connected by the or operator, the entire statement is True. Only one component needs to be True for an or statement to be True.</p>
+<p>In English, or implies that if one component is True, then the other component must be False. This is not true in Python. If an or statement has two True components, it is also True.</p>
+<p>Let’s take a look at a couple example in Python:</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb164-1" data-line-number="1"><span class="va">True</span> <span class="kw">or</span> (<span class="dv">3</span> <span class="op">+</span> <span class="dv">4</span> <span class="op">==</span> <span class="dv">7</span>)</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2"><span class="co">#True</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb166-1" data-line-number="1">(<span class="dv">1</span> <span class="op">-</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">0</span>) <span class="kw">or</span> <span class="va">False</span></a>
+<a class="sourceLine" id="cb166-2" data-line-number="2"><span class="co">#True</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb168-1" data-line-number="1">(<span class="dv">2</span> <span class="op">&lt;</span> <span class="dv">0</span>) <span class="kw">or</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb168-2" data-line-number="2"><span class="co">#True</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<div class="sourceCode" id="cb170"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb170-1" data-line-number="1">(<span class="dv">3</span> <span class="op">==</span> <span class="dv">8</span>) <span class="kw">or</span> (<span class="dv">3</span> <span class="op">&gt;</span> <span class="dv">4</span>) </a>
+<a class="sourceLine" id="cb170-2" data-line-number="2"><span class="co">#False</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<p>Notice that each or statement that has at least one True component is True, but the final statement has two False components, so it is False.</p>
+</div>
+<div id="boolean-operators-not" class="section level2">
+<h2>Boolean Operators: not</h2>
+<p>The final boolean operator we will cover is not. This operator is straightforward: when applied to any boolean expression it reverses the boolean value. So if we have a True statement and apply a not operator we get a False statement.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb172-1" data-line-number="1"><span class="co"># not True == False</span></a>
+<a class="sourceLine" id="cb172-2" data-line-number="2"><span class="co"># not False == True</span></a></code></pre></div>
+<p>Consider the following statement: <em>“Oranges are not a fruit”</em>. Here, we took the True statement oranges are a fruit and added a not operator to make the False statement oranges are not a fruit.</p>
+<p>This example in English is slightly different from the way it would appear in Python because in Python we add the not operator to the very beginning of the statement. Let’s take a look at some of those:</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">not</span> <span class="dv">1</span> <span class="op">+</span> <span class="dv">1</span> <span class="op">==</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb173-2" data-line-number="2"><span class="co"># False</span></a></code></pre></div>
+<pre><code>## False</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">not</span> <span class="dv">7</span> <span class="op">&lt;</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb175-2" data-line-number="2"><span class="co"># True</span></a></code></pre></div>
+<pre><code>## True</code></pre>
+<p>Example:</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw">def</span> graduation_reqs(gpa, credits):</a>
+<a class="sourceLine" id="cb177-2" data-line-number="2">  <span class="cf">if</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb177-3" data-line-number="3">    <span class="cf">return</span> <span class="st">&quot;You meet the requirements to graduate!&quot;</span></a>
+<a class="sourceLine" id="cb177-4" data-line-number="4">  <span class="cf">if</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> <span class="kw">not</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb177-5" data-line-number="5">    <span class="cf">return</span> <span class="st">&quot;You do not have enough credits to graduate.&quot;</span></a>
+<a class="sourceLine" id="cb177-6" data-line-number="6">  <span class="cf">if</span> <span class="kw">not</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb177-7" data-line-number="7">    <span class="cf">return</span> <span class="st">&quot;Your GPA is not high enough to graduate.&quot;</span></a>
+<a class="sourceLine" id="cb177-8" data-line-number="8">  <span class="cf">if</span> <span class="kw">not</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> <span class="kw">not</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb177-9" data-line-number="9">    <span class="cf">return</span>  <span class="st">&quot;You do not meet either requirement to graduate!&quot;</span></a>
+<a class="sourceLine" id="cb177-10" data-line-number="10">    </a>
+<a class="sourceLine" id="cb177-11" data-line-number="11"><span class="bu">print</span>(graduation_reqs(<span class="dv">3</span>, <span class="dv">100</span>))</a></code></pre></div>
+<pre><code>## You do not have enough credits to graduate.</code></pre>
+</div>
+<div id="else-statements" class="section level2">
+<h2>Else Statements</h2>
+<p>As you can tell from your work with Calvin Coolidge’s Cool College, once you start including lots of if statements in a function the code becomes a little cluttered and clunky. Luckily, there are other tools we can use to build control flow. <strong>else</strong> statements allow us to elegantly describe what we want our code to do when certain conditions are not met.</p>
+<p>else statements always appear in conjunction with if statements. Consider our waking-up example to see how this works:</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="co">#  if weekday:</span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2"><span class="co">#    wake_up(&quot;6:30&quot;)</span></a>
+<a class="sourceLine" id="cb179-3" data-line-number="3"><span class="co">#  else:</span></a>
+<a class="sourceLine" id="cb179-4" data-line-number="4"><span class="co">#    sleep_in()</span></a></code></pre></div>
+<p>In this way, we can build if statements that execute different code if conditions are or are not met. This prevents us from needing to write if statements for each possible condition, we can instead write a blanket else statement for all the times the condition is not met.</p>
+<p>Let’s return to our age_check function for our movie streaming platform. Previously, all it did was check if the user’s age was over 13 and if so return True. We can use an else statement to return a message in the event the user is too young to watch the movie.</p>
+<div class="sourceCode" id="cb180"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb180-1" data-line-number="1"><span class="kw">def</span> age_check(age):</a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">  <span class="cf">if</span> age <span class="op">&gt;=</span> <span class="dv">13</span>:</a>
+<a class="sourceLine" id="cb180-3" data-line-number="3">    <span class="cf">return</span> <span class="va">True</span></a>
+<a class="sourceLine" id="cb180-4" data-line-number="4">  <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb180-5" data-line-number="5">    <span class="cf">return</span> <span class="st">&quot;Sorry, you must be 13 or older to watch this movie.&quot;</span></a>
+<a class="sourceLine" id="cb180-6" data-line-number="6">    </a>
+<a class="sourceLine" id="cb180-7" data-line-number="7"><span class="bu">print</span>(age_check(<span class="dv">12</span>))</a></code></pre></div>
+<pre><code>## Sorry, you must be 13 or older to watch this movie.</code></pre>
+<p>Back to the graduation example we could use else for the last scenario:</p>
+<div class="sourceCode" id="cb182"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="kw">def</span> graduation_reqs(gpa, credits):</a>
+<a class="sourceLine" id="cb182-2" data-line-number="2">  <span class="cf">if</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb182-3" data-line-number="3">    <span class="cf">return</span> <span class="st">&quot;You meet the requirements to graduate!&quot;</span></a>
+<a class="sourceLine" id="cb182-4" data-line-number="4">  <span class="cf">if</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> <span class="kw">not</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb182-5" data-line-number="5">    <span class="cf">return</span> <span class="st">&quot;You do not have enough credits to graduate.&quot;</span></a>
+<a class="sourceLine" id="cb182-6" data-line-number="6">  <span class="cf">if</span> <span class="kw">not</span> (gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>) <span class="kw">and</span> (credits <span class="op">&gt;=</span> <span class="dv">120</span>):</a>
+<a class="sourceLine" id="cb182-7" data-line-number="7">    <span class="cf">return</span> <span class="st">&quot;Your GPA is not high enough to graduate.&quot;</span></a>
+<a class="sourceLine" id="cb182-8" data-line-number="8">  <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb182-9" data-line-number="9">    <span class="cf">return</span> <span class="st">&quot;You do not meet the GPA or the credit requirement for graduation.&quot;</span></a>
+<a class="sourceLine" id="cb182-10" data-line-number="10">    </a>
+<a class="sourceLine" id="cb182-11" data-line-number="11"><span class="bu">print</span>(graduation_reqs(<span class="dv">1</span>, <span class="dv">100</span>))</a></code></pre></div>
+<pre><code>## You do not meet the GPA or the credit requirement for graduation.</code></pre>
+</div>
+<div id="else-if-statements" class="section level2">
+<h2>Else If Statements</h2>
+<p>We have if statements, we have else statements, we can also have <strong>elif</strong> statements. It’s exactly what it sounds like, “else if”. An elif statement checks another condition after the previous if statements conditions aren’t met. We can use elif statements to control the order we want our program to check each of our conditional statements. First, the if statement is checked, then each elif statement is checked from top to bottom, then finally the else code is executed if none of the previous conditions have been met.</p>
+<p>Let’s take a look at this in practice. The following function will display a “thank you” message after someone donates to a charity: It takes the donation amount and prints a message based on how much was donated.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">def</span> thank_you(donation):</a>
+<a class="sourceLine" id="cb184-2" data-line-number="2">  <span class="cf">if</span> donation <span class="op">&gt;=</span> <span class="dv">1000</span>:</a>
+<a class="sourceLine" id="cb184-3" data-line-number="3">    <span class="bu">print</span>(<span class="st">&quot;Thank you for your donation! You have achieved platinum donation status!&quot;</span>)</a>
+<a class="sourceLine" id="cb184-4" data-line-number="4">  <span class="cf">elif</span> donation <span class="op">&gt;=</span> <span class="dv">500</span>: </a>
+<a class="sourceLine" id="cb184-5" data-line-number="5">    <span class="bu">print</span>(<span class="st">&quot;Thank you for your donation! You have achieved gold donation status!&quot;</span>)</a>
+<a class="sourceLine" id="cb184-6" data-line-number="6">  <span class="cf">elif</span> donation <span class="op">&gt;=</span> <span class="dv">100</span>:</a>
+<a class="sourceLine" id="cb184-7" data-line-number="7">    <span class="bu">print</span>(<span class="st">&quot;Thank you for your donation! You have achieved silver donation status!&quot;</span>)</a>
+<a class="sourceLine" id="cb184-8" data-line-number="8">  <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb184-9" data-line-number="9">    <span class="bu">print</span>(<span class="st">&quot;Thank you for your donation! You have achieved bronze donation status!&quot;</span>)</a>
+<a class="sourceLine" id="cb184-10" data-line-number="10">    </a>
+<a class="sourceLine" id="cb184-11" data-line-number="11">thank_you(<span class="dv">600</span>)</a></code></pre></div>
+<pre><code>## Thank you for your donation! You have achieved gold donation status!</code></pre>
+<p>Take a second to think about this function. What would happen if all of the elif statements were simply if statements? If you donated $1000.00, then the first three messages would all print because each if condition had been met.</p>
+<p>But because we used elif statements, it checks each condition sequentially and only prints one message. If I donate $600.00, the code first checks if that is over $1000.00, which it is not, then it checks if it’s over $500.00, which it is, so it prints that message, then because all of the other statements are elif and else, none of them get checked and no more messages get printed.</p>
+<p>Example:</p>
+<p>Calvin Coolidge’s Cool College has noticed that students prefer to get letter grades over GPA numbers. They want you to write a function called grade_converter that converts an inputted GPA into the appropriate letter grade. Your function should be named grade_converter, take the input gpa, and convert the following GPAs: 4.0 or higher should return “A” , 3.0 or higher should return “B” , 2.0 or higher should return “C” , 1.0 or higher should return “D” , 0.0 or higher should return “F”.</p>
+<div class="sourceCode" id="cb186"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">def</span> grade_converter(gpa):</a>
+<a class="sourceLine" id="cb186-2" data-line-number="2">  grade <span class="op">=</span> <span class="st">&quot;F&quot;</span></a>
+<a class="sourceLine" id="cb186-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb186-4" data-line-number="4">  <span class="cf">if</span> gpa <span class="op">&gt;=</span> <span class="fl">4.0</span>:</a>
+<a class="sourceLine" id="cb186-5" data-line-number="5">    grade <span class="op">=</span> <span class="st">&quot;A&quot;</span></a>
+<a class="sourceLine" id="cb186-6" data-line-number="6">  <span class="cf">elif</span> gpa <span class="op">&gt;=</span> <span class="fl">3.0</span>:</a>
+<a class="sourceLine" id="cb186-7" data-line-number="7">    grade <span class="op">=</span> <span class="st">&quot;B&quot;</span></a>
+<a class="sourceLine" id="cb186-8" data-line-number="8">  <span class="cf">elif</span> gpa <span class="op">&gt;=</span> <span class="fl">2.0</span>:</a>
+<a class="sourceLine" id="cb186-9" data-line-number="9">    grade <span class="op">=</span> <span class="st">&quot;C&quot;</span></a>
+<a class="sourceLine" id="cb186-10" data-line-number="10">  <span class="cf">elif</span> gpa <span class="op">&gt;=</span> <span class="fl">1.0</span>:</a>
+<a class="sourceLine" id="cb186-11" data-line-number="11">    grade <span class="op">=</span> <span class="st">&quot;D&quot;</span></a>
+<a class="sourceLine" id="cb186-12" data-line-number="12">  <span class="cf">return</span> grade</a>
+<a class="sourceLine" id="cb186-13" data-line-number="13">  </a>
+<a class="sourceLine" id="cb186-14" data-line-number="14"><span class="bu">print</span>(grade_converter(<span class="dv">3</span>))</a></code></pre></div>
+<pre><code>## B</code></pre>
+</div>
+<div id="try-and-except-statements" class="section level2">
+<h2>Try and Except Statements</h2>
+<p>Notice that if, elif, and else statements aren’t the only way to build a control flow into your program. You can use <strong>try</strong> and <strong>except</strong> statements to check for possible errors that a user might encounter.</p>
+<p>The general syntax of a try and except statement is</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="co">#  try:</span></a>
+<a class="sourceLine" id="cb188-2" data-line-number="2"><span class="co">#      # some statement</span></a>
+<a class="sourceLine" id="cb188-3" data-line-number="3"><span class="co">#  except ErrorName:</span></a>
+<a class="sourceLine" id="cb188-4" data-line-number="4"><span class="co">#      # some statement</span></a></code></pre></div>
+<p>First, the statement under try will be executed. If at some point an exception is raised during this execution, such as a NameError or a ValueError and that exception matches the keyword in the except statement, then the try statement will terminate and the except statement will execute.</p>
+<p>Let’s take a look at this in an application. I want to write a function that takes two numbers, a and b as an input and then returns a divided by b. But, there is a possibility that b is zero, which will cause an error, so I want to include a try and except flow to catch this error.</p>
+<div class="sourceCode" id="cb189"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="kw">def</span> divides(a,b):</a>
+<a class="sourceLine" id="cb189-2" data-line-number="2">  <span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb189-3" data-line-number="3">    result <span class="op">=</span> a <span class="op">/</span> b</a>
+<a class="sourceLine" id="cb189-4" data-line-number="4">    <span class="bu">print</span> (result)</a>
+<a class="sourceLine" id="cb189-5" data-line-number="5">  <span class="cf">except</span> <span class="pp">ZeroDivisionError</span>:</a>
+<a class="sourceLine" id="cb189-6" data-line-number="6">    <span class="bu">print</span> (<span class="st">&quot;Can't divide by zero!&quot;</span>)</a>
+<a class="sourceLine" id="cb189-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb189-8" data-line-number="8">divides(<span class="dv">3</span>,<span class="dv">4</span>)</a></code></pre></div>
+<pre><code>## 0.75</code></pre>
+<div class="sourceCode" id="cb191"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb191-1" data-line-number="1">divides(<span class="dv">2</span>,<span class="dv">0</span>)</a></code></pre></div>
+<pre><code>## Can't divide by zero!</code></pre>
+<p>Another example: The following function is very simple and serves one purpose: it raises a ValueError. We write a try statement and an except statement around the line of code that executes the function to catch a ValueError and make the error message print You raised a ValueError!</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb193-1" data-line-number="1"><span class="kw">def</span> raises_value_error():</a>
+<a class="sourceLine" id="cb193-2" data-line-number="2">    <span class="cf">raise</span> <span class="pp">ValueError</span></a>
+<a class="sourceLine" id="cb193-3" data-line-number="3"><span class="cf">try</span>:</a>
+<a class="sourceLine" id="cb193-4" data-line-number="4">  raises_value_error()</a>
+<a class="sourceLine" id="cb193-5" data-line-number="5"><span class="cf">except</span> <span class="pp">ValueError</span>:</a>
+<a class="sourceLine" id="cb193-6" data-line-number="6">  <span class="bu">print</span>(<span class="st">&quot;You raised a ValueError!&quot;</span>)</a></code></pre></div>
+<pre><code>## You raised a ValueError!</code></pre>
+</div>
+<div id="review-2" class="section level2">
+<h2>Review</h2>
+<ul>
+<li>Boolean expressions are statements that can be either True or False</li>
+<li>A boolean variable is a variable that is set to either True or False.</li>
+<li>You can create boolean expressions using relational operators:</li>
+<li>Equals: ==</li>
+<li>Not equals: !=</li>
+<li>Greater than: &gt;</li>
+<li>Greater than or equal to: &gt;=</li>
+<li>Less than: &lt;</li>
+<li>Less than or equal to: &lt;=</li>
+<li>if statements can be used to create control flow in your code.</li>
+<li>else statements can be used to execute code when the conditions of an if statement are not met.</li>
+<li>elif statements can be used to build additional checks into your if statements</li>
+<li>try and except statements can be used to build error control into your code.</li>
+</ul>
+<p>Example:</p>
+<p>The admissions office at Calvin Coolidge’s Cool College has heard about your programming prowess and wants to get a piece of it for themselves. They’ve been inundated with applications and need a way to automate the filtering process. They collect three pieces of information for each applicant:</p>
+<ol style="list-style-type: decimal">
+<li>Their high school GPA, on a 0.0 - 4.0 scale.</li>
+<li>Their personal statement, which is given a score on a 1 - 100 scale.</li>
+<li>The number of extracurricular activities they participate in.</li>
+</ol>
+<p>The admissions office has a cutoff point for each category. They want students that have a GPA of 3.0 or higher, a personal statement with a score of 90 or higher, and who participated in 3 or more extracurricular activities. The admissions office also wants to give students who have a high GPA and a strong personal statement a chance even if they don’t participate in enough extracurricular activities. For all other cases, application should be rejected.</p>
+<p>We write a function called applicant_selector which takes three inputs, gpa, ps_score, and ec_count.</p>
+<div class="sourceCode" id="cb195"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb195-1" data-line-number="1"><span class="kw">def</span> applicant_selector(gpa,ps_score,ec_count):</a>
+<a class="sourceLine" id="cb195-2" data-line-number="2">  <span class="cf">if</span> gpa <span class="op">&gt;=</span> <span class="dv">3</span> <span class="kw">and</span> ps_score <span class="op">&gt;=</span> <span class="dv">90</span> <span class="kw">and</span> ec_count <span class="op">&gt;=</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb195-3" data-line-number="3">    <span class="cf">return</span> <span class="st">&quot;This applicant should be accepted.&quot;</span></a>
+<a class="sourceLine" id="cb195-4" data-line-number="4">  <span class="cf">elif</span> gpa <span class="op">&gt;=</span> <span class="dv">3</span> <span class="kw">and</span> ps_score <span class="op">&gt;=</span> <span class="dv">90</span> <span class="kw">and</span> <span class="kw">not</span> ec_count <span class="op">&gt;=</span> <span class="dv">3</span>:</a>
+<a class="sourceLine" id="cb195-5" data-line-number="5">    <span class="cf">return</span> <span class="st">&quot;This applicant should be given an in-person interview.&quot;</span></a>
+<a class="sourceLine" id="cb195-6" data-line-number="6">  <span class="cf">else</span>:</a>
+<a class="sourceLine" id="cb195-7" data-line-number="7">    <span class="cf">return</span> <span class="st">&quot;This applicant should be rejected.&quot;</span></a>
+<a class="sourceLine" id="cb195-8" data-line-number="8">    </a>
+<a class="sourceLine" id="cb195-9" data-line-number="9">applicant_selector(<span class="dv">4</span>,<span class="dv">100</span>,<span class="dv">2</span>)</a></code></pre></div>
+<pre><code>## 'This applicant should be given an in-person interview.'</code></pre>
+</div>
+</div>
+<div id="list" class="section level1">
+<h1>List</h1>
+<div id="what-is-a-list" class="section level2">
+<h2>What is a list?</h2>
+<p>A list is an ordered set of objects in Python.</p>
+<p>Suppose we want to make a list of the heights of students in a class:</p>
+<ul>
+<li>Jenny is 61 inches tall</li>
+<li>Alexus is 70 inches tall</li>
+<li>Sam is 67 inches tall</li>
+<li>Grace is 64 inches tall</li>
+</ul>
+<p>In Python, we can create a variable called heights to store these numbers:</p>
+<div class="sourceCode" id="cb197"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb197-1" data-line-number="1">heights <span class="op">=</span> [<span class="dv">61</span>, <span class="dv">70</span>, <span class="dv">67</span>, <span class="dv">64</span>]</a></code></pre></div>
+<p>Notice that:</p>
+<ul>
+<li>A list begins and ends with square brackets ([ and ]).</li>
+<li>Each item (i.e., 67 or 70) is separated by a comma (,)</li>
+<li>It’s considered good practice to insert a space () after each comma, but your code will run just fine if you forget the space.</li>
+</ul>
+<p>Lists can contain more than just numbers. Let’s revisit our height example. We can make a list of strings that contain the students’ names:</p>
+<div class="sourceCode" id="cb198"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb198-1" data-line-number="1">names <span class="op">=</span> [<span class="st">'Jenny'</span>, <span class="st">'Alexus'</span>, <span class="st">'Sam'</span>, <span class="st">'Grace'</span>]</a></code></pre></div>
+<p>We can also combine multiple data types in one list. For example, this list contains both a string and an integer:</p>
+<div class="sourceCode" id="cb199"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb199-1" data-line-number="1">mixed_list <span class="op">=</span> [<span class="st">'Jenny'</span>, <span class="dv">61</span>]</a></code></pre></div>
+</div>
+<div id="list-of-lists" class="section level2">
+<h2>List of Lists</h2>
+<p>We’ve seen that the items in a list can be numbers or strings. They can also be other lists! Previously, we saw that we could create a list representing both Jenny’s name and height:</p>
+<div class="sourceCode" id="cb200"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb200-1" data-line-number="1">jenny <span class="op">=</span> [<span class="st">'Jenny'</span>, <span class="dv">61</span>]</a></code></pre></div>
+<p>We can put several of these lists into one list, such that each entry in the list represents a student and their height:</p>
+<div class="sourceCode" id="cb201"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb201-1" data-line-number="1">heights <span class="op">=</span> [[<span class="st">'Jenny'</span>, <span class="dv">61</span>], [<span class="st">'Alexus'</span>, <span class="dv">70</span>], [<span class="st">'Sam'</span>, <span class="dv">67</span>], [<span class="st">'Grace'</span>, <span class="dv">64</span>]]</a></code></pre></div>
+</div>
+<div id="zip" class="section level2">
+<h2>Zip</h2>
+<p>Again, let’s return to our class height example. Suppose that we already had a list of names and a list of heights:</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb202-1" data-line-number="1">names <span class="op">=</span> [<span class="st">'Jenny'</span>, <span class="st">'Alexus'</span>, <span class="st">'Sam'</span>, <span class="st">'Grace'</span>]</a>
+<a class="sourceLine" id="cb202-2" data-line-number="2">heights <span class="op">=</span> [<span class="dv">61</span>, <span class="dv">70</span>, <span class="dv">67</span>, <span class="dv">65</span>]</a></code></pre></div>
+<p>If we wanted to create a list of lists that paired each name with a height, we could use the command <strong>zip.</strong> zip takes two (or more) lists as inputs and returns an object that contains a list of pairs. Each pair contains one element from each of the inputs. You won’t be able to see much about this object from just printing it, because it will return the location of this object in memory. Output would look something like this:</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb203-1" data-line-number="1">names_and_heights <span class="op">=</span> <span class="bu">zip</span>(names, heights)</a>
+<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="bu">print</span>(names_and_heights)</a></code></pre></div>
+<pre><code>## &lt;zip object at 0x7ff1c6c171c8&gt;</code></pre>
+<p>To see the nested lists, you can convert the zip object to a list first:</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb205-1" data-line-number="1"><span class="bu">print</span>(<span class="bu">list</span>(names_and_heights))</a></code></pre></div>
+<pre><code>## [('Jenny', 61), ('Alexus', 70), ('Sam', 67), ('Grace', 65)]</code></pre>
+</div>
+<div id="empty-lists" class="section level2">
+<h2>Empty Lists</h2>
+<p>A list doesn’t have to contain anything! You can create an empty list like this:</p>
+<div class="sourceCode" id="cb207"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb207-1" data-line-number="1">empty_list <span class="op">=</span> []</a></code></pre></div>
+<p>Why would we create an empty list?</p>
+<p>Usually, it’s because we’re planning on filling it later based on some other input. We’ll talk about two ways of filling up a list in the next exercise.</p>
+</div>
+<div id="growing-a-list-append" class="section level2">
+<h2>Growing a List: Append</h2>
+<p>We can add a single element to a list using <strong>.append()</strong>. For example, suppose we have an empty list called empty_list:</p>
+<div class="sourceCode" id="cb208"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb208-1" data-line-number="1">empty_list <span class="op">=</span> []</a></code></pre></div>
+<p>We can add the element 1 using the following commands:</p>
+<div class="sourceCode" id="cb209"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb209-1" data-line-number="1">empty_list.append(<span class="dv">1</span>)</a></code></pre></div>
+<p>If we examine empty_list, we see that it now contains 1:</p>
+<div class="sourceCode" id="cb210"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb210-1" data-line-number="1"><span class="bu">print</span>(empty_list)</a></code></pre></div>
+<pre><code>## [1]</code></pre>
+<p>When we use .append() on a list that already has elements, our new element is added to the end of the list:</p>
+<div class="sourceCode" id="cb212"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb212-1" data-line-number="1"><span class="co"># Create a list</span></a>
+<a class="sourceLine" id="cb212-2" data-line-number="2">my_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb212-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb212-4" data-line-number="4"><span class="co"># Append a number</span></a>
+<a class="sourceLine" id="cb212-5" data-line-number="5">my_list.append(<span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb212-6" data-line-number="6"><span class="bu">print</span>(my_list) <span class="co"># check the result</span></a></code></pre></div>
+<pre><code>## [1, 2, 3, 5]</code></pre>
+<p>Note: It’s important to remember that .append() comes after the list. This is different from functions like print, which come before. Also note that .append() takes exactly one argument: a string, a number or another list.</p>
+</div>
+<div id="growing-a-list-plus" class="section level2">
+<h2>Growing a List: Plus (+)</h2>
+<p>When we want to add multiple items to a list, we can use + to combine two lists. Below, we have a list of items sold at a bakery called items_sold:</p>
+<div class="sourceCode" id="cb214"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb214-1" data-line-number="1">items_sold <span class="op">=</span> [<span class="st">'cake'</span>, <span class="st">'cookie'</span>, <span class="st">'bread'</span>]</a></code></pre></div>
+<p>Suppose the bakery wants to start selling ‘biscuit’ and ‘tart’:</p>
+<div class="sourceCode" id="cb215"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb215-1" data-line-number="1">items_sold_new <span class="op">=</span> items_sold <span class="op">+</span> [<span class="st">'biscuit'</span>, <span class="st">'tart'</span>]</a>
+<a class="sourceLine" id="cb215-2" data-line-number="2"><span class="bu">print</span>(items_sold_new)</a></code></pre></div>
+<pre><code>## ['cake', 'cookie', 'bread', 'biscuit', 'tart']</code></pre>
+<p>In this example, we created a new variable, items_sold_new, which contained both the original items sold, and the new ones. We can inspect the original items_sold and see that it did not change. We can only use + with other lists. If we type in this code we will get the following error:</p>
+<div class="sourceCode" id="cb217"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb217-1" data-line-number="1">my_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb217-2" data-line-number="2"><span class="co"># my_list + 4</span></a>
+<a class="sourceLine" id="cb217-3" data-line-number="3"><span class="co">## TypeError: can only concatenate list (not &quot;int&quot;) to list</span></a>
+<a class="sourceLine" id="cb217-4" data-line-number="4"><span class="bu">print</span>(my_list)</a></code></pre></div>
+<pre><code>## [1, 2, 3]</code></pre>
+<p>If we want to add a single element using +, we have to put it into a list with brackets ([]):</p>
+<div class="sourceCode" id="cb219"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb219-1" data-line-number="1">new_list <span class="op">=</span> my_list <span class="op">+</span> [<span class="dv">4</span>]</a>
+<a class="sourceLine" id="cb219-2" data-line-number="2"><span class="bu">print</span>(new_list)</a></code></pre></div>
+<pre><code>## [1, 2, 3, 4]</code></pre>
+</div>
+<div id="range" class="section level2">
+<h2>Range</h2>
+<p>Often, we want to create a list of consecutive numbers. For example, suppose we want a list containing the numbers 0 through 9:</p>
+<div class="sourceCode" id="cb221"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb221-1" data-line-number="1">my_list <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>]</a></code></pre></div>
+<p>Typing out all of those numbers takes time and the more numbers we type, the more likely it is that we have a typo.</p>
+<p>Python gives us an easy way of creating these lists using a function called range. The function range takes a single input, and generates numbers starting at 0 and ending at the number before the input. So, if we want the numbers from 0 through 9, we use range(10) because 10 is 1 greater than 9:</p>
+<div class="sourceCode" id="cb222"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb222-1" data-line-number="1">my_range <span class="op">=</span> <span class="bu">range</span>(<span class="dv">10</span>)</a></code></pre></div>
+<p>Just like with zip, the range function returns an object that we can convert into a list:</p>
+<div class="sourceCode" id="cb223"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb223-1" data-line-number="1"><span class="bu">print</span>(my_list)</a></code></pre></div>
+<pre><code>## [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+<div class="sourceCode" id="cb225"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb225-1" data-line-number="1"><span class="bu">print</span>(<span class="bu">list</span>(my_range))</a></code></pre></div>
+<pre><code>## [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+<p>We can use range to generate more interesting lists. By default, range creates a list starting at 0. However, if we call range with two arguments, we can create a list that starts at a different number. For example, range(2, 9) would generate numbers starting at 2 and ending at 8 (just before 9):</p>
+<div class="sourceCode" id="cb227"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb227-1" data-line-number="1">my_list <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb227-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">list</span>(my_list))</a></code></pre></div>
+<pre><code>## [2, 3, 4, 5, 6, 7, 8]</code></pre>
+<p>With one or two arguments, range will create a list of consecutive numbers (i.e., each number is one greater than the previous number). If we use a third argument, we can create a list that “skips” numbers. For example, range(2, 9, 2) will give us a list where each number is 2 greater than the previous number:</p>
+<div class="sourceCode" id="cb229"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb229-1" data-line-number="1">my_range2 <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>, <span class="dv">9</span>, <span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb229-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">list</span>(my_range2))</a></code></pre></div>
+<pre><code>## [2, 4, 6, 8]</code></pre>
+<div class="sourceCode" id="cb231"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb231-1" data-line-number="1">my_range3 <span class="op">=</span> <span class="bu">range</span>(<span class="dv">1</span>, <span class="dv">100</span>, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb231-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">list</span>(my_range3))</a></code></pre></div>
+<pre><code>## [1, 11, 21, 31, 41, 51, 61, 71, 81, 91]</code></pre>
+<p>Our list stops at 91 because the next number in the sequence would be 101, which is greater than 100 (our stopping point).</p>
+</div>
+<div id="review-3" class="section level2">
+<h2>Review</h2>
+<p>Now we know:</p>
+<ul>
+<li>How to create a list</li>
+<li>How to create a list of lists using zip</li>
+<li>How to add elements to a list using either .append() or +</li>
+<li>How to use range to create lists of integers</li>
+</ul>
+</div>
+</div>
+<div id="working-lists" class="section level1">
+<h1>Working lists</h1>
+<div id="operations-on-lists" class="section level2">
+<h2>Operations on Lists</h2>
+<p>Now that we know how to create a list, we can start working with existing lists of data.</p>
+<p>In this section, we’ll learn how to:</p>
+<ul>
+<li>Get the length of a list</li>
+<li>Select subsets of a list (called slicing)</li>
+<li>Count the number of times that an element appears in a list</li>
+<li>Sort a list of items</li>
+</ul>
+</div>
+<div id="length-of-a-list" class="section level2">
+<h2>Length of a List</h2>
+<p>Often, we’ll need to find the number of items in a list, usually called its length. We can do this using the function len. When we apply len to a list, we get the number of elements in that list:</p>
+<div class="sourceCode" id="cb233"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb233-1" data-line-number="1">my_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>]</a>
+<a class="sourceLine" id="cb233-2" data-line-number="2"><span class="bu">print</span>(<span class="bu">len</span>(my_list))</a></code></pre></div>
+<pre><code>## 5</code></pre>
+</div>
+<div id="selecting-list-elements" class="section level2">
+<h2>Selecting List Elements</h2>
+<p>Chris is interviewing candidates for a job. He will call each candidate in order, represented by a Python list:</p>
+<div class="sourceCode" id="cb235"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb235-1" data-line-number="1">calls <span class="op">=</span> [<span class="st">'Ali'</span>, <span class="st">'Bob'</span>, <span class="st">'Cam'</span>, <span class="st">'Doug'</span>, <span class="st">'Ellie'</span>]</a></code></pre></div>
+<p>First, he’ll call ‘Ali’, then ‘Bob’, etc. In Python, we call the order of an element in a list its <strong>index</strong>. Python lists are <strong>zero-indexed</strong>. This means that the <strong>first element in a list has index 0</strong>, rather than 1.</p>
+<p>Here are the index numbers for that list:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Element</th>
+<th>Index</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>‘Ali’</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>‘Bob’</td>
+<td>1</td>
+</tr>
+<tr class="odd">
+<td>‘Cam’</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>‘Doug’</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>‘Ellie’</td>
+<td>4</td>
+</tr>
+</tbody>
+</table>
+<p>In this example, the element with index 2 is ‘Cam’. We can select a single element from a list by using square brackets ([]) and the index of the list item. For example, if we wanted to select the third element from the list, we’d use calls[2]:</p>
+<div class="sourceCode" id="cb236"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb236-1" data-line-number="1"><span class="bu">print</span>(calls[<span class="dv">2</span>])</a></code></pre></div>
+<pre><code>## Cam</code></pre>
+<p>Selecting an element that does not exist produces an “IndexError: list index out of range”.</p>
+<p>What if we want to select the last element of a list?</p>
+<p>We can use the index -1 to select the last item of a list, even when we don’t know how many elements are in a list.</p>
+<p>Consider the following list with 5 elements:</p>
+<div class="sourceCode" id="cb238"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb238-1" data-line-number="1">list1 <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>]</a></code></pre></div>
+<p>If we select the -1 element, we get the final element, ‘e’. This is the same as selecting the element with index 4:</p>
+<div class="sourceCode" id="cb239"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb239-1" data-line-number="1"><span class="bu">print</span>(list1[<span class="op">-</span><span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## e</code></pre>
+</div>
+<div id="slicing-lists" class="section level2">
+<h2>Slicing Lists</h2>
+<p>Suppose we have a list of letters:</p>
+<div class="sourceCode" id="cb241"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb241-1" data-line-number="1">letters <span class="op">=</span> [<span class="st">'a'</span>, <span class="st">'b'</span>, <span class="st">'c'</span>, <span class="st">'d'</span>, <span class="st">'e'</span>, <span class="st">'f'</span>, <span class="st">'g'</span>]</a></code></pre></div>
+<p>Suppose we want to select from b through f. We can do this using the following syntax: <strong>letters[start:end]</strong>, where: - start is the index of the first element that we want to include in our selection. In this case, we want to start at b, which has index 1. - end is the index of one more than the last index that we want to include. The last element we want is f, which has index 5, so end needs to be 6.</p>
+<div class="sourceCode" id="cb242"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb242-1" data-line-number="1">sublist <span class="op">=</span> letters[<span class="dv">1</span>:<span class="dv">6</span>]</a>
+<a class="sourceLine" id="cb242-2" data-line-number="2"><span class="bu">print</span>(sublist)</a></code></pre></div>
+<pre><code>## ['b', 'c', 'd', 'e', 'f']</code></pre>
+<p>Notice that the element at index 6 (which is g) is not included in our selection. Creating a selection from a list is called slicing.</p>
+<p>Example:</p>
+<p>We have the following list:</p>
+<div class="sourceCode" id="cb244"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb244-1" data-line-number="1">suitcase <span class="op">=</span> [<span class="st">'shirt'</span>, <span class="st">'shirt'</span>, <span class="st">'pants'</span>, <span class="st">'pants'</span>, <span class="st">'pajamas'</span>, <span class="st">'books'</span>]</a></code></pre></div>
+<p>beginning selects the first 4 elements of suitcase.</p>
+<div class="sourceCode" id="cb245"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb245-1" data-line-number="1">beginning <span class="op">=</span> suitcase[<span class="dv">0</span>:<span class="dv">4</span>]</a>
+<a class="sourceLine" id="cb245-2" data-line-number="2"><span class="bu">print</span>(beginning)</a></code></pre></div>
+<pre><code>## ['shirt', 'shirt', 'pants', 'pants']</code></pre>
+<p>middle that contains the middle two items from suitcase.</p>
+<div class="sourceCode" id="cb247"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb247-1" data-line-number="1">middle <span class="op">=</span> suitcase[<span class="dv">2</span>:<span class="dv">4</span>]</a>
+<a class="sourceLine" id="cb247-2" data-line-number="2"><span class="bu">print</span>(middle)</a></code></pre></div>
+<pre><code>## ['pants', 'pants']</code></pre>
+<p>If we want to select the first 3 elements of a list, we could use the following code:</p>
+<div class="sourceCode" id="cb249"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb249-1" data-line-number="1">fruits <span class="op">=</span> [<span class="st">'apple'</span>, <span class="st">'banana'</span>, <span class="st">'cherry'</span>, <span class="st">'date'</span>]</a>
+<a class="sourceLine" id="cb249-2" data-line-number="2"><span class="bu">print</span>(fruits[<span class="dv">0</span>:<span class="dv">3</span>])</a></code></pre></div>
+<pre><code>## ['apple', 'banana', 'cherry']</code></pre>
+<p>When starting at the beginning of the list, it is also valid to omit the 0:</p>
+<div class="sourceCode" id="cb251"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb251-1" data-line-number="1"><span class="bu">print</span>(fruits[:<span class="dv">3</span>])</a></code></pre></div>
+<pre><code>## ['apple', 'banana', 'cherry']</code></pre>
+<p>We can do something similar when selecting the last few items of a list. We can omit the final index when selecting the final elements from a list.</p>
+<div class="sourceCode" id="cb253"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb253-1" data-line-number="1"><span class="bu">print</span>(fruits[<span class="dv">2</span>:])</a></code></pre></div>
+<pre><code>## ['cherry', 'date']</code></pre>
+<p>If we want to select the last 3 elements of fruits, we can also use this syntax:</p>
+<div class="sourceCode" id="cb255"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb255-1" data-line-number="1"><span class="bu">print</span>(fruits[<span class="op">-</span><span class="dv">3</span>:])</a></code></pre></div>
+<pre><code>## ['banana', 'cherry', 'date']</code></pre>
+<p>We can use negative indexes to count backward from the last element.</p>
+</div>
+<div id="counting-elements-in-a-list" class="section level2">
+<h2>Counting elements in a list</h2>
+<p>Suppose we have a list called letters that represents the letters in the word “Mississippi”:</p>
+<div class="sourceCode" id="cb257"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb257-1" data-line-number="1">letters <span class="op">=</span> [<span class="st">'m'</span>, <span class="st">'i'</span>, <span class="st">'s'</span>, <span class="st">'s'</span>, <span class="st">'i'</span>, <span class="st">'s'</span>, <span class="st">'s'</span>, <span class="st">'i'</span>, <span class="st">'p'</span>, <span class="st">'p'</span>, <span class="st">'i'</span>]</a></code></pre></div>
+<p>If we want to know how many times i appears in this word, we can use the function <strong>.count</strong> that goes after the list name.</p>
+<div class="sourceCode" id="cb258"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb258-1" data-line-number="1">num_i <span class="op">=</span> letters.count(<span class="st">'i'</span>)</a>
+<a class="sourceLine" id="cb258-2" data-line-number="2"><span class="bu">print</span>(num_i)</a></code></pre></div>
+<pre><code>## 4</code></pre>
+<p>Another example:</p>
+<p>Mrs. WIlson’s class is voting for class president. She has saved each student’s vote into the list votes. How many votes does Jake has?</p>
+<div class="sourceCode" id="cb260"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb260-1" data-line-number="1">votes <span class="op">=</span> [<span class="st">'Jake'</span>, <span class="st">'Jake'</span>, <span class="st">'Laurie'</span>, <span class="st">'Laurie'</span>, <span class="st">'Laurie'</span>, <span class="st">'Jake'</span>, <span class="st">'Jake'</span>, <span class="st">'Jake'</span>, <span class="st">'Laurie'</span>, <span class="st">'Cassie'</span>, <span class="st">'Cassie'</span>, <span class="st">'Jake'</span>, <span class="st">'Jake'</span>, <span class="st">'Cassie'</span>, <span class="st">'Laurie'</span>, <span class="st">'Cassie'</span>, <span class="st">'Jake'</span>, <span class="st">'Jake'</span>, <span class="st">'Cassie'</span>, <span class="st">'Laurie'</span>]</a>
+<a class="sourceLine" id="cb260-2" data-line-number="2">jake_votes <span class="op">=</span> votes.count(<span class="st">'Jake'</span>)</a>
+<a class="sourceLine" id="cb260-3" data-line-number="3"><span class="bu">print</span>(jake_votes)</a></code></pre></div>
+<pre><code>## 9</code></pre>
+</div>
+<div id="sorting-lists-1" class="section level2">
+<h2>Sorting lists 1</h2>
+<p>Sometimes, we want to sort a list in either numerical (1, 2, 3, …) or alphabetical (a, b, c, …) order. We can sort a list <em>in place</em> using <strong>.sort()</strong>. Suppose that we have a list of names:</p>
+<div class="sourceCode" id="cb262"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb262-1" data-line-number="1">names <span class="op">=</span> [<span class="st">'Xander'</span>, <span class="st">'Buffy'</span>, <span class="st">'Angel'</span>, <span class="st">'Willow'</span>, <span class="st">'Giles'</span>]</a>
+<a class="sourceLine" id="cb262-2" data-line-number="2"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Xander', 'Buffy', 'Angel', 'Willow', 'Giles']</code></pre>
+<p>Now we apply .sort():</p>
+<div class="sourceCode" id="cb264"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb264-1" data-line-number="1">names.sort()</a>
+<a class="sourceLine" id="cb264-2" data-line-number="2"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander']</code></pre>
+<p>Notice that sort goes after our list, names. If we try sort(names), we will get a NameError.</p>
+<p>sort does not return anything. So, if we try to assign names.sort() to a variable, our new variable would be None:</p>
+<div class="sourceCode" id="cb266"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb266-1" data-line-number="1">sorted_names <span class="op">=</span> names.sort()</a>
+<a class="sourceLine" id="cb266-2" data-line-number="2"><span class="bu">print</span>(sorted_names)</a></code></pre></div>
+<pre><code>## None</code></pre>
+<p>Although sorted_names is None, the line sorted_names = names.sort() still edited names:</p>
+<div class="sourceCode" id="cb268"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb268-1" data-line-number="1"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander']</code></pre>
+<p>More examples:</p>
+<div class="sourceCode" id="cb270"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb270-1" data-line-number="1">addresses <span class="op">=</span> [<span class="st">'221 B Baker St.'</span>, <span class="st">'42 Wallaby Way'</span>, <span class="st">'12 Grimmauld Place'</span>, <span class="st">'742 Evergreen Terrace'</span>, <span class="st">'1600 Pennsylvania Ave'</span>, <span class="st">'10 Downing St.'</span>]</a>
+<a class="sourceLine" id="cb270-2" data-line-number="2"><span class="co"># Sort addresses:</span></a>
+<a class="sourceLine" id="cb270-3" data-line-number="3">addresses.sort()</a>
+<a class="sourceLine" id="cb270-4" data-line-number="4"><span class="bu">print</span>(addresses)</a></code></pre></div>
+<pre><code>## ['10 Downing St.', '12 Grimmauld Place', '1600 Pennsylvania Ave', '221 B Baker St.', '42 Wallaby Way', '742 Evergreen Terrace']</code></pre>
+<div class="sourceCode" id="cb272"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb272-1" data-line-number="1">names <span class="op">=</span> [<span class="st">'Ron'</span>, <span class="st">'Hermione'</span>, <span class="st">'Harry'</span>, <span class="st">'Albus'</span>, <span class="st">'Sirius'</span>]</a>
+<a class="sourceLine" id="cb272-2" data-line-number="2">names.sort()</a>
+<a class="sourceLine" id="cb272-3" data-line-number="3"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Albus', 'Harry', 'Hermione', 'Ron', 'Sirius']</code></pre>
+</div>
+<div id="sorting-lists-2" class="section level2">
+<h2>Sorting lists 2</h2>
+<p>A second way of sorting a list is to use <strong>sorted.</strong> sorted is different from <strong>.sort()</strong> in several ways:</p>
+<ul>
+<li>It comes before a list, instead of after.</li>
+<li>It generates a new list.</li>
+</ul>
+<p>Let’s return to our list of names:</p>
+<div class="sourceCode" id="cb274"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb274-1" data-line-number="1">names <span class="op">=</span> [<span class="st">'Xander'</span>, <span class="st">'Buffy'</span>, <span class="st">'Angel'</span>, <span class="st">'Willow'</span>, <span class="st">'Giles'</span>]</a></code></pre></div>
+<p>Using sorted, we can create a new list, called sorted_names, notice the difference with .sort()</p>
+<div class="sourceCode" id="cb275"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb275-1" data-line-number="1">sorted_names <span class="op">=</span> <span class="bu">sorted</span>(names)</a>
+<a class="sourceLine" id="cb275-2" data-line-number="2"><span class="bu">print</span>(sorted_names)</a></code></pre></div>
+<pre><code>## ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander']</code></pre>
+<div class="sourceCode" id="cb277"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb277-1" data-line-number="1"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Xander', 'Buffy', 'Angel', 'Willow', 'Giles']</code></pre>
+<div class="sourceCode" id="cb279"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb279-1" data-line-number="1">names.sort()</a>
+<a class="sourceLine" id="cb279-2" data-line-number="2"><span class="bu">print</span>(names)</a></code></pre></div>
+<pre><code>## ['Angel', 'Buffy', 'Giles', 'Willow', 'Xander']</code></pre>
+</div>
+<div id="review-4" class="section level2">
+<h2>Review</h2>
+<p>We learned how to:</p>
+<ul>
+<li>Get the length of a list</li>
+<li>Select subsets of a list (called slicing)</li>
+<li>Count the number of times that an element appears in a list</li>
+<li>Sort a list of items</li>
+</ul>
+<p>Example: inventory is a list of items that are in the warehouse for Bob’s Furniture.</p>
+<div class="sourceCode" id="cb281"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb281-1" data-line-number="1">inventory <span class="op">=</span> [<span class="st">'twin bed'</span>, <span class="st">'twin bed'</span>, <span class="st">'headboard'</span>, <span class="st">'queen bed'</span>, <span class="st">'king bed'</span>, <span class="st">'dresser'</span>, <span class="st">'dresser'</span>, <span class="st">'table'</span>, <span class="st">'table'</span>, <span class="st">'nightstand'</span>, <span class="st">'nightstand'</span>, <span class="st">'king bed'</span>, <span class="st">'king bed'</span>, <span class="st">'twin bed'</span>, <span class="st">'twin bed'</span>, <span class="st">'sheets'</span>, <span class="st">'sheets'</span>, <span class="st">'pillow'</span>, <span class="st">'pillow'</span>]</a>
+<a class="sourceLine" id="cb281-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb281-3" data-line-number="3"><span class="co">#How many items</span></a>
+<a class="sourceLine" id="cb281-4" data-line-number="4">inventory_len <span class="op">=</span> <span class="bu">len</span>(inventory)</a>
+<a class="sourceLine" id="cb281-5" data-line-number="5"><span class="co">#First element </span></a>
+<a class="sourceLine" id="cb281-6" data-line-number="6">first <span class="op">=</span> inventory[<span class="dv">0</span>]</a>
+<a class="sourceLine" id="cb281-7" data-line-number="7"><span class="co">#Last element</span></a>
+<a class="sourceLine" id="cb281-8" data-line-number="8">last <span class="op">=</span> inventory [<span class="op">-</span><span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb281-9" data-line-number="9"><span class="co"># Items indexed 2-5</span></a>
+<a class="sourceLine" id="cb281-10" data-line-number="10">inventory_2_6 <span class="op">=</span> inventory [<span class="dv">2</span>:<span class="dv">6</span>]</a>
+<a class="sourceLine" id="cb281-11" data-line-number="11"><span class="co">#First 3 items</span></a>
+<a class="sourceLine" id="cb281-12" data-line-number="12">first_3 <span class="op">=</span> inventory[:<span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb281-13" data-line-number="13"><span class="co"># How many 'twin bed's are?</span></a>
+<a class="sourceLine" id="cb281-14" data-line-number="14">twin_beds <span class="op">=</span> inventory.count(<span class="st">'twin bed'</span>)</a>
+<a class="sourceLine" id="cb281-15" data-line-number="15"><span class="co"># Sort</span></a>
+<a class="sourceLine" id="cb281-16" data-line-number="16">inventory.sort()</a></code></pre></div>
+</div>
+</div>
+<div id="loops" class="section level1">
+<h1>Loops</h1>
+<div id="introduction-3" class="section level2">
+<h2>Introduction</h2>
+<p>Suppose we want to print() <strong>each</strong> item from a list of dog_breeds. (Notice that we don’t want to print the string, but each element. We would need to use the following code snippet:</p>
+<div class="sourceCode" id="cb282"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb282-1" data-line-number="1">dog_breeds <span class="op">=</span> [<span class="st">'french_bulldog'</span>, <span class="st">'dalmatian'</span>, <span class="st">'shihtzu'</span>, <span class="st">'poodle'</span>, <span class="st">'collie'</span>]</a>
+<a class="sourceLine" id="cb282-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb282-3" data-line-number="3"><span class="bu">print</span>(dog_breeds[<span class="dv">0</span>])</a></code></pre></div>
+<pre><code>## french_bulldog</code></pre>
+<div class="sourceCode" id="cb284"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb284-1" data-line-number="1"><span class="bu">print</span>(dog_breeds[<span class="dv">1</span>])</a></code></pre></div>
+<pre><code>## dalmatian</code></pre>
+<div class="sourceCode" id="cb286"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb286-1" data-line-number="1"><span class="bu">print</span>(dog_breeds[<span class="dv">2</span>])</a></code></pre></div>
+<pre><code>## shihtzu</code></pre>
+<div class="sourceCode" id="cb288"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb288-1" data-line-number="1"><span class="bu">print</span>(dog_breeds[<span class="dv">3</span>])</a></code></pre></div>
+<pre><code>## poodle</code></pre>
+<div class="sourceCode" id="cb290"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb290-1" data-line-number="1"><span class="bu">print</span>(dog_breeds[<span class="dv">4</span>])</a></code></pre></div>
+<pre><code>## collie</code></pre>
+<p>This seems inefficient. Luckily, Python (and most other programming languages) gives us an easier way of using, or iterating through, every item in a list. We can use <strong>loops!</strong> A loop is a way of repeating a set of code many times.</p>
+<div class="sourceCode" id="cb292"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb292-1" data-line-number="1"><span class="cf">for</span> breed <span class="kw">in</span> dog_breeds:</a>
+<a class="sourceLine" id="cb292-2" data-line-number="2">    <span class="bu">print</span>(breed)</a></code></pre></div>
+<pre><code>## french_bulldog
+## dalmatian
+## shihtzu
+## poodle
+## collie</code></pre>
+<p>In this section, we’ll be learning about:</p>
+<ul>
+<li>Loops that let us move through each item in a list, called <strong>for loops</strong>.</li>
+<li>Loops that keep going until we tell them to stop, called <strong>while loops</strong>.</li>
+<li>Loops that create new lists, called <strong>list comprehensions</strong>.</li>
+</ul>
+</div>
+<div id="create-a-for-loop" class="section level2">
+<h2>Create a For Loop</h2>
+<p>In the previous exercise, we saw that we can print each item in a list using a for loop. A for loop lets us perform an action on each item in a list. Using each element of a list is known as <strong>iterating</strong>.</p>
+<p>The general way of writing a for loop is:</p>
+<div class="sourceCode" id="cb294"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb294-1" data-line-number="1"><span class="co">#    for &lt;temporary variable&gt; in &lt;list variable&gt;:</span></a>
+<a class="sourceLine" id="cb294-2" data-line-number="2"><span class="co">#        &lt;action&gt;</span></a></code></pre></div>
+<p>Example:</p>
+<div class="sourceCode" id="cb295"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb295-1" data-line-number="1"><span class="cf">for</span> breed <span class="kw">in</span> dog_breeds:</a>
+<a class="sourceLine" id="cb295-2" data-line-number="2">    <span class="bu">print</span>(breed)</a></code></pre></div>
+<pre><code>## french_bulldog
+## dalmatian
+## shihtzu
+## poodle
+## collie</code></pre>
+<p>In our dog breeds example, <em>breed</em> was the temporary variable, <em>dog_breeds</em> was the list variable, and <em>print(breed)</em> was the action performed on every item in the list.</p>
+<p>Our temporary variable can be named whatever we want and does not need to be defined beforehand. Each of the following code snippets does the exact same thing as our example:</p>
+<div class="sourceCode" id="cb297"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb297-1" data-line-number="1"><span class="cf">for</span> i <span class="kw">in</span> dog_breeds:</a>
+<a class="sourceLine" id="cb297-2" data-line-number="2">    <span class="bu">print</span>(i)</a></code></pre></div>
+<pre><code>## french_bulldog
+## dalmatian
+## shihtzu
+## poodle
+## collie</code></pre>
+<div class="sourceCode" id="cb299"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb299-1" data-line-number="1"><span class="cf">for</span> dog <span class="kw">in</span> dog_breeds:</a>
+<a class="sourceLine" id="cb299-2" data-line-number="2">    <span class="bu">print</span>(dog)</a></code></pre></div>
+<pre><code>## french_bulldog
+## dalmatian
+## shihtzu
+## poodle
+## collie</code></pre>
+<p>Notice that in all of these examples the print statement is indented. Everything in the same level of indentation after the for loop declaration is included in the for loop, and run every iteration. If we forget to indent, we’ll get an <em>IndentationError.</em></p>
+</div>
+<div id="using-range-in-loops" class="section level2">
+<h2>Using Range in Loops</h2>
+<p>Previously, we iterated through an existing list. Often we won’t be iterating through a specific list, we’ll just want to do a certain action multiple times. For example, if we wanted to print out a “WARNING!” message three times, we would want to say something like:</p>
+<div class="sourceCode" id="cb301"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb301-1" data-line-number="1"><span class="co">#  for i in &lt;a list of length 3&gt;:</span></a>
+<a class="sourceLine" id="cb301-2" data-line-number="2"><span class="co">#    print(&quot;WARNING!&quot;)</span></a></code></pre></div>
+<p>Notice that we need to iterate through a list of length 3, but we don’t care what’s in the list.</p>
+<p>To create these lists of length n, we can use the range function. range takes in a number n as input, and returns a list from 0 to n-1. For example:</p>
+<div class="sourceCode" id="cb302"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb302-1" data-line-number="1">zero_thru_five <span class="op">=</span> <span class="bu">range</span>(<span class="dv">6</span>)</a>
+<a class="sourceLine" id="cb302-2" data-line-number="2"><span class="co"># zero_thru_five is now [0, 1, 2, 3, 4, 5]</span></a>
+<a class="sourceLine" id="cb302-3" data-line-number="3">zero_thru_one <span class="op">=</span> <span class="bu">range</span>(<span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb302-4" data-line-number="4"><span class="co"># zero_thru_one is now [0, 1]</span></a></code></pre></div>
+<p>So, an easy way to accomplish our “WARNING!” example would be:</p>
+<div class="sourceCode" id="cb303"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb303-1" data-line-number="1"><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</a>
+<a class="sourceLine" id="cb303-2" data-line-number="2">  <span class="bu">print</span>(<span class="st">&quot;WARNING!&quot;</span>)</a></code></pre></div>
+<pre><code>## WARNING!
+## WARNING!
+## WARNING!</code></pre>
+<p>Remember our dog_breeds list? It had 5 elements, so we could use it to print 5 “WARNING!s” (not really usefull but is for you to understand how the for loop works)</p>
+<div class="sourceCode" id="cb305"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb305-1" data-line-number="1"><span class="cf">for</span> i <span class="kw">in</span> dog_breeds:</a>
+<a class="sourceLine" id="cb305-2" data-line-number="2">  <span class="bu">print</span>(<span class="st">&quot;WARNING!&quot;</span>)</a></code></pre></div>
+<pre><code>## WARNING!
+## WARNING!
+## WARNING!
+## WARNING!
+## WARNING!</code></pre>
+</div>
+<div id="infinite-loops" class="section level2">
+<h2>Infinite Loops</h2>
+<p>We’ve iterated through lists that have a discrete beginning and end. However, let’s consider this example:</p>
+<div class="sourceCode" id="cb307"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb307-1" data-line-number="1"><span class="co">#### DON'T RUN ####</span></a>
+<a class="sourceLine" id="cb307-2" data-line-number="2"><span class="co">#  my_favorite_numbers = [4, 8, 15, 16, 42]</span></a>
+<a class="sourceLine" id="cb307-3" data-line-number="3"><span class="co">#  </span></a>
+<a class="sourceLine" id="cb307-4" data-line-number="4"><span class="co">#  for number in my_favorite_numbers:</span></a>
+<a class="sourceLine" id="cb307-5" data-line-number="5"><span class="co">#    my_favorite_numbers.append(1)</span></a></code></pre></div>
+<p>What happens here? Every time we enter the loop, we add a 1 to the end of the list that we are iterating through. As a result, we never make it to the end of the list! It keeps growing! A loop that never terminates is called an infinite loop. <strong>These are very dangerous for your code!</strong></p>
+<p>A program that hits an infinite loop often becomes completely unusable. The best course of action is to never write an infinite loop.</p>
+<p>Note: If you accidentally stumble into an infinite loop while developing on your own machine, you can end the loop by using <strong>control + c</strong> (cmd + c in Mac) to terminate the program. If you’re writing code in our online editor, you’ll need to refresh the page to get out of an infinite loop!</p>
+<p>Example of using for loops:</p>
+<p>Suppose we have two lists of students, students_period_A and students_period_B. We want to combine all students into students_period_B.</p>
+<div class="sourceCode" id="cb308"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb308-1" data-line-number="1">students_period_A <span class="op">=</span> [<span class="st">&quot;Alex&quot;</span>, <span class="st">&quot;Briana&quot;</span>, <span class="st">&quot;Cheri&quot;</span>, <span class="st">&quot;Daniele&quot;</span>]</a>
+<a class="sourceLine" id="cb308-2" data-line-number="2">students_period_B <span class="op">=</span> [<span class="st">&quot;Dora&quot;</span>, <span class="st">&quot;Minerva&quot;</span>, <span class="st">&quot;Alexa&quot;</span>, <span class="st">&quot;Obie&quot;</span>]</a></code></pre></div>
+<p>We want to combine all students at the end of students_period_B.</p>
+<div class="sourceCode" id="cb309"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb309-1" data-line-number="1"><span class="cf">for</span> student <span class="kw">in</span> students_period_A:</a>
+<a class="sourceLine" id="cb309-2" data-line-number="2">  students_period_B.append(student)</a>
+<a class="sourceLine" id="cb309-3" data-line-number="3">  </a>
+<a class="sourceLine" id="cb309-4" data-line-number="4"><span class="bu">print</span>(students_period_B)</a></code></pre></div>
+<pre><code>## ['Dora', 'Minerva', 'Alexa', 'Obie', 'Alex', 'Briana', 'Cheri', 'Daniele']</code></pre>
+<p>Notice that every time you run the for loop, it will append again <em>students_period_A</em> at the end of <em>students_period_B</em>.</p>
+</div>
+<div id="break" class="section level2">
+<h2>Break</h2>
+<p>We often want to use a for loop to search through a list for some value:</p>
+<div class="sourceCode" id="cb311"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb311-1" data-line-number="1">items_on_sale <span class="op">=</span> [<span class="st">&quot;blue_shirt&quot;</span>, <span class="st">&quot;striped_socks&quot;</span>, <span class="st">&quot;knit_dress&quot;</span>, <span class="st">&quot;red_headband&quot;</span>, <span class="st">&quot;dinosaur_onesie&quot;</span>]</a>
+<a class="sourceLine" id="cb311-2" data-line-number="2"><span class="co"># we want to check if the item with ID &quot;knit_dress&quot; is on sale:</span></a>
+<a class="sourceLine" id="cb311-3" data-line-number="3"><span class="cf">for</span> item <span class="kw">in</span> items_on_sale:</a>
+<a class="sourceLine" id="cb311-4" data-line-number="4">  <span class="cf">if</span> item <span class="op">==</span> <span class="st">&quot;knit_dress&quot;</span>:</a>
+<a class="sourceLine" id="cb311-5" data-line-number="5">    <span class="bu">print</span>(<span class="st">&quot;Yes, there's a Knit Dress on sale!&quot;</span>)</a></code></pre></div>
+<pre><code>## Yes, there's a Knit Dress on sale!</code></pre>
+<p>This code goes through each item in items_on_sale and checks for a match. After we find that “knit_dress” is in the list items_on_sale, we don’t need to go through the rest of the items_on_sale list. Since it’s only 5 elements long, iterating through the entire list is not a big deal in this case. But what if items_on_sale had 1000 items after “knit_dress”? What if it had 100,000 items after “knit_dress”?</p>
+<p>You can stop a for loop from inside the loop by using break. When the program hits a break statement, control returns to the code outside of the for loop. For example:</p>
+<div class="sourceCode" id="cb313"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb313-1" data-line-number="1">items_on_sale <span class="op">=</span> [<span class="st">&quot;blue_shirt&quot;</span>, <span class="st">&quot;striped_socks&quot;</span>, <span class="st">&quot;knit_dress&quot;</span>, <span class="st">&quot;red_headband&quot;</span>, <span class="st">&quot;dinosaur_onesie&quot;</span>]</a>
+<a class="sourceLine" id="cb313-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb313-3" data-line-number="3"><span class="bu">print</span>(<span class="st">&quot;Checking the sale list!&quot;</span>)</a></code></pre></div>
+<pre><code>## Checking the sale list!</code></pre>
+<div class="sourceCode" id="cb315"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb315-1" data-line-number="1"><span class="cf">for</span> item <span class="kw">in</span> items_on_sale:</a>
+<a class="sourceLine" id="cb315-2" data-line-number="2">  <span class="bu">print</span>(item)</a>
+<a class="sourceLine" id="cb315-3" data-line-number="3">  <span class="cf">if</span> item <span class="op">==</span> <span class="st">&quot;knit_dress&quot;</span>:</a>
+<a class="sourceLine" id="cb315-4" data-line-number="4">    <span class="cf">break</span></a></code></pre></div>
+<pre><code>## blue_shirt
+## striped_socks
+## knit_dress</code></pre>
+<div class="sourceCode" id="cb317"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb317-1" data-line-number="1"><span class="bu">print</span>(<span class="st">&quot;End of search!&quot;</span>)</a></code></pre></div>
+<pre><code>## End of search!</code></pre>
+<p>We didn’t need to check “red_headband” or “dinosaur_onesie” at all!</p>
+<p>Another example:</p>
+<p>You have a list of dog breeds you can adopt, dog_breeds_available_for_adoption. We check if the dog_breed_I_want is available. If so, we “They have the dog I want!” and stop the loop.</p>
+<div class="sourceCode" id="cb319"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb319-1" data-line-number="1">dog_breeds_available_for_adoption <span class="op">=</span> [<span class="st">'french_bulldog'</span>, <span class="st">'dalmatian'</span>, <span class="st">'shihtzu'</span>, <span class="st">'poodle'</span>, <span class="st">'collie'</span>]</a>
+<a class="sourceLine" id="cb319-2" data-line-number="2">dog_breed_I_want <span class="op">=</span> <span class="st">'dalmatian'</span></a>
+<a class="sourceLine" id="cb319-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb319-4" data-line-number="4"><span class="cf">for</span> dog <span class="kw">in</span> dog_breeds_available_for_adoption:</a>
+<a class="sourceLine" id="cb319-5" data-line-number="5">  <span class="cf">if</span> dog <span class="op">==</span> dog_breed_I_want:</a>
+<a class="sourceLine" id="cb319-6" data-line-number="6">    <span class="bu">print</span>(<span class="st">&quot;They have the dog I want!&quot;</span>)</a>
+<a class="sourceLine" id="cb319-7" data-line-number="7">    <span class="cf">break</span></a></code></pre></div>
+<pre><code>## They have the dog I want!</code></pre>
+</div>
+<div id="continue" class="section level2">
+<h2>Continue</h2>
+<p>When we’re iterating through lists, we may want to skip some values. Let’s say we want to print out all of the numbers in a list, unless they’re negative. We can use <strong>continue</strong> to move to the next <strong>i</strong> in the list:</p>
+<div class="sourceCode" id="cb321"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb321-1" data-line-number="1">big_number_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">-1</span>, <span class="dv">4</span>, <span class="dv">-5</span>, <span class="dv">5</span>, <span class="dv">2</span>, <span class="dv">-9</span>]</a>
+<a class="sourceLine" id="cb321-2" data-line-number="2"><span class="cf">for</span> i <span class="kw">in</span> big_number_list:</a>
+<a class="sourceLine" id="cb321-3" data-line-number="3">  <span class="cf">if</span> i <span class="op">&lt;</span> <span class="dv">0</span>:</a>
+<a class="sourceLine" id="cb321-4" data-line-number="4">    <span class="cf">continue</span></a>
+<a class="sourceLine" id="cb321-5" data-line-number="5">  <span class="bu">print</span>(i)</a></code></pre></div>
+<pre><code>## 1
+## 2
+## 4
+## 5
+## 2</code></pre>
+<p>Every time there was a negative number, the <strong>continue</strong> keyword moved the index to the next value in the list, without executing the code in the rest of the for loop.</p>
+</div>
+<div id="while-loops" class="section level2">
+<h2>While Loops</h2>
+<p>We now have seen and used a lot of examples of for loops. There is another type of loop we can also use, called a <strong>while loop</strong>. The <strong>while loop</strong> performs a set of code until some condition is reached.</p>
+<p><strong>While loops</strong> can be used to iterate through lists, just like <strong>for loops</strong>:</p>
+<div class="sourceCode" id="cb323"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb323-1" data-line-number="1">dog_breeds <span class="op">=</span> [<span class="st">'bulldog'</span>, <span class="st">'dalmation'</span>, <span class="st">'shihtzu'</span>, <span class="st">'poodle'</span>, <span class="st">'collie'</span>]</a>
+<a class="sourceLine" id="cb323-2" data-line-number="2">index <span class="op">=</span> <span class="dv">0</span></a>
+<a class="sourceLine" id="cb323-3" data-line-number="3"><span class="cf">while</span> index <span class="op">&lt;</span> <span class="bu">len</span>(dog_breeds):</a>
+<a class="sourceLine" id="cb323-4" data-line-number="4">  <span class="bu">print</span>(dog_breeds[index])</a>
+<a class="sourceLine" id="cb323-5" data-line-number="5">  index <span class="op">+=</span> <span class="dv">1</span></a></code></pre></div>
+<pre><code>## bulldog
+## dalmation
+## shihtzu
+## poodle
+## collie</code></pre>
+<p>Every time the condition of the while loop (in this case, index &lt; len(dog_breeds)) is satisfied, the code inside the while loop runs. While loops can be useful when you don’t know how many iterations it will take to satisfy a condition.</p>
+<p>Here’s another example:</p>
+<p>We are adding students to a Poetry class, the size of which is capped at 6. While the length of the students_in_poetry list is less than 6, we .pop() to take a student off the all_students list and add it to the students_in_poetry list.</p>
+<p>First we look at the <strong>.pop()</strong> method will take an item off of the end of a list:</p>
+<div class="sourceCode" id="cb325"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb325-1" data-line-number="1">my_list <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">15</span>]</a>
+<a class="sourceLine" id="cb325-2" data-line-number="2">number <span class="op">=</span> my_list.pop()</a>
+<a class="sourceLine" id="cb325-3" data-line-number="3"><span class="bu">print</span>(number)</a></code></pre></div>
+<pre><code>## 15</code></pre>
+<div class="sourceCode" id="cb327"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb327-1" data-line-number="1"><span class="bu">print</span>(my_list)</a></code></pre></div>
+<pre><code>## [1, 4, 10]</code></pre>
+<p>Then we proceed to fill our Poetry Class</p>
+<div class="sourceCode" id="cb329"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb329-1" data-line-number="1">all_students <span class="op">=</span> [<span class="st">&quot;Alex&quot;</span>, <span class="st">&quot;Briana&quot;</span>, <span class="st">&quot;Cheri&quot;</span>, <span class="st">&quot;Daniele&quot;</span>, <span class="st">&quot;Dora&quot;</span>, <span class="st">&quot;Minerva&quot;</span>, <span class="st">&quot;Alexa&quot;</span>, <span class="st">&quot;Obie&quot;</span>, <span class="st">&quot;Arius&quot;</span>, <span class="st">&quot;Loki&quot;</span>]</a>
+<a class="sourceLine" id="cb329-2" data-line-number="2">students_in_poetry <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb329-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb329-4" data-line-number="4"><span class="cf">while</span> <span class="bu">len</span>(students_in_poetry) <span class="op">&lt;</span> <span class="dv">6</span>:</a>
+<a class="sourceLine" id="cb329-5" data-line-number="5">  student <span class="op">=</span> all_students.pop()</a>
+<a class="sourceLine" id="cb329-6" data-line-number="6">  students_in_poetry.append(student)</a>
+<a class="sourceLine" id="cb329-7" data-line-number="7">  </a>
+<a class="sourceLine" id="cb329-8" data-line-number="8"><span class="bu">print</span>(students_in_poetry)</a></code></pre></div>
+<pre><code>## ['Loki', 'Arius', 'Obie', 'Alexa', 'Minerva', 'Dora']</code></pre>
+</div>
+<div id="nested-loops" class="section level2">
+<h2>Nested Loops</h2>
+<p>We have seen how we can go through the elements of a list. What if we have a list made up of multiple lists? How can we loop through all of the individual elements?</p>
+<p>Suppose we are in charge of a science class, that is split into three project teams:</p>
+<div class="sourceCode" id="cb331"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb331-1" data-line-number="1">project_teams <span class="op">=</span> [[<span class="st">&quot;Ava&quot;</span>, <span class="st">&quot;Samantha&quot;</span>, <span class="st">&quot;James&quot;</span>], [<span class="st">&quot;Lucille&quot;</span>, <span class="st">&quot;Zed&quot;</span>], [<span class="st">&quot;Edgar&quot;</span>, <span class="st">&quot;Gabriel&quot;</span>]]</a></code></pre></div>
+<p>If we want to go through each student, we have to put one loop inside another:</p>
+<div class="sourceCode" id="cb332"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb332-1" data-line-number="1"><span class="cf">for</span> team <span class="kw">in</span> project_teams:</a>
+<a class="sourceLine" id="cb332-2" data-line-number="2">  <span class="cf">for</span> student <span class="kw">in</span> team:</a>
+<a class="sourceLine" id="cb332-3" data-line-number="3">    <span class="bu">print</span>(student)</a></code></pre></div>
+<pre><code>## Ava
+## Samantha
+## James
+## Lucille
+## Zed
+## Edgar
+## Gabriel</code></pre>
+<p>Example: We have the list sales_data that shows the numbers of different flavors of ice cream sold at three different locations of the fictional shop, Gilbert and Ilbert’s Scoop Shop. We want to sum up the total number of scoops sold.</p>
+<div class="sourceCode" id="cb334"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb334-1" data-line-number="1">sales_data <span class="op">=</span> [[<span class="dv">12</span>, <span class="dv">17</span>, <span class="dv">22</span>], [<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">3</span>], [<span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">13</span>]]</a>
+<a class="sourceLine" id="cb334-2" data-line-number="2"><span class="co"># We define variable scoops_sold and set to 0</span></a>
+<a class="sourceLine" id="cb334-3" data-line-number="3">scoops_sold <span class="op">=</span> <span class="dv">0</span> </a>
+<a class="sourceLine" id="cb334-4" data-line-number="4"><span class="co"># We create the nested loop.</span></a>
+<a class="sourceLine" id="cb334-5" data-line-number="5"><span class="cf">for</span> location <span class="kw">in</span> sales_data:</a>
+<a class="sourceLine" id="cb334-6" data-line-number="6">  <span class="cf">for</span> ice_cream <span class="kw">in</span> location:</a>
+<a class="sourceLine" id="cb334-7" data-line-number="7">    scoops_sold <span class="op">=</span> scoops_sold <span class="op">+</span> ice_cream</a>
+<a class="sourceLine" id="cb334-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb334-9" data-line-number="9"><span class="bu">print</span>(scoops_sold)</a></code></pre></div>
+<pre><code>## 96</code></pre>
+</div>
+<div id="list-comprehensions" class="section level2">
+<h2>List Comprehensions</h2>
+<p>Let’s say we have scraped a certain website and gotten these words:</p>
+<div class="sourceCode" id="cb336"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb336-1" data-line-number="1">words <span class="op">=</span> [<span class="st">&quot;@coolguy35&quot;</span>, <span class="st">&quot;#nofilter&quot;</span>, <span class="st">&quot;@kewldawg54&quot;</span>, <span class="st">&quot;reply&quot;</span>, <span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;@matchamom&quot;</span>, <span class="st">&quot;follow&quot;</span>, <span class="st">&quot;#updog&quot;</span>]</a></code></pre></div>
+<p>We want to make a new list, called usernames, that has all of the strings in words with an ‘@’ as the first character. We know we can do this with a for loop:</p>
+<div class="sourceCode" id="cb337"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb337-1" data-line-number="1">words <span class="op">=</span> [<span class="st">&quot;@coolguy35&quot;</span>, <span class="st">&quot;#nofilter&quot;</span>, <span class="st">&quot;@kewldawg54&quot;</span>, <span class="st">&quot;reply&quot;</span>, <span class="st">&quot;timestamp&quot;</span>, <span class="st">&quot;@matchamom&quot;</span>, <span class="st">&quot;follow&quot;</span>, <span class="st">&quot;#updog&quot;</span>]</a>
+<a class="sourceLine" id="cb337-2" data-line-number="2">usernames <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb337-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb337-4" data-line-number="4"><span class="cf">for</span> word <span class="kw">in</span> words:</a>
+<a class="sourceLine" id="cb337-5" data-line-number="5">  <span class="cf">if</span> word[<span class="dv">0</span>] <span class="op">==</span> <span class="st">'@'</span>:</a>
+<a class="sourceLine" id="cb337-6" data-line-number="6">    usernames.append(word)</a></code></pre></div>
+<p>First, we created a new empty list, usernames, and as we looped through the words list, we added every word that matched our criterion. Now, the usernames list looks like this:</p>
+<div class="sourceCode" id="cb338"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb338-1" data-line-number="1"><span class="bu">print</span>(usernames)</a></code></pre></div>
+<pre><code>## ['@coolguy35', '@kewldawg54', '@matchamom']</code></pre>
+<p>Python has a convenient shorthand to create lists like this with one line:</p>
+<div class="sourceCode" id="cb340"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb340-1" data-line-number="1">usernames <span class="op">=</span> [word <span class="cf">for</span> word <span class="kw">in</span> words <span class="cf">if</span> word[<span class="dv">0</span>] <span class="op">==</span> <span class="st">'@'</span>]</a></code></pre></div>
+<p>This is called a list comprehension. It will produce the same output as the for loop did:</p>
+<div class="sourceCode" id="cb341"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb341-1" data-line-number="1"><span class="bu">print</span>(usernames)</a></code></pre></div>
+<pre><code>## ['@coolguy35', '@kewldawg54', '@matchamom']</code></pre>
+<p>This list comprehension:</p>
+<ul>
+<li>Takes an element in words</li>
+<li>Assigns that element to a variable called word</li>
+<li>Checks if word[0] == ‘@’, and if so, it adds word to the new list, usernames. If not, nothing happens.</li>
+<li>Repeats steps 1-3 for all of the strings in words</li>
+</ul>
+<p>Note: if we hadn’t done any checking (let’s say we had omitted if word[0] == ‘@’) such as usernames = [word for word in words], the new list would be just a copy of words:</p>
+<p>Example:</p>
+<p>We have defined a list heights of visitors to a theme park. In order to ride the Topsy Turvy Tumbletron roller coaster, you need to be above 161 centimeters. Using a list comprehension, we create a new list called can_ride_coaster that has every element from heights that is greater than 161.</p>
+<div class="sourceCode" id="cb343"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb343-1" data-line-number="1">heights <span class="op">=</span> [<span class="dv">161</span>, <span class="dv">164</span>, <span class="dv">156</span>, <span class="dv">144</span>, <span class="dv">158</span>, <span class="dv">170</span>, <span class="dv">163</span>, <span class="dv">163</span>, <span class="dv">157</span>]</a>
+<a class="sourceLine" id="cb343-2" data-line-number="2"><span class="co"># We create the list comprehension</span></a>
+<a class="sourceLine" id="cb343-3" data-line-number="3">can_ride_coaster <span class="op">=</span> [person <span class="cf">for</span> person <span class="kw">in</span> heights <span class="cf">if</span> person <span class="op">&gt;</span> <span class="dv">161</span>]</a>
+<a class="sourceLine" id="cb343-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb343-5" data-line-number="5"><span class="bu">print</span>(can_ride_coaster)</a></code></pre></div>
+<pre><code>## [164, 170, 163, 163]</code></pre>
+</div>
+<div id="more-list-comprehensions" class="section level2">
+<h2>More List Comprehensions</h2>
+<p>Let’s say we’re working with the usernames list from the last exercise:</p>
+<div class="sourceCode" id="cb345"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb345-1" data-line-number="1"><span class="bu">print</span>(usernames)</a></code></pre></div>
+<pre><code>## ['@coolguy35', '@kewldawg54', '@matchamom']</code></pre>
+<p>We want to create a new list with the string &quot; please follow me!&quot; added to the end of each username. We want to call this new list <em>messages</em>. We can use a list comprehension to make this list with one line:</p>
+<div class="sourceCode" id="cb347"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb347-1" data-line-number="1">messages <span class="op">=</span> [user <span class="op">+</span> <span class="st">&quot; please follow me!&quot;</span> <span class="cf">for</span> user <span class="kw">in</span> usernames]</a></code></pre></div>
+<p>This list comprehension:</p>
+<ul>
+<li>Takes a string in usernames</li>
+<li>Assigns that string to a variable called user</li>
+<li>Adds “ please follow me!” to user</li>
+<li>Appends that concatenation to the new list called messages</li>
+<li>Repeats steps 1-4 for all of the strings in usernames</li>
+</ul>
+<p>Now, messages contains these values:</p>
+<div class="sourceCode" id="cb348"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb348-1" data-line-number="1"><span class="bu">print</span>(messages)</a></code></pre></div>
+<pre><code>## ['@coolguy35 please follow me!', '@kewldawg54 please follow me!', '@matchamom please follow me!']</code></pre>
+<p>Being able to create lists with modified values is especially useful when working with numbers. Let’s say we have this list:</p>
+<div class="sourceCode" id="cb350"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb350-1" data-line-number="1">my_upvotes <span class="op">=</span> [<span class="dv">192</span>, <span class="dv">34</span>, <span class="dv">22</span>, <span class="dv">175</span>, <span class="dv">75</span>, <span class="dv">101</span>, <span class="dv">97</span>]</a></code></pre></div>
+<p>We want to add 100 to each value. We can accomplish this goal in one line:</p>
+<div class="sourceCode" id="cb351"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb351-1" data-line-number="1">updated_upvotes <span class="op">=</span> [vote_value <span class="op">+</span> <span class="dv">100</span> <span class="cf">for</span> vote_value <span class="kw">in</span> my_upvotes]</a></code></pre></div>
+<p>This list comprehension:</p>
+<ul>
+<li>Takes a number in my_upvotes</li>
+<li>Assigns that number to a variable called vote_value</li>
+<li>Adds 100 to vote_value</li>
+<li>Appends that sum to the new list updated_upvotes</li>
+<li>Repeats steps 1-4 for all of the numbers in my_upvotes</li>
+</ul>
+<div class="sourceCode" id="cb352"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb352-1" data-line-number="1"><span class="bu">print</span>(updated_upvotes)</a></code></pre></div>
+<pre><code>## [292, 134, 122, 275, 175, 201, 197]</code></pre>
+<p>Another example:</p>
+<p>We have a list of temperatures in celsius.</p>
+<div class="sourceCode" id="cb354"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb354-1" data-line-number="1">celsius <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">32</span>, <span class="dv">-5</span>, <span class="dv">27</span>, <span class="dv">3</span>]</a></code></pre></div>
+<p>Using a list comprehension, we create a new list called fahrenheit that converts each element in the celsius list to fahrenheit. Remember the formula to convert:</p>
+<p><span class="math display">\[
+fahrenheit^{\circ} = \frac{celsius^{\circ} \cdot 9}{5} + 32
+\]</span></p>
+<div class="sourceCode" id="cb355"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb355-1" data-line-number="1">celsius <span class="op">=</span> [<span class="dv">0</span>, <span class="dv">10</span>, <span class="dv">15</span>, <span class="dv">32</span>, <span class="dv">-5</span>, <span class="dv">27</span>, <span class="dv">3</span>]</a>
+<a class="sourceLine" id="cb355-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb355-3" data-line-number="3">fahrenheit <span class="op">=</span> [temp<span class="op">*</span> <span class="dv">9</span><span class="op">/</span><span class="dv">5</span> <span class="op">+</span> <span class="dv">32</span> <span class="cf">for</span> temp <span class="kw">in</span> celsius]</a>
+<a class="sourceLine" id="cb355-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb355-5" data-line-number="5"><span class="bu">print</span>(fahrenheit)</a></code></pre></div>
+<pre><code>## [32.0, 50.0, 59.0, 89.6, 23.0, 80.6, 37.4]</code></pre>
+</div>
+<div id="review-5" class="section level2">
+<h2>Review</h2>
+<p>Now we know:</p>
+<ul>
+<li>how to write a for loop</li>
+<li>how to use range in a loop</li>
+<li>what infinite loops are and how to avoid them</li>
+<li>how to skip values in a loop</li>
+<li>how to write a while loop</li>
+<li>how to make lists with one line</li>
+</ul>
+<p>Example:</p>
+<div class="sourceCode" id="cb357"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb357-1" data-line-number="1">single_digits <span class="op">=</span> <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">10</span>))</a>
+<a class="sourceLine" id="cb357-2" data-line-number="2"><span class="bu">print</span>(single_digits)</a></code></pre></div>
+<pre><code>## [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</code></pre>
+<div class="sourceCode" id="cb359"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb359-1" data-line-number="1">squares <span class="op">=</span> []</a>
+<a class="sourceLine" id="cb359-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb359-3" data-line-number="3"><span class="cf">for</span> digit <span class="kw">in</span> single_digits:</a>
+<a class="sourceLine" id="cb359-4" data-line-number="4">  squares.append(digit<span class="op">**</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb359-5" data-line-number="5"><span class="bu">print</span>(squares)</a></code></pre></div>
+<pre><code>## [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]</code></pre>
+<div class="sourceCode" id="cb361"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb361-1" data-line-number="1">cubes <span class="op">=</span> [digit<span class="op">**</span><span class="dv">3</span> <span class="cf">for</span> digit <span class="kw">in</span> single_digits]</a>
+<a class="sourceLine" id="cb361-2" data-line-number="2"><span class="bu">print</span> (cubes)</a></code></pre></div>
+<pre><code>## [0, 1, 8, 27, 64, 125, 216, 343, 512, 729]</code></pre>
+</div>
+</div>
+<div id="loop-challenges" class="section level1">
+<h1>Loop Challenges</h1>
 </div>
 <div id="pandas-library" class="section level1">
 <h1>Pandas Library</h1>
-<div id="introduction-3" class="section level2">
+<div id="introduction-4" class="section level2">
 <h2>Introduction</h2>
 <p>Pandas stands for “Python Data Analysis Library”. According to the Wikipedia page on Pandas, “the name is derived from the term “panel data”, an econometrics term for multidimensional structured data sets.”</p>
 <p>Pandas takes data (like a CSV or TSV file, or a SQL database) and creates a Python object with rows and columns called data frame that looks very similar to table in a statistical software (think Excel or SPSS for example. People who are familiar with R would see similarities to R too).</p>
 <p>In order to use Pandas in your Python IDE (Integrated Development Environment) like Jupyter Notebook or Spyder (both of them come with Anaconda by default), you need to import the Pandas library first. Importing a library means loading it into the memory and then it’s there for you to work with. In order to import Pandas all you have to do is run the following code:</p>
-<div class="sourceCode" id="cb122"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="co"># import pandas as pd </span></a>
-<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="co"># import numpy as np </span></a></code></pre></div>
+<div class="sourceCode" id="cb363"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb363-1" data-line-number="1"><span class="co"># import pandas as pd </span></a>
+<a class="sourceLine" id="cb363-2" data-line-number="2"><span class="co"># import numpy as np </span></a></code></pre></div>
 <p>Usually you would add the second part (‘as pd’) so you can access Pandas with ‘pd.command’ instead of needing to write ‘pandas.command’ every time you need to use it. Also, you would import <strong>numpy</strong> as well, because it is very useful library for scientific computing with Python. Now Pandas is ready for use! Remember, you would need to do it every time you start a new Jupyter Notebook, Spyder file etc.</p>
 </div>
 <div id="working-with-pandas" class="section level2">
@@ -3413,15 +4402,15 @@ div.tocify {
 <h3>Loading and Saving Data with Pandas</h3>
 <p>When you want to use Pandas for data analysis, you’ll usually use it in one of three different ways: - Convert a Python’s list, dictionary or Numpy array to a Pandas data frame - Open a local file using Pandas, usually a CSV file, but could also be a delimited text file (like TSV), Excel, etc - Open a remote file or database like a CSV or a JSONon a website through a URL or read from a SQL table/database</p>
 <p>There are different commands to each of these options, but when you open a file, they would look like this:</p>
-<div class="sourceCode" id="cb123"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="co"># pd.read_filetype()</span></a></code></pre></div>
+<div class="sourceCode" id="cb364"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb364-1" data-line-number="1"><span class="co"># pd.read_filetype()</span></a></code></pre></div>
 <p>Example:</p>
-<div class="sourceCode" id="cb124"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb124-1" data-line-number="1"><span class="co"># d = pd.read_csv('https://url/file.csv')</span></a></code></pre></div>
+<div class="sourceCode" id="cb365"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb365-1" data-line-number="1"><span class="co"># d = pd.read_csv('https://url/file.csv')</span></a></code></pre></div>
 <p>As I mentioned before, there are different filetypes Pandas can work with, so you would replace “filetype” with the actual, well, filetype (like CSV). You would give the path, filename etc inside the parenthesis. Inside the parenthesis you can also pass different arguments that relate to how to open the file. There are numerous arguments and in order to know all you them, you would have to read the documentation (for example, the <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.read_csv.html">documentation for pd.read_csv()</a> would contain all the arguments you can pass in this Pandas command).</p>
 <p>In order to convert a certain Python object (dictionary, lists etc) the basic command is: <strong>pd.DataFrame()</strong></p>
 <p>Inside the parenthesis you would specify the object(s) you’re creating the data frame from. This command also has different arguments, <a href="http://pandas.pydata.org/pandas-docs/stable/generated/pandas.DataFrame.html">take a look</a>.</p>
 <p>Example:</p>
 <p>You can also save a data frame you’re working with/on to different kinds of files (like CSV, Excel, JSON and SQL tables). The general code for that is:</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="co"># df.to_filetype(filename)</span></a></code></pre></div>
+<div class="sourceCode" id="cb366"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb366-1" data-line-number="1"><span class="co"># df.to_filetype(filename)</span></a></code></pre></div>
 </div>
 </div>
 </div>
@@ -3432,26 +4421,26 @@ div.tocify {
 <p>Thanks to the <a href="https://rstudio.github.io/reticulate/">R reticulate package</a>, you can run Python code right within an R script—and pass data back and forth between Python and R. In addition to reticulate, you need Python installed on your system. You also need any Python modules, packages, and files your Python code depends on.</p>
 <p>If you’d like to follow along, install and load reticulate with install.packages(“reticulate”) and library(reticulate).</p>
 <p>To keep things simple, let’s start with just two lines of Python code to import the NumPy package for basic scientific computing and create an array of four numbers. The Python code looks like this:</p>
-<div class="sourceCode" id="cb126"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
-<a class="sourceLine" id="cb126-2" data-line-number="2">my_python_array <span class="op">=</span> np.array([<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>])</a>
-<a class="sourceLine" id="cb126-3" data-line-number="3"><span class="cf">for</span> item <span class="kw">in</span> my_python_array:</a>
-<a class="sourceLine" id="cb126-4" data-line-number="4">    <span class="bu">print</span>(item)</a></code></pre></div>
+<div class="sourceCode" id="cb367"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb367-1" data-line-number="1"><span class="im">import</span> numpy <span class="im">as</span> np</a>
+<a class="sourceLine" id="cb367-2" data-line-number="2">my_python_array <span class="op">=</span> np.array([<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>])</a>
+<a class="sourceLine" id="cb367-3" data-line-number="3"><span class="cf">for</span> item <span class="kw">in</span> my_python_array:</a>
+<a class="sourceLine" id="cb367-4" data-line-number="4">    <span class="bu">print</span>(item)</a></code></pre></div>
 <pre><code>## 2
 ## 4
 ## 6
 ## 8</code></pre>
 <p>Here’s the cool part: You can use that array in R.In this next code chunk, I store that Python array in an R variable called my_r_array. And then I check the class of that array.</p>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1">my_r_array &lt;-<span class="st"> </span>py<span class="op">$</span>my_python_array</a>
-<a class="sourceLine" id="cb128-2" data-line-number="2"><span class="kw">class</span>(my_r_array)</a></code></pre></div>
+<div class="sourceCode" id="cb369"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb369-1" data-line-number="1">my_r_array &lt;-<span class="st"> </span>py<span class="op">$</span>my_python_array</a>
+<a class="sourceLine" id="cb369-2" data-line-number="2"><span class="kw">class</span>(my_r_array)</a></code></pre></div>
 <pre><code>## [1] &quot;array&quot;</code></pre>
 <p>It’s a class “array,” which isn’t exactly what you’d expect for an R object like this. But I can turn it into a regular vector with as.vector(my_r_array) and run whatever R operations I’d like on it, such as multiplying each item by 2.</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" data-line-number="1">my_r_vector &lt;-<span class="st"> </span><span class="kw">as.vector</span>(py<span class="op">$</span>my_python_array)</a>
-<a class="sourceLine" id="cb130-2" data-line-number="2"><span class="kw">class</span>(my_r_vector)</a></code></pre></div>
+<div class="sourceCode" id="cb371"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb371-1" data-line-number="1">my_r_vector &lt;-<span class="st"> </span><span class="kw">as.vector</span>(py<span class="op">$</span>my_python_array)</a>
+<a class="sourceLine" id="cb371-2" data-line-number="2"><span class="kw">class</span>(my_r_vector)</a></code></pre></div>
 <pre><code>## [1] &quot;numeric&quot;</code></pre>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" data-line-number="1">my_r_vector_<span class="dv">2</span> &lt;-<span class="st"> </span>my_r_vector <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<div class="sourceCode" id="cb373"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb373-1" data-line-number="1">my_r_vector_<span class="dv">2</span> &lt;-<span class="st"> </span>my_r_vector <span class="op">*</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <p>Next cool part: I can use that R variable back in Python, as r.my_r_array (more generally, r.variablename), such as</p>
-<div class="sourceCode" id="cb133"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb133-1" data-line-number="1">my_python_array2 <span class="op">=</span> r.my_r_vector_2</a>
-<a class="sourceLine" id="cb133-2" data-line-number="2"><span class="bu">print</span>(my_python_array2)</a></code></pre></div>
+<div class="sourceCode" id="cb374"><pre class="sourceCode python"><code class="sourceCode python"><a class="sourceLine" id="cb374-1" data-line-number="1">my_python_array2 <span class="op">=</span> r.my_r_vector_2</a>
+<a class="sourceLine" id="cb374-2" data-line-number="2"><span class="bu">print</span>(my_python_array2)</a></code></pre></div>
 <pre><code>## [4.0, 8.0, 12.0, 16.0]</code></pre>
 </div>
 </div>
