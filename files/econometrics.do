@@ -36,23 +36,39 @@ ttest return=0
 ttest return=6
 
 ** Simple Regression
+
 clear
 import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/week1_dataset1.csv", encoding(UTF-8) 
+*Let's look at our data frame
+ histogram price, frequency normal subtitle("Histogram for price frequency")
+ histogram sales, frequency normal subtitle("Histogram for sales frequency")
+ 
+ * Scatter both variables https://www.ssc.wisc.edu/sscc/pubs/sfs/sfs-scatter.htm
+graph twoway (lfit sales price) (scatter sales price) , ytitle(Price) xtitle(Sales) title(Scatterplot Price Sales) subtitle(With fitted line) caption(Made with simulated data) note(Simulated price and sales data set with 104 weekly observation) legend(on)
 
 
+* New data exercises
+* Simulated data set on holiday expenditures of 26 clients. 
+* Age: age in years Expenditures: average daily expenditures during holidays
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer1_1.csv", encoding(UTF-8) 
 
 
+* Make two histograms, one of expenditures and the other of age. Make also a scatter diagram with expenditures on the vertical axis versus age on the horizontal axis.
 
+ histogram expenditures, frequency normal subtitle("Histogram for expenditures frequency")
+ histogram age, frequency normal subtitle("Histogram for age frequency")
 
+ graph twoway (scatter expenditures age) , ytitle(Expenditures) xtitle(Age) title(Scatterplot Expenditures Age) caption(Made with simulated data) note(Simulated data set on holiday expenditures of 26 clients. ) legend(on)
+ 
+* Compute the sample mean of expenditures of all 26 clients.
 
+summarize expenditures
+ 
+ * Compute two sample means of expenditures, one for clients of age forty or more and the other for clients of age below forty.
 
-
-
-
-
-
-
-
+summarize expenditures if age >= 40
+summarize expenditures if age < 40
 
 
 
