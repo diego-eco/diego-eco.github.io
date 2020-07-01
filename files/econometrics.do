@@ -36,12 +36,11 @@ ttest return=0
 ttest return=6
 
 ** Simple Regression
-
 clear
 import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/week1_dataset1.csv", encoding(UTF-8) 
-*Let's look at our data frame
- histogram price, frequency normal subtitle("Histogram for price frequency")
- histogram sales, frequency normal subtitle("Histogram for sales frequency")
+
+
+
 
 
 
