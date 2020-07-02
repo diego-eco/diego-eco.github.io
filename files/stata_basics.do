@@ -55,6 +55,16 @@ regress sat colgpa
 * predict fitted stores the fitted values from the regression in a data column (variable) called FITTED, and keeps it in memory.
 * predict residuals stores the residuals from the regression in a data column (variable) called FITTED, and keeps it in memory.
 
+* To calculate predicted values, use the predict command after the regress or newey command
+predict p 
+* This creates a variable “p” of the fitted values  x’beta.
+* To calculate least‐squares residuals, after the regress or newey command
+predict e, residuals 
+* This creates a variable “e” of the in‐sample residuals  y‐x’beta.
+
+
+
+
 clear
 bcuse hprice1
 
@@ -116,6 +126,7 @@ scatter price mpg
 
 *** Time Series
 * http://econ.queensu.ca/faculty/gregory/econ452/manual.pdf
+* https://www.ssc.wisc.edu/~bhansen/390/stata.pdf
 
 * We often wish to create leads or lags of certain variables and Stata needs to know what variable in our set it should identify with the time (much more on this below). 
 
@@ -126,6 +137,15 @@ import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.i
 *tsset date
 
 
+*To calculate predicted values, use the predict command after the regress or newey command
+ predict p
+*This creates a variable “p” of the fitted values  x’beta.
+*To calculate least‐squares residuals, after the regress or newey command
+ predict e, residuals
+*This creates a variable “e” of the in‐sample residuals  y‐x’beta.
+*You can then plot the fit versus actual values, and a residual time‐series
+ tsline y p
+ tsline e 
 
 
 

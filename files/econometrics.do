@@ -70,6 +70,36 @@ summarize expenditures
 summarize expenditures if age >= 40
 summarize expenditures if age < 40
 
+* Estimation exercise
+
+clear 
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer13.csv", encoding(UTF-8) 
+
+* A simple regression model for the trend in winning times is 
+* W_i=a+bG_i+e
+
+regress winningtimemen game
+
+* What prediction do you get for 2008, 2012, and 2016? 
+
+* https://www.ssc.wisc.edu/~bhansen/390/stata.pdf
+* To calculate predicted values, use the predict command after the regress or newey command
+* predict p 
+* This creates a variable “p” of the fitted values  x’beta.
+
+* The predict command can be used for point forecasting, so long as the regressors are available. The dataset first needs to be expanded as previously described, and the regression coefficients estimated using either the regress or newey commands.  
+
+* Expanding the Dataset Before Forecasting
+set obs 16
+replace game = 16 in 16
+set obs 17
+replace game = 17 in 17
+set obs 18
+replace game = 18 in 18
+
+predict predicted 
+
+* This will add to a new column all the predicted values including the new ones.
 
 
 
