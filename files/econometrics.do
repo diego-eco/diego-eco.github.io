@@ -8,6 +8,7 @@
 *Dataset S1
 *Contains 26 yearly returns based on the S&P500 index. Returns are constructed from end-of-year prices Pt as rt = (Pt – Pt-1)/Pt-1. Data has been taken from the public FRED database of the Federal Reserve Bank of St. Louis. 
 
+clear
 import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset_s1.csv", encoding(UTF-8) 
 
 * A simple stat description of our dataset:
@@ -101,6 +102,46 @@ predict predicted
 
 * This will add to a new column all the predicted values including the new ones.
 
+* Example: TrainExer15 Winning time 100 meter athletics for men and women at Olympic Games 1948-2004.
 
+* Lets compute our linear and non-linear models:
 
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer15.csv", encoding(UTF-8) 
 
+* Create our log variables
+ generate ln_win_men = ln(winningtimemen)
+ generate ln_win_women = ln(winningtimewomen)
+
+* linear and non-linear models:
+
+ regress winningtimemen game
+ regress winningtimewomen game
+ regress ln_win_men game 
+ regress ln_win_women game
+
+ * For example, we can also calculate some predictions with our non-linear models, remeber to exp() your results to remove the log()
+ 
+* Remember that the command predict will work with the last runned model. 
+ 
+set obs 16
+replace game = 16 in 16
+set obs 17
+replace game = 20 in 17
+set obs 18
+replace game = 30 in 18
+set obs 19
+replace game = 40 in 19
+set obs 20
+replace game = 50 in 20
+
+ regress winningtimemen game
+ predict predic_line_men
+ regress winningtimewomen game
+ predict predic_line_women 
+ regress ln_win_men game 
+ predict predic_log_men 
+ regress ln_win_women game
+ predict predic_log_women 
+
+ 
