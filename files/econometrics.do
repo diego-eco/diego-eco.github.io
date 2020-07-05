@@ -144,4 +144,92 @@ replace game = 50 in 20
  regress ln_win_women game
  predict predic_log_women 
 
+** Multiple regression
+
+*Simulated wage data set of 500 employees (fixed country, labor sector, and year).
+* Age: age in years (scale variable, 20-70)
+* Educ: education level (catergorical variable, values 1, 2, 3, 4)
+* Female: gender (dummy variable, 1 for females, 0 for males)
+* Parttime: parttime job (dummy variable, 1 if job for at most 3 days per week, 0 if job for more than 3 days per week)
+* Wageindex: yearly wage (scale variable, indexed such that median is equal to 100)
+* Logwageindex: natural logarithm of Wageindex 
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset2.csv", encoding(UTF-8) 
+
+* What is the total gender difference in wage, that is, including differences caused by other factors like education? (To get the total effect including education Effects, the variable education should be excluded from the model.)
  
+* What is the partial gender difference in wage, excluding differences caused by other factors like education? (To get the partial effect excluding education effects, the variable education should be included in the model.)
+
+
+ histogram wage, frequency subtitle("Histogram for wages")
+ histogram logwage, frequency subtitle("Histogram for log wages")
+* The histograms show that wage is much more skewed than log wages
+
+* The following boxplots show that females have on average lower wages than males. 
+* over : at each level of categorical variable over(var)
+* https://www.stata.com/manuals/g-2graphbox.pdf
+
+graph hbox wage, over(female,  relabel(1 "Male" 2 "Female")) title("Wage by gender")
+* graph hbox wage, by(female)
+
+graph hbox logwage, over(female,  relabel(1 "Male" 2 "Female")) title("Log Wage by gender")
+* graph hbox logwage, by(female)
+
+* simple regression analysis and explain log wage from the gender dummy, female
+
+regress logwage female
+
+
+* These Simple regression show that as compared to males, females do not differ significantly in age, but they have on average lower education and more often a part time job.
+
+regress age female
+regress educ female
+regress parttime female
+
+* How can we count the male/females separated by their education level?
+* https://www.stata.com/manuals13/dcount.pdf
+
+*Total men
+count if female==0
+*Totel women
+count if female==1
+*Total men with educ 1
+count if female==0 & educ == 1
+*Total women with educ 4
+count if female==1 & educ == 4
+
+* Let's look a deeper analysis on gender effect on wage by calculating the residuals from our first model:
+
+* To calculate least‐squares residuals, after the regress or newey command
+regress logwage female
+predict e, residuals 
+* This creates a variable “e” of the in‐sample residuals  y‐x’beta.
+
+* e on a constant and education
+regress e educ
+* an extra level of education has an effect of +22\% of the unexplained part of wage. As expected, unexplained wage is higher for higher education levels.
+
+* e on a constant and the part-time job dummy
+regress e parttime
+* having a part time job has an effect of +10\% on the unexplained part of wage, this is unexpected as we expect lower wages for part-time jobs. This result may be due to correlation with other factors. 
+
+* We estimate the complete model:
+
+regress logwage female age educ parttime
+
+* The coefficient on educ means that increasing education by one level always leads to the same relative wage increase. This effect may, however, depend on the education level, for example, if the effect is smaller for a shift from eduction level 1 to 2 as compared to a shift from 3 to 4.
+
+* We start by defining a dummy for Educ level 2 and the same for level 3 and 4:
+* https://www.stata.com/support/faqs/data-management/creating-dummy-variables/
+
+generate dum_edu2 = 0 
+replace dum_edu2 = 1 if educ==2
+generate dum_edu3 = 0 
+replace dum_edu3 = 1 if educ==3
+generate dum_edu4 = 0 
+replace dum_edu4 = 1 if educ==4
+
+* General educ models
+regress logwage female age dum_edu2 dum_edu3 dum_edu4 parttime
+

@@ -45,6 +45,20 @@ gen new_var = sat-1
 *Note: Note that a single equal sign corresponds to a variables name (as in the GENERATE command) while two equal signs are needed when dealing with a given value of a variable (as in VAR2==1).
 * by varlist  makes Stata to repeat a command for each subset of the data for which the values of the variables in varlist are equal.
 
+*** Count variables
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset2.csv", encoding(UTF-8) 
+* How can we count the male/females separated by their education level?
+* https://www.stata.com/manuals13/dcount.pdf
+
+*Total men
+count if female==0
+*Totel women
+count if female==1
+*Total men with educ 1
+count if female==0 & educ == 1
+*Total women with educ 4
+count if female==1 & educ == 4
 
 
 ***** Regression in STATA
