@@ -233,3 +233,57 @@ replace dum_edu4 = 1 if educ==4
 * General educ models
 regress logwage female age dum_edu2 dum_edu3 dum_edu4 parttime
 
+* Applications.
+
+* We return to the research question on the size and causes of gender differences in wage. We use the wage date and wage equation discussed before, including as explanatory factors the variables gender, age, education level, and an indicator for having a part time job.
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer25.csv", encoding(UTF-8) 
+
+* Compare the significance of Female in the following three models.
+
+regress logwage female
+regress logwage female age educ parttime
+regress logwage female age de2 de3 de4 parttime
+
+* Notice that After controlling for age, education, and part-time job effects, the (partial) gender effect of −4% for females is not significant anymore.
+
+* Now we show two relevant scatter diagrams:
+
+regress logwage female age educ parttime
+predict lm1_pred
+predict lm1_res, residuals 
+
+twoway (scatter logwage lm1_pred), ytitle(Log wage) xtitle(Fitted Log wage)
+*The model would provide a perfect fit if all points were located exactly on the 45 degrees line
+twoway (scatter lm1_res lm1_pred), ytitle(Residuals) xtitle(Fitted Log wage)
+* No signal of heteroscedasticity
+
+* Until now, we considered a model for the logarithm of wage, where the coefficients have the interpretation of relative wage effects. As an alternative, we now consider a model where the dependent variable is wage itself, instead of its logarithm.
+
+regress wage female age educ parttime
+predict lm2_pred
+predict lm2_res, residuals 
+
+* Again, we find significant effects of age, education, and part time jobs, but not for gender.
+* One way to choose between the two models is to check whether the regression assumptions seem reasonable or not.
+
+ twoway (scatter lm1_res lm1_pred), ytitle(Residuals) xtitle(Fitted Log wage) title(Log wage model)
+*  This diagram shows no clear patterns, as the residuals are scattered rather randomly. This diagram is therefore more in line with the assumptions of the linear regression model. For this reason, we prefer the model for log-wage above the model for wage.
+ 
+ twoway (scatter lm2_res lm2_pred), ytitle(Residuals) xtitle(Fitted Log wage) title(Level wage model)
+* This diagram shows some patterns. The variance is small on the left and large on the right, suggesting heteroskedastic error terms. The residuals also exhibit a nonlinear pattern, somewhat like a parabolic shape. We therefore have some doubts on the regression assumptions of heteroscedasticity and linearity.
+
+* Differences in effects can be modelled by replacing the single education variable by a set of three education dummies, namely for levels two, three, and four. In this way, education level one is taken as the benchmark level.
+
+regress logwage female age de2 de3 de4 parttime
+predict lm3_pred
+predict lm3_res, residuals 
+
+* Let’s look deeper into the model:
+
+* Let ei be the residuals of the model (full_lm1). If these residuals are regressed on a constant and the three education dummies we obtain:
+
+regress lm1_res de2 de3 de4
+
+* The economic interpretation is that the model with fixed education effects gives sistematicaly biased wage forecast per education level
