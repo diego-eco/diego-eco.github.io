@@ -287,3 +287,17 @@ predict lm3_res, residuals
 regress lm1_res de2 de3 de4
 
 * The economic interpretation is that the model with fixed education effects gives sistematicaly biased wage forecast per education level
+
+
+
+*** MODEL SPECIFICATION
+
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset3.csv", encoding(UTF-8) 
+* This is a stock market data set for the United States for 1927-2013 (yearly data).
+* Suppose we have a data set of a stock price index with a large number of variables which of which we suspect they may explain movements in the stock index.
+
+* Annual evolution of the S&P 500 stock price index over the years 1927 up to 2013
+
+
