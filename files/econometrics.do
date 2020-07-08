@@ -298,6 +298,66 @@ import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.i
 * This is a stock market data set for the United States for 1927-2013 (yearly data).
 * Suppose we have a data set of a stock price index with a large number of variables which of which we suspect they may explain movements in the stock index.
 
+* Define year as our time variable
+tsset year 
+
 * Annual evolution of the S&P 500 stock price index over the years 1927 up to 2013
+tsline index, title("S&P 500 stock price index")
+* the .com bubble at the end of the 1990s and its burst in the early 2000s, and the financial crisis starting 2007, 2008.
+
+* Let's take one of the explanatory variables, which is the **book-to-market ratio**. This is the book value of the firms relative to the market value. The picture on the left plots the index together with this variable, with the index in blue on the left axis and the book-to-market ratio in red on the right axis.
+
+twoway line index year, yaxis(2) || line bookmarket year, yaxis(1) title(SP500 Index and Book/Mkt)
+
+* The index grows exponentially, while the book-to-market ratio stays relatively stable over time. We can transform the series in order to get a more similar behavior. For example, to undo the exponential growth, we can take the log of the index.
+gen log_sp500 = log(index)
+
+twoway line log_sp500 year, yaxis(2) || line bookmarket year, yaxis(1) title(log SP500 Index and Book/Mkt)
+
+* It turns out that in our current application, we still need another transformation. We do not considered the log of the series directly, but the change in the log of the index from one period to the next.
+
+twoway line d.log_sp500 bookmarket year, title(d.log SP500 Index and Book/Mkt)
+
+* We can regress the change of the log index on a constant and book-to-market to study this relation in more detail.
+
+regress d.log_sp500 bookmarket
+
+* It turns out book-to-market is significant in explaining the change in the log of the stock index. It's significant at a 1% level, and the r-squared of this regression is 8%.Since book-to-market is defined as book value divided by market value, a high book-to-market period typically coincides with a period when the market value is low and has decreased.
+
+* What would happen if we regress regress the S&P500 index (without any kind of transformation) on a constant and the book-to-market ratio.  
+
+regress index bookmarket
+
+* We make a plot of the residuals e from both models:
+regress d.log_sp500 bookmarket
+predict lm1_res, residuals 
+regress index bookmarket
+predict lm2_res, residuals 
+
+tsline lm1_res , title(Residuals: d.log SP500 Index ~ Book/Mkt)
+tsline lm2_res , title(Residuals: SP500 Index ~ Book/Mkt)
+
+* The residuals in both regressions are clearly not the same. The most obvios difference is that in the Not transformed SP500 model, the residuals have a pattern and strong persistence (violating the assumption A7)
+
+* We now regress the change in the log of the S&P500 index on a constant, the book-to-market ratio, and the square of the book-to-market ratio. 
+
+* More generally, the # sign may be used to create interaction effects (age squared is just an interaction of age with itself). "c." of course is for "continuous".
+regress d.log_sp500 bookmarket c.bookmarket#c.bookmarket
+* See factor variables http://wlm.userweb.mwn.de/Stata/wstatfv.htm
+
+gen bookmarket2 = bookmarket^2
+regress d.log_sp500 bookmarket bookmarket2
+
+* We can see from the p-value of BookMarket^2 that the coefficient is insignificant, thus the relationship is not quadratic.
+
+* Now we define a dummy that is 1 for 1980 and all following years
+* https://www.stata.com/support/faqs/data-management/creating-dummy-variables/
+gen D1980 = (year >= 1980)
+
+* We now  regress the change in the log of the S&P500 index on a constant, the book-to-market ratio, and an interaction between the book-to-market ratio and the just-defined dummy.
+
+regress d.log_sp500 bookmarket c.bookmarket#D1980
+
+* We can se from the result beta_3=0.048 and is not statistically significant, therefore the relationship might be stable over the pre-post 1980 periods.
 
 
