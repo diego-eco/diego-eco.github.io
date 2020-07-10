@@ -361,3 +361,128 @@ regress d.log_sp500 bookmarket c.bookmarket#D1980
 * We can se from the result beta_3=0.048 and is not statistically significant, therefore the relationship might be stable over the pre-post 1980 periods.
 
 
+**** Application on SP500 ****
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset3.csv", encoding(UTF-8) 
+tsset year 
+
+* Variable transformation
+
+* Here is the S&P 500 index again, annual data of the period 1927 through 2013.
+
+tsline index, title("S&P 500 stock price index")
+
+* Rather than modeling the stock index directly, or some appropriate transformed version, we consider how much the stock market index earns in total, on top of simply putting money in a risk-free asset. This difference tells us how high the total reward is for taking on the risk of the stock market.
+
+* Index + Dividends
+
+
+tsline index index_div, title("S&P 500 stock price index and Index + Dividends")
+
+* We take the log to undo the exponential growth, and consider the difference of the log index to take out the trend in the log index. It turns out that the combination of these transformations gives a series that is approximately equal to a growth rate.
+
+gen log_return = log(index_div/index[_n-1])
+
+tsline log_return, title("Log return")
+
+
+* For the economic setting, we also subtract the risk-free rate, for which we take the treasury bill rate, the return on short-term government bonds
+
+
+gen log_eq_pr = log_return - log(1 + riskfree)
+
+tsline log_return log_eq_pr, title("Log return and Log Equity Premium")
+
+*** Testing Specification
+
+* Just to get going, and as we only have five explanatory variables, we run five separate simple regressions. In each of these regressions, we regress the log equity premium on one of the variables
+
+regress log_eq_pr bookmarket
+regress log_eq_pr ntis
+regress log_eq_pr divprice
+regress log_eq_pr earnprice
+regress log_eq_pr inflation
+
+* From this table, you can see that both the book-to-market and the dividend/price ratio are significant at the 5% level for the log equity premium. Also the R-squareds are highest for these two regressions.
+
+*** General-to-specific
+
+* To develop a model for the log equity premium, we apply the general-to-specific approach. In column one, the output is given for the regression of the log equity premium on all variables. For all variables, we inspect whether they are significant, and if there are insignificant variables, we eliminate the variable with the highest p-value.
+
+regress log_eq_pr bookmarket ntis divprice earnprice inflation
+regress log_eq_pr bookmarket divprice earnprice inflation 
+regress log_eq_pr bookmarket divprice earnprice
+regress log_eq_pr bookmarket earnprice
+regress log_eq_pr bookmarket
+
+
+*** Stability
+
+* As an example, we consider the stability during two important periods, the Second World War during 1939 up to 1945, and the oil crisis during 1973 up to 1975.
+
+gen war_dummy = (year >= 1939  & year <= 1945)
+gen oil_dummy = (year >= 1973  & year <= 1975)
+
+* Selected model, including two extra coefficients for the interaction of the book-to-market value with the war-dummy, and the interaction with the oil-dummy.
+
+regress log_eq_pr bookmarket c.bookmarket#war_dummy c.bookmarket#oil_dummy
+
+*** Testing Information criteria
+
+* We can compare the model we obtained (lm5) to the full model (lm1)
+* estat ic displays Akaike’s and Schwarz’s Bayesian information criteria.
+
+regress log_eq_pr bookmarket ntis divprice earnprice inflation
+estat ic
+
+regress log_eq_pr bookmarket
+estat ic
+
+* The Akaike and Bayesian information criteria confirm this. The lowest AIC and BIC values are indeed obtained for the book-to-market model, confirming this is the preferred approach.
+
+* Notice glm and binreg, ml report a slightly different version of AIC and BIC
+* https://www.stata.com/manuals13/restatic.pdf
+
+*** RESET test
+
+* After any regression. It is the Ramsey test (RESET) of specification that there is no independent power that improves significantly fit. It is the first thing to do, to solve omitted variable problems. if p-value = 0.000 is that there are variables (powers or roots of independent or dependent) omitted
+* (omitted variable test) 
+
+regress log_eq_pr bookmarket
+ovtest
+
+*** Chow Test
+
+* New commands estat sbknown and estat sbsingle test for a structural break after estimation with regress or ivregress. Both are robust to unknown forms of heteroskedasticity, something that cannot be said of traditional Chow tests.
+
+regress log_eq_pr bookmarket, vce(robust)
+
+estat sbsingle
+
+* The test DO NOT reject the null hypothesis of no structural break.
+
+* We can also perform a test for more than one structural break if we have ex-ante information about when the breaks might be.
+
+estat sbknown, break(y(1980))
+
+* The test DO NOT reject the null hypothesis of no structural break in 1980
+
+* To follow the Chow break test see:
+* https://www.stata.com/support/faqs/statistics/computing-chow-statistic/ 
+* https://kb.iu.edu/d/chow
+
+*** Jarque Bera Normality Test
+
+regress log_eq_pr bookmarket
+predict model_residuals, residuals
+
+* That "sum x,d" is Stata shorthand for "summarize x, detail", which returns a detailed statistical summary of the variable x
+* Here we can see the Skewness and Kurtosis
+sum model_residuals,d
+
+* The following test is used
+sktest model_residuals
+
+* The model does fairly well. Reset with p=1 does not reject the null of correct specification, and both Chow tests do not reject the null of no breaks. Only Jarque-Bera seem somewhat doubtful, as at 5%, we reject normality of the residuals. This may hint to some remaining specification problems.
+
