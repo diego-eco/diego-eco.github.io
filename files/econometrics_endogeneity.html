@@ -2932,7 +2932,9 @@ Cov (X_1,\epsilon) =  Cov (X_1,X_2 \beta_2 + \eta) = Cov (X_1,X_2 ) \beta_2 + Co
 <li>A second cause of endogeneity is <strong>strategic behavior</strong>.</li>
 </ol>
 <p>Consider a model in which you explain the demand for products using only its price. If the salesperson strategically sets high prices when a high demand is expected, high demand will often go together with high prices! A simple regression may then yield a positive price coefficient. This is of course not the true impact of price. <strong>Price is endogenous in this regression</strong> as it correlates with the market information, which in turn, determines demand.</p>
-<p>3.A third reason for endogeneity, is <strong>measurement error</strong>.</p>
+<ol start="3" style="list-style-type: decimal">
+<li>A third reason for endogeneity, is <strong>measurement error</strong>.</li>
+</ol>
 <p>Suppose that we have a variable y, say, salary, That depends on a factor that is difficult to measure. For example, intelligence. Let’s denote the intelligence by <span class="math inline">\(x^\ast\)</span>. We can obtain a noisy measurement of intelligence, for example through an IQ test. The test score is called x and is equal to the true intelligence plus the measurement error.</p>
 <p><span class="math display">\[
 x = x^\ast + measurement \space error
@@ -4486,13 +4488,22 @@ H_0: \delta =0
 </ol>
 <p>The distribution of n times R squared is approximately a chi-squared distribution with as degrees of freedom the number of variables that we test.</p>
 </div>
-<div id="example-of-endogeneity" class="section level3">
-<h3>Example of endogeneity</h3>
+<div id="example-endogeneity-and-instruments" class="section level3">
+<h3>Example: endogeneity and instruments</h3>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">trainexer44 &lt;-<span class="st"> </span><span class="kw">read_csv</span>(</a>
 <a class="sourceLine" id="cb7-2" data-line-number="2">  <span class="st">&quot;https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer44.csv&quot;</span>)</a></code></pre></div>
 <p><strong>trainexer44</strong></p>
 <p>Consumption of motor gasoline in the US from 1970 to 1999, including price index, disposable income, and price indices of used cars, new cars, and public transport. Data source is C. Heij et al, Econometric Methods with Applications in Business and Economics, 2004, Oxford. Original data sources: Economic Report of the President 2000 and Census Bureau and Department of Energy.</p>
-<p>Variables: - OBS: Year of observation - GC: log real gasoline consumption - PG: log real gasoline price index - RI: log real disposable income - RPN: log real price index of new cars - RPT: log real price index of public transport - RPU: log real price index of used cars</p>
+<p>Variables:</p>
+<ul>
+<li>OBS: Year of observation</li>
+<li>GC: log real gasoline consumption</li>
+<li>PG: log real gasoline price index</li>
+<li>RI: log real disposable income</li>
+<li>RPN: log real price index of new cars</li>
+<li>RPT: log real price index of public transport</li>
+<li>RPU: log real price index of used cars</li>
+</ul>
 <p>In this exercise we study the gasoline market and look at the relation between consumption and price in the USA. We will use yearly data on these variables from 1977 to 1999. Additionally we have data on disposable income, and some price indices.</p>
 <p>We consider the following model: <span class="math display">\[
 GC = \beta_1 + \beta_2PG + \beta_3RI + \epsilon
@@ -4509,7 +4520,8 @@ GC = \beta_1 + \beta_2PG + \beta_3RI + \epsilon
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">lm1 &lt;-<span class="st"> </span><span class="kw">lm</span>(PG <span class="op">~</span><span class="st"> </span>RPT <span class="op">+</span><span class="st"> </span>RPN <span class="op">+</span><span class="st"> </span>RPU <span class="op">+</span><span class="st"> </span>RI , <span class="dt">data =</span> trainexer44)</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">PG_fitted &lt;-<span class="st"> </span><span class="kw">predict</span>(lm1)</a>
 <a class="sourceLine" id="cb8-3" data-line-number="3"><span class="co"># Add predictions to data set</span></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">trainexer44 &lt;-<span class="st"> </span><span class="kw">cbind</span>(trainexer44, PG_fitted)</a></code></pre></div>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co">#trainexer44 &lt;- cbind(trainexer44, PG_fitted)</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">trainexer44 &lt;-<span class="st"> </span>trainexer44<span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">PG_fitted=</span><span class="kw">fitted</span>(lm1))</a></code></pre></div>
 <table style="text-align:center">
 <caption>
 <strong>1st Stage</strong>
@@ -4705,6 +4717,7 @@ F Statistic
 </tr>
 </table>
 <p><span class="math inline">\(~\)</span></p>
+<p>The p -value for the instruments RPT,RPN is very low, indicating a strong correlation between this instrument and the endogenous variable PG aven after controling for other variables.</p>
 <p><span class="math display">\[
 \text{2. Regress y on } \hat X 
 \]</span></p>
@@ -5072,7 +5085,332 @@ F Statistic
 <p>We check the value of <a href="https://rpubs.com/mpfoley73/460935#:~:text=R%20Functions%20dchisq%20%2C%20pchisq%20%2C%20qchisq%20%2C%20and%20rchisq&amp;text=tail%20%3D%20TRUE%20for%20left%20tail,from%20the%20chi%2Dsquare%20distribution.&amp;text=The%20chi%2Dsquared%20distribution%20has%20numerous%20applications.">chi squared statistic</a> R function qchisq(p, df, lower.tail) is the value of x at the qth percentile (lower.tail = TRUE).</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">qchisq</span>(<span class="fl">0.95</span>, <span class="dv">2</span>)</a></code></pre></div>
 <pre><code>## [1] 5.991465</code></pre>
-<p>The 5% critical value is <span class="math inline">\(\chi^2(2)=5.99\)</span> therefore as <span class="math inline">\(3.12&lt;5.99\)</span> we can NOT reject <span class="math inline">\(H_0:\)</span> Epsilon and Z are unrelated, Valid Instruments.</p>
+<p>The 5% critical value is <span class="math inline">\(\chi^2(2)=5.99\)</span> therefore as <span class="math inline">\(3.12&lt;5.99\)</span> we can NOT reject <span class="math inline">\(H_0:\)</span> Epsilon and Z are unrelated, we have valid instruments.</p>
+</div>
+<div id="ivreg-function-in-r" class="section level3">
+<h3>ivreg function in R</h3>
+<p>A quicker way to perform the Sargant test is to use the <a href="https://bookdown.org/ccolonescu/RPoE4/random-regressors.html#the-instrumental-variables-iv-method">R function ivreg()</a>. For documentation <a href="https://www.rdocumentation.org/packages/AER/versions/1.2-9/topics/ivreg">read this</a>. Notice that the vertical bar character | separates the proper regressor list from the instrument list. For a model to be identified the number of instruments should be at least equal to the number of endogenous variables. If there are more instruments than endogenous variables, the model is said to be overidentified.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="co"># Our model with endogenous variable PG</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2">gc_model &lt;-<span class="st"> </span><span class="kw">lm</span>(GC <span class="op">~</span><span class="st"> </span>PG <span class="op">+</span><span class="st"> </span>RI  , <span class="dt">data =</span> trainexer44)</a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co"># Our IV model with Instruments RI, RPT, RPN, and RPU</span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4">gc_model.iv &lt;-<span class="st"> </span><span class="kw">ivreg</span>(GC<span class="op">~</span>PG<span class="op">+</span>RI<span class="op">|</span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">            </span>RPT <span class="op">+</span><span class="st"> </span>RPN <span class="op">+</span><span class="st"> </span>RPU <span class="op">+</span><span class="st"> </span>RI, <span class="dt">data=</span>trainexer44)</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co"># Our 2SLS model for comparison purpose.</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7">lm2sls &lt;-<span class="st"> </span><span class="kw">lm</span>(GC <span class="op">~</span><span class="st"> </span>RI <span class="op">+</span><span class="st"> </span>PG_fitted , <span class="dt">data =</span> trainexer44)</a></code></pre></div>
+<table style="text-align:center">
+<caption>
+<strong>Sargan Test using ivreg function</strong>
+</caption>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+<em>Dependent variable:</em>
+</td>
+</tr>
+<tr>
+<td>
+</td>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td colspan="3">
+GC
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em>OLS</em>
+</td>
+<td>
+<em>instrumental</em>
+</td>
+<td>
+<em>OLS</em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+<em></em>
+</td>
+<td>
+<em>variable</em>
+</td>
+<td>
+<em></em>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+endog
+</td>
+<td>
+ivreg
+</td>
+<td>
+2sls
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(1)
+</td>
+<td>
+(2)
+</td>
+<td>
+(3)
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+PG
+</td>
+<td>
+-0.528<sup>***</sup>
+</td>
+<td>
+-0.544<sup>***</sup>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.026)
+</td>
+<td>
+(0.029)
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+RI
+</td>
+<td>
+0.573<sup>***</sup>
+</td>
+<td>
+0.565<sup>***</sup>
+</td>
+<td>
+0.565<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.025)
+</td>
+<td>
+(0.025)
+</td>
+<td>
+(0.041)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+PG_fitted
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+-0.544<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+(0.046)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Constant
+</td>
+<td>
+4.986<sup>***</sup>
+</td>
+<td>
+5.014<sup>***</sup>
+</td>
+<td>
+5.014<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(0.081)
+</td>
+<td>
+(0.084)
+</td>
+<td>
+(0.134)
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+</td>
+<td>
+</td>
+<td>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Observations
+</td>
+<td>
+30
+</td>
+<td>
+30
+</td>
+<td>
+30
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+R<sup>2</sup>
+</td>
+<td>
+0.987
+</td>
+<td>
+0.987
+</td>
+<td>
+0.967
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Adjusted R<sup>2</sup>
+</td>
+<td>
+0.986
+</td>
+<td>
+0.986
+</td>
+<td>
+0.964
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Residual Std. Error (df = 27)
+</td>
+<td>
+0.024
+</td>
+<td>
+0.024
+</td>
+<td>
+0.038
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+F Statistic (df = 2; 27)
+</td>
+<td>
+1,037.467<sup>***</sup>
+</td>
+<td>
+</td>
+<td>
+393.308<sup>***</sup>
+</td>
+</tr>
+<tr>
+<td colspan="4" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+<em>Note:</em>
+</td>
+<td colspan="3" style="text-align:right">
+<sup><em></sup>p&lt;0.1; <sup><strong></sup>p&lt;0.05; <sup></strong></em></sup>p&lt;0.01
+</td>
+</tr>
+</table>
+<p><span class="math inline">\(~\)</span></p>
+<p>The table shows that the importance of PG in determining GC decreases in the IV model. It also shows that the explicit 2SLS model and the IV model yield the same coefficients (the PG in the IV model is equivalent to the PG_fitted in 2SLS), but the standard errors are different. The correct ones are those provided by the IV model which are the ones we use for the Sargan Test.</p>
 </div>
 </div>
 </div>
