@@ -290,7 +290,7 @@ regress lm1_res de2 de3 de4
 
 
 
-*** MODEL SPECIFICATION
+*** MODEL SPECIFICATION ***
 
 
 clear
@@ -486,3 +486,145 @@ sktest model_residuals
 
 * The model does fairly well. Reset with p=1 does not reject the null of correct specification, and both Chow tests do not reject the null of no breaks. Only Jarque-Bera seem somewhat doubtful, as at 5%, we reject normality of the residuals. This may hint to some remaining specification problems.
 
+
+*** ENDOGENEITY ***
+
+
+*** Consequences of endogeneity 
+
+*Let’s reconsider the measurement error example where salary, denoted by y, depends on intelligence, denoted by x-star. 
+
+*However, in practice we cannot observe intelligence and can only get a noisy measurement, say an IQ score. 
+
+*The noisy measurement is denoted by x. As an illustration, we will use hypothetical data. where we randomly generate intelligence, x^*, and generate y=1+2x. The IQ score x is generated as x=x+noise.
+
+* We create the random variables for our example:
+
+* Prior to using runiform(), we set the seed so that the results are reproducible.
+
+set obs 20
+set seed 123
+* https://www.stata.com/manuals/fnrandom-numberfunctions.pdf
+generate x_1 = rnormal(2,3)
+generate y_1 = 1+2*x_1
+generate y_2 = 1+2*x_1+rnormal(0,2)
+
+
+ graph twoway (scatter y_1 y_2 x_1) , ytitle(Salary (y)) xtitle(True inteligence x IQ Score x^*) title(Simulated example y=1+2x+u) caption(Made with simulated data)
+
+ *  The OLS regression, through this cloud of points, is given by this blue line. However, this is not the line we want to have. The true effect of intelligence on salary is stronger (steeper)! This can clearly be seen by the regression line through the green dots. This red line shows the true effect we would like to estimate!
+ 
+  graph twoway (lfit y_1 x_1) (lfit y_2 x_1) (scatter y_1 y_2 x_1) , ytitle(Salary (y)) xtitle(True inteligence x IQ Score x^*) title(Simulated example y=1+2x+u with lm lines) caption(Made with simulated data)
+
+*** Example on endogeneity
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer42.csv", encoding(UTF-8) 
+
+* Simulated data on 250 observations of sales and prices of ice cream under various scenarios of the Data Generating Process [DGP]. The DGP equals:
+* Sales=100−1⋅Price+α⋅Event+ϵ1
+* Price=5⋅βEvent+ϵ2
+* The dataset contains sales and price data for different values of α and β. For each scenario the same simulated values for ϵ1 and ϵ2 were used. Specifically, the data contains 4 price series and 16 sales series.
+
+* First consider the case where the event only directly affects price (α=0).
+
+regress sales 0_0 price0
+regress sales 0_1 price1
+regress sales 0_5 price5
+regress sales 0_10 price10
+
+* As you can see, the coefficients are all close enough to the true value of −1 so there’s no problem here, price is NOT endogenous, as the event does not influence Sales directly. 
+*The R2 increases for higher values of β this is due to the fact that for higher β, more of the variations in sales can be explained.
+
+* Repeat the exercise above, but now consider the case where the event only directly affects sales, that is, set (β=0) and check the results for the four different values of α.
+
+regress sales 0_0 price0
+regress sales 1_0 price0
+regress sales 5_0 price0
+regress sales 10_0 price0
+
+* We can see that all the coefficients again are relatively close to the true value −1, again, Price is not endogenous, as the Event only affects Sales, not Price. So the omission of Event does not lead to a correlation between the Error and Price.
+
+* Finally consider the parameter estimates for the cases where the event affects price and sales, that is, look at α=β=0,1,5,10. Can you see the impact of endogeneity in this case?
+
+regress sales 0_0 price0
+regress sales 1_1 price1
+regress sales 5_5 price5
+regress sales 10_10 price10
+
+
+* We now can see consequences of endogeneity, if α=β≠0, the omition of the Event dummy will lead to correltaion between the Error term Corr(Price,ϵ)≠0. As a consequence of the correlation, the estimate can be completely off, as α=β=10 shows an estimate close to 0.
+
+*** Example: endogeneity and instruments *** 
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer44.csv", encoding(UTF-8) 
+
+* Consumption of motor gasoline in the US from 1970 to 1999, including price index, disposable income, and price indices of used cars, new cars, and public transport.
+
+* In this exercise we study the gasoline market and look at the relation between consumption and price in the USA. We will use yearly data on these variables from 1977 to 1999. Additionally we have data on disposable income, and some price indices.
+
+*We consider the following model:
+*GC=β1+β2PG+β3RI+ϵ
+
+regress GC PG RI
+
+* Give an argument why the gasoline price may be endogenous in this equation.
+* The USA is a major player in the gasoline market, so it is likely that high demand for gasoline by the USA leads to an increase in the market price, in other words, consumption (GC) and price (PG) are determined simultaneously. Therefore we suspect that gasoline price (PG) may be endogenous.
+
+
+** Use 2SLS to estimate the price elasticity (β2). Use a constant, RI, RPT, RPN, and RPU as instruments.
+
+* 1. Regress X on Z to get explained part : X=Zγ+η
+
+regress pg rpt rpn rpu ri
+
+* The p -value for the instruments RPT,RPN is very low, indicating a strong correlation between this instrument and the endogenous variable PG aven after controling for other variables.
+
+* We add the fitted values to dataset
+predict pg_fitted
+
+* 2. Regress y on X̂ 
+
+regress gc ri pg_fitted
+
+* We use PG_fitted which are the predicted values of step 1. The estimated price elasticity is −0.54 that means that a 1% price increase leads to about −0.5% decrease in consumption.
+
+* 3.Perform a Sargan test to test whether the five instruments are correlated with ϵ. What do you conclude?
+
+* First We calculate the residuals: Note that you need to use PG here, NOT PG_fitted
+
+generate res_2sls = gc -(5.01+0.56*ri-0.54*pg)
+
+* Second we regress the Res.2SLS on all the instruments:
+
+regress res_2sls rpt rpn rpu ri
+
+* The Sargent test statistic is equal to: nR2=30(0.104)=3.12 and should be compared with χ2(m−k)=χ2(5−3).
+
+*** IV regression in STATA
+
+* https://www.stata.com/manuals13/rivregress.pdf
+* Because we are treating pg as an endogenous regressor, we must have one or more additional variables available that are correlated with pg but uncorrelated with error term.
+
+* To fit the equation in Stata, we specify the dependent variable and the list of included exogenous variables. In parentheses, we specify the endogenous regressors, an equal sign, and the excluded exogenous variables. 
+*Only the additional exogenous variables must be specified to the right of the equal sign; the exogenous variables that appear in the regression equation are automatically included as instruments.
+
+ivregress 2sls gc ri (pg = rpt rpn rpu)
+
+* 2SLS model and the IV model yield the same coefficients (the PG in the IV model is equivalent to the PG_fitted in 2SLS), but the standard errors are different. The correct ones are those provided by the IV model which are the ones we use for the Sargan Test.
+
+* ivreg2 is written by Baum, Schaffer and Stillman, and produces a lot more statistics and tests including Sagan tests
+
+* You need to instal ivreg2 before using via typing "ssc describe ivreg2"
+ssc install ivreg2 
+ssc install ranktest 
+* http://mayoral.iae-csic.org/econometrics_insead20/StataIV_baum.pdf
+
+ivreg2 gc ri (pg = rpt rpn rpu)
+
+* Sargan statistic (overidentification test of all instruments):           3.125
+  *                                                 Chi-sq(2) P-val =    0.2096
+
+* The 5% critical value is χ2(2)=5.99 therefore as 3.12<5.99 we can NOT reject H0: Epsilon and Z are unrelated, we have valid instruments.
+  
