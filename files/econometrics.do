@@ -623,8 +623,87 @@ ssc install ranktest
 
 ivreg2 gc ri (pg = rpt rpn rpu)
 
-* Sargan statistic (overidentification test of all instruments):           3.125
-  *                                                 Chi-sq(2) P-val =    0.2096
+* Sargan statistic (overidentification test of all instruments): 3.125
+*   Chi-sq(2) P-val =    0.2096
 
 * The 5% critical value is χ2(2)=5.99 therefore as 3.12<5.99 we can NOT reject H0: Epsilon and Z are unrelated, we have valid instruments.
-  
+ 
+**** Case Application ****
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset4.csv", encoding(UTF-8) 
+
+* Simulated data on performance of 1000 participants of an Engineering MOOC. Performance is measured by Grade Point Average. Background variables are gender, whether participant followed a preparatory mathematics MOOC, and whether the participant received an email invitation for this preparatory MOOC.
+
+* To get some first insight in the impact of the prep course, we take a look at the correlation between GPA and participation.
+
+ graph twoway (lfit gpa participation) (scatter gpa participation), title(Participation vs GPA) 
+
+* Participation on the horizontal access only takes two possible values. Zero for no, or one for yes. From this graph it seems that GPA is indeed a bit higher for learners who have taken the prep course. The regression line confirms this idea.
+
+
+* A natural starting point is to formulate a linear model in which we regress GPA on a constant, a gender dummy variable that equals one if the learner is male and a dummy for participation.
+*GPA=β1+β2GENDER+β3PARTICIPATION
+
+
+regress gpa gender participation
+predict lm1_res,residuals
+
+* Participation seems to have a large positive impact on the GPA of about 0.8 grade point. The t-statistic suggests that this impact is also significant. The table further shows that males tend to perform slightly worse compared to females by about .2 grade point.
+
+* We now need to ask ourselves whether we should trust these OLS estimates? If you think about all you have learned from our previous sections, you might suspect that the answer is no. It is very likely that participation is endogenous.
+
+* 2SLS
+
+*Stage 1
+regress participation gender email
+* We add the fitted values to dataset
+predict part_fitted
+predict sage1_res,residuals
+
+*Stage 2
+regress gpa gender part_fitted
+
+*Stage 2 Alt with correct Std. Err.
+ivreg2 gpa gender (participation = email)
+
+* We now find a smaller but still significant impact of participation. Participation increases GPA by 0.24 points, which is considerably less then the OLS estimate of 0.84 obtained before. 
+
+*** Hausman test
+
+*We have argued in previous lectures that 2SLS will increase the estimation uncertainty. So we should only use 2SLS when participation is indeed endogenous.
+* The null hypothesis is that the variable participation is exogenous.
+*H0:PARTICIPATION exogenous
+
+* lm1.resid=β1+β2GENDER+β3PARTICIPATIN+β4stage_1.resid
+
+regress lm1_res gender participation sage1_res
+
+* The test-statistic is the number of observations times the R-squared, and equals 36.8. This number should be compared to the chi-squared distribution with one degree of freedom as we test for the endogeneity of a single variable.
+
+* As the critical value is χ2(1)=3.8, 36.8>3.8 we should reject the null hypothesis. Participation is endogenous and 2SLS should be used.
+
+* Stata does 2SLS the estimation for you to get the correct (robust) standard errors
+* http://www.eco.uc3m.es/~ricmora/mei/materials/Session_10_Testing.pdf
+
+* Notice we use ivregress, not ivreg2
+
+ivregress 2sls gpa gender (participation = email)
+estat endogenous
+* estat overid only with more instruments than endogenous variables
+
+* If the test statistic is signignicant, the variables must be treated as endogenous
+
+
+
+
+
+
+
+
+
+
+
+
+
+
