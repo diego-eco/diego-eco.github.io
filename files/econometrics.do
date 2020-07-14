@@ -2,6 +2,7 @@
 * Diego López Tamayo. El Colegio de México diego.lopez@colmex.mx]
 * Based on [MOOC](https://www.coursera.org/learn/erasmus-econom) by Erasmus University Rotterdam
 
+*** SINGLE REGRESSION ***
 
 * Parameter Estimation
 
@@ -144,7 +145,7 @@ replace game = 50 in 20
  regress ln_win_women game
  predict predic_log_women 
 
-** Multiple regression
+*** MULTIPLE REGRESSION ***
 
 *Simulated wage data set of 500 employees (fixed country, labor sector, and year).
 * Age: age in years (scale variable, 20-70)
@@ -693,6 +694,50 @@ estat endogenous
 * estat overid only with more instruments than endogenous variables
 
 * If the test statistic is signignicant, the variables must be treated as endogenous
+
+
+*** BINARY CHOICE ***
+
+* We will learn about econometric challenges when the dependent variable can take only two values.
+* When a dependent variable can only take two values, we often translate the outcomes into numerical values for notational convenience. In most applications, the values zero and one are used, but the researcher is free to use any two numbers.
+
+* We consider data from a survey distributed among a thousand households. They were asked whether they would want to buy a new electronic gadget. Each individual was faced with a different price in dollars and could answer yes or no.
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/data5_1.csv", encoding(UTF-8) 
+
+* The following graph shows a histogram of the answers. You can see that about 20% of the individuals answered, yes, and about 80% said no.
+
+histogram response, frequency subtitle("Histogram of Response frequency")
+
+* It is to be expected that the choice of individuals depends on the price of the new gadget. Next, we can see a scatter diagram of the data. 
+
+ graph twoway (scatter response price), title(Price vs Response with lm fitted line) 
+
+* The observations are indicated by circles. As you can see, there are roughly two clusters of observations. There is small cluster of observations at the top left corner. 
+
+* Although there are also observations outside the two clusters, in general, the graph suggests that the relation between choice and price is negative. Suppose that you use a linear regression model to describe a binary dependent variable response. That is:
+* response=β1+β2⋅price+ϵ
+
+regress response price
+
+* Although the dependent variable can only take two values, we can still apply least squares to estimate the model parameters. Although we can directly interpret the size of the β2 parameter, the interpretation of the size of this parameter is more difficult. Let us return to the scatter diagram shown before. 
+
+ graph twoway (lfit response price) (scatter response price), title(Price vs Response with lm fitted line) 
+ 
+* First of all, the regression line does not cross the cluster of data points in the top left corner. As the majority of the response observation is zero, the regression line turns out to be flat to make the residuals belonging to the many 0 observations small. 
+
+ graph twoway (lfit response price) (scatter response price), title(Price vs Response with lm fitted line) 
+ 
+* More importantly, the fitted line does not lead to zero or one predictions, but takes values between zero and 0.7, and in fact even values smaller than zero. The fit of the regression line is not in line with the binary character of the dependent variable.
+
+
+* The model will explicitly deal with the binary character of the dependent variable by describing the probability that the dependent variable takes the value zero or one. The fit of such a model will look like the following curve:
+* https://stats.idre.ucla.edu/stata/webbooks/logistic/chapter1/logistic-regression-with-statachapter-1-introduction-to-logistic-regression-with-stata/
+
+logit response price
+predict yhat1
+twoway scatter yhat1 response price, connect(l i) msymbol(i O) sort ylabel(0 1)
 
 
 
