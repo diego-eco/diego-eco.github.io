@@ -3489,6 +3489,186 @@ b_1 = log \left (\frac{\sum_{i=1}^n y_i }{\sum_{i=1}^n (1-y_i) } \right )
 \]</span></p>
 </div>
 </div>
+<div id="evaluating-logit-model" class="section level2">
+<h2>Evaluating logit model</h2>
+<p>In this section we discus model fit and forecast elevation for logit models. After you have specified an appropriate logit model, it is of course of interest to analyse the fit, and forecast performance of the model.</p>
+<p>First we consider model fit.</p>
+<div id="residuals" class="section level3">
+<h3>Residuals</h3>
+<p>As the logit model cannot be written in a linear regression format, it is not immediately clear how to construct residuals. However, we can use a similar idea as for the linear regression model. Residuals of the logit model can be defined as the difference between y and its expectation.</p>
+<p>The expectation of y equals the value (0,1) times the probability that y takes that value. Hence, the expectation is simply the probability that y=1. So, the residual is the difference between <span class="math inline">\(y_i\)</span> and the probability that <span class="math inline">\(y_i=1.\)</span></p>
+<p><span class="math display">\[
+\begin{split}
+\text{Residuals } &amp; \\
+y_i - E[y_i] &amp; = y_i -\left ( 0 \cdot Pr[y_i=0] + 1 \cdot Pr[y_i=1] \right ) \\
+ &amp; = y_i - Pr[y_i=1] \\
+ &amp; = y_i - \frac{exp(x_i'b)}{1+exp(x_i'b)}
+\end{split}
+\]</span></p>
+<p>Note that you can never have exactly the value of zero as the logit probability can never be exactly 0 or 1, but you can get very close to 0.</p>
+<p>Interesting cases:</p>
+<ul>
+<li>Lower bound: <span class="math inline">\(y_i - E[y_i] \approx -1\)</span> Corresponds to the situation where the value of y is 0 and expectation of y is 1</li>
+<li>Upper bound: <span class="math inline">\(y_i - E[y_i] \approx 1\)</span> Corresponds to the situation where the value of y is 1 and expectation of y is 0</li>
+<li>Perfect fit: <span class="math inline">\(y_i - E[y_i] \approx 0\)</span> In this case, the value of y is 1 and expectation equals 1 or the value of y and its expectation are both 0</li>
+</ul>
+<p>You can use residuals to analyse the performance of your logit model. Suppose that we have almost perfect fit for all observations. What is in this case the numerical value of the likelihood function?</p>
+<p><span class="math display">\[
+\text{ If we have : }y_i - \frac{exp(x_i'b)}{1+exp(x_i'b)} \approx 0 \space \forall i
+\]</span> <span class="math display">\[
+\text{ The numerical value of L function : } \prod_{i=1}^n \left ( \frac{exp(x_i'\beta)}{1+exp(x_i'\beta)} \right  )^{y_1} \left ( \frac{1}{1+exp(x_i'\beta)}  \right )^{1-y_i} \approx 1
+\]</span></p>
+<p>For all observations equal to 1, the likelihood contribution is very close to 1. And for all observations equal to 0, the likelihood contribution will also be very close to 1, as the probability that y=0 will be very close to 1. Hence, the likelihood function is the product of roughly ones and obtains the value very close to 1.</p>
+</div>
+<div id="pseudo-r-squared" class="section level3">
+<h3>Pseudo R squared</h3>
+<p>We can use this perfect-fit result to construct R-squared type measures of fit for the logit model. As parameter estimates are obtained by maximizing the likelihood function the R-squared measures are expressed in terms of the likelihood function instead of the sum of the squared residuals. Such R-squared measures are therefore called <strong>pseudo R-squared measures</strong>. The measures compare the maximum likelihood value of the logit model under consideration with the same value of a model with only an intercept.</p>
+<p>We define: - <span class="math inline">\(L(b)\)</span> the maximum value of the likelihood function of the model under consideration - <span class="math inline">\(L(b_1)\)</span> the maximum value of the likelihood function in case the model only contains an intercept.</p>
+<p>Notice that in case of perfect fit the value of the likelihood function equals about 1. Which implies that the value of the log-likelihood function equals 0. Perfect fit corresponds to <span class="math inline">\(L(b) \approx 1\)</span> or <span class="math inline">\(log(L(b)) \approx 0\)</span></p>
+<p>There are two popular pseudo R-squared measures:</p>
+<ul>
+<li>The <strong>McFadden R-squared</strong>, compares the value of the log-likelihood function of two models, both evaluated at a maximum likelihood estimate. The first model is a logit model with the explanatory variables included. The second model contains only an intercept.</li>
+</ul>
+<p><span class="math display">\[
+\begin{split}
+\text{McFadden } R^2 &amp; \\
+ &amp; R^2 =  1- \frac{log(L(b))}{log(L(b_1))} \\
+\end{split}
+\]</span> If the model with explanatory variables has about the same likelihood value as the model with only the intercept, the explanatory variables hardly contribute to the fit of the model. The R-squared is then close to 0 indicating that the fit is not good. In case of perfect fit, the likelihood function of the model with the explanatory variables is roughly 0 and hence the R-squared measure equals 1. In all other cases the R-squared measure is smaller than 1 but positive. In practice the value of this R-squared is usually rather low, as perfect fit is hardly realized.</p>
+<ul>
+<li>The <strong>Nagelkerke R-squared</strong>, uses values of likelihood functions instead of the log-likelihood functions.</li>
+</ul>
+<p><span class="math display">\[
+\begin{split}
+\text{Nagelkerke } R^2 &amp; \\
+ &amp; R^2 =  1- \frac{1- \left ( \frac{L(b)}{L(b_1)}\right )^{2/n} }{1- L(b_1)^{2/n}} \\
+\end{split}
+\]</span></p>
+<p>From the formula you can see that in case of perfect fit with L(b) equal to 1, the R-squared also equals 1. When the model with only the intercept provides the same maximum likelihood value as the model with explanatory variables, then the Nagelkerke R-squared equals 0. This R-squared is always between 0 and 1, and usually takes much higher values than the McFadden R-squared.</p>
+<p>The choice between the two R squared measures is mostly a matter of taste.</p>
+</div>
+<div id="prediction-probability" class="section level3">
+<h3>Prediction probability</h3>
+<p>Apart from determining which variables explain choice, the logit model can also be used to predict the value of y for new observations for given explanatory variables <span class="math inline">\(x_{n+1}\)</span>. As you already have seen before, the expected value of <span class="math inline">\(y_{n+1}\)</span> is equal to the probability that <span class="math inline">\(y=1\)</span>. Hence, an unbiased prediction of <span class="math inline">\(y\)</span> is equal to the probability that <span class="math inline">\(y=1\)</span>.</p>
+<p>If the value of <span class="math inline">\(x_n+1\)</span> is available, one can predict the value of <span class="math inline">\(y_n+1\)</span> using:</p>
+<p><span class="math display">\[
+\begin{split}
+\text{Prediction : } &amp; \\
+E[y_{n+1}] &amp; =  0 \cdot Pr[y_{n+1}=0] + 1 \cdot Pr[y_{n+1}=1] \\
+ &amp; = Pr[y_{n+1}=1] \\
+ &amp; = \frac{exp(x_{n+1}'\beta)}{1+exp(x_{n+1}'\beta)}
+\end{split}
+\]</span></p>
+<p>To estimate this probability we replace <span class="math inline">\(\beta\)</span> by its estimate <span class="math inline">\(b\)</span> and obtain <span class="math inline">\(\hat {Pr}[y_{n+1}=1]=\frac{exp(x_{n+1}'b}{1+exp(x_{n+1}'b)}\)</span>.</p>
+<p>The constructed forecast is a probability and not equal to 1 or 0. To construct a 0 or 1 forecast we need to transform the forecasted probability into a value of either 1 or 0. A simple decision rule is to forecast the Outcome 1 if the predicted probability that y=1 is larger than the threshold c, and to make the forecast 0, if the forecast probability is smaller or equal to c.</p>
+<p>Transform the prediction probability into 0 or 1 forecast <span class="math inline">\(\hat y_{n+1}\)</span> by the rule:</p>
+<p><span class="math display">\[
+\hat y_{n+1} = 1 \space \text{ if } \space \hat {Pr}[y_{n+1}=1] &gt; c
+\]</span> <span class="math display">\[
+\hat y_{n+1} = 0 \space \text{ if } \space \hat {Pr}[y_{n+1}=1] \leq c
+\]</span> <span class="math display">\[
+\text{Many statistical packages use c = 0.5. However, one may also consider} 
+\]</span> <span class="math display">\[
+\text{ The fraction of ones (1) in the sample } \Rightarrow c = \frac{1}{n} \sum^n_{i=1}y_i \space 
+\]</span></p>
+<p>Does a higher value of the cut-off value c generate more, the same or less predictions equal to 1? A higher value of c means that less or the same number of forecasted probabilities are above c, and hence you forecast less or the same number of outcomes to be one for a higher value of c.</p>
+<p>If your data contains a high percentage of ones, the predicted probabilities are very likely to be close to 1. And hence a cut-off value of 1/2 sometimes results in no zero predictions. A common option in this case is to take for c the percentage of observations equal to 1 in the sample. This implies that you only forecast the outcome to be 1 if the predicted probability is larger than the percentage of ones in the data.</p>
+</div>
+<div id="evaluating-forecast" class="section level3">
+<h3>Evaluating forecast</h3>
+<p>To evaluate point forecast, you can use so-called <strong>prediction-realization tables</strong>. Such a table provides an overview of the forecast performance of the logit model. To construct this table, you need to know the true outcomes corresponding to the predictions. The table is based on the relative number of times your prediction does or does not match the true outcome.</p>
+<p>Here see the four counts you need to construct the table for the situation where you have m predictions:</p>
+<p><span class="math display">\[
+\begin{split}
+m_{11}=\sum^m_{i=1} y_{n+i} \hat y_{n+i} &amp; \space \space \text{ data=1 , prediction=1} \\ 
+m_{00}=\sum^m_{i=1} (1-y_{n+i}) (1-\hat y_{n+i}) &amp; \space \space \text{ data=0 , prediction=0} \\
+m_{10}=\sum^m_{i=1} y_{n+i} (1-\hat y_{n+i}) &amp; \space \space \text{ data=1 , prediction=0} \\
+m_{01}=\sum^m_{i=1} (1-y_{n+i}) \hat y_{n+i} &amp; \space \space \text{ data=0 , prediction=1} \\
+\end{split}
+\]</span></p>
+<p>The prediction realization table displays the counts in a 2 times 2 matrix in an orderly way.</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(Obs/Predic\)</span></th>
+<th align="center"><span class="math inline">\(\hat y=0\)</span></th>
+<th align="center"><span class="math inline">\(\hat y=1\)</span></th>
+<th align="center"><span class="math inline">\(sum\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(y=0\)</span></td>
+<td align="center"><span class="math inline">\(m_{00}/m\)</span></td>
+<td align="center"><span class="math inline">\(m_{01}/m\)</span></td>
+<td align="center"><span class="math inline">\((m_{00} + m_{01})/m\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y=1\)</span></td>
+<td align="center"><span class="math inline">\(m_{10}/m\)</span></td>
+<td align="center"><span class="math inline">\(m_{11}/m\)</span></td>
+<td align="center"><span class="math inline">\((m_{10} + m_{11})/m\)</span></td>
+</tr>
+<tr class="odd">
+<td align="center"><span class="math inline">\(sum\)</span></td>
+<td align="center"><span class="math inline">\((m_{00} + m_{10})/m\)</span></td>
+<td align="center"><span class="math inline">\((m_{01} + m_{11})/m\)</span></td>
+<td align="center"><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>The <span class="math inline">\(m_{11}/m\)</span> cell contains, for example, the relative frequency that both the forecast and the actual outcome are 1.</li>
+<li>The sum of the two diagonal elements <span class="math inline">\((m_{00}/m) + (m_{11}/m)\)</span> in the table is called the <strong>hit rate</strong>. This value indicates the relative number of correct predictions. To shed light on the forecasting performance of a logit model, we can compare the hit rate of the model with the hit rate based on random prediction.</li>
+<li>The sum of the two off-diagonal elements <span class="math inline">\((m_{10}/m) + (m_{01}/m)\)</span> indicate the relative number of incorrect predictions, which of course equals 1 minus the hit rate.</li>
+<li>The last column and last row in the table show the sum of the two columns and rows.</li>
+<li>The bottom row indicates the fraction of zero and one predictions, and the last column the observed fraction of zeros and ones.</li>
+</ul>
+</div>
+<div id="example-of-forecast-evaluation" class="section level3">
+<h3>Example of forecast evaluation</h3>
+<p>A researcher constructed a logit model for a binary dependent variable yi and (s)he wants to use this model for forecasting. Assume that the logit model is the true model and that the used sample is large enough to ensure that the estimated parameters correspond to their true value.</p>
+<p>(S)he constructs forecasted probabilities denoted by <span class="math inline">\(\hat p_i\)</span> for <span class="math inline">\(m\)</span> new values of yi and wants to transform these values to 0/1 predictions using a cut-off value c. In this exercise we are going to derive which value of c the researcher has to choose to maximize the expected hit rate.</p>
+<p>Consider the following pay-off matrix for the four situations that can occur:</p>
+<table>
+<thead>
+<tr class="header">
+<th align="center"><span class="math inline">\(Obs/Predic\)</span></th>
+<th align="center"><span class="math inline">\(\hat y=0\)</span></th>
+<th align="center"><span class="math inline">\(\hat y=1\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center"><span class="math inline">\(y=0\)</span></td>
+<td align="center"><span class="math inline">\(1\)</span></td>
+<td align="center"><span class="math inline">\(0\)</span></td>
+</tr>
+<tr class="even">
+<td align="center"><span class="math inline">\(y=1\)</span></td>
+<td align="center"><span class="math inline">\(0\)</span></td>
+<td align="center"><span class="math inline">\(1\)</span></td>
+</tr>
+</tbody>
+</table>
+<p>When the researcher predicts a one (zero) and the true value of y is zero (one) the pay-off is 0. When (s)he predicts a one or zero and the prediction is correct, the pay-off is 1.</p>
+<ol style="list-style-type: decimal">
+<li>What is the expected pay-off in case the researcher predicts a one? (Hint. The true value y is a one with probability <span class="math inline">\(\hat p_i\)</span>)</li>
+</ol>
+<p>The payoff is 1 if the true observation is 1, which occurs with probability <span class="math inline">\(\hat p_i\)</span> and 0 if the true observartion is 0. Hence the expected payoff is: <span class="math inline">\((1-\hat p_i)\cdot 0 + \hat p_i \cdot 1 = \hat p_i\)</span></p>
+<ol start="2" style="list-style-type: decimal">
+<li>What is the expected pay-off in case the researcher predicts a zero?</li>
+</ol>
+<p>The payoff is 1 if the true observation is 0, which occurs with probability <span class="math inline">\((1-\hat p_i)\)</span> and 0 if the true observartion is 1. Hence the expected payoff is: <span class="math inline">\((1-\hat p_i)\cdot 1 + \hat p_i \cdot 0 = (1-\hat p_i)\)</span></p>
+<ol start="3" style="list-style-type: decimal">
+<li>Use the results in (1) and (2) to derive the optimal threshold to predict a one.</li>
+</ol>
+<p>You predict a 1 if the expected payoff of forecasting a 1 is larger or equal than the expected payoff of forecasting a 0, that is:</p>
+<p><span class="math display">\[
+\hat p_i \geq (1-\hat p_i) \Rightarrow 2\hat p_i \geq 1 \Rightarrow \hat p_i \geq 1/2
+\]</span> Thus the optimal threshold is <span class="math inline">\(c=1/2\)</span>.</p>
+</div>
+</div>
 </div>
 <div class="footnotes">
 <hr />
