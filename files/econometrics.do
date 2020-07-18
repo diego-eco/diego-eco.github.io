@@ -740,15 +740,113 @@ predict yhat1
 twoway scatter yhat1 response price, connect(l i) msymbol(i O) sort ylabel(0 1)
 
 
+*** Logistic function ***
+clear 
+
+* We generate a sequence of 100 numbers from -5 to 5
+*https://www.stata.com/manuals13/drange.pdf
+range x -5 5 100
+
+* We generate some logistic functions to compared
+gen y_1 = (exp(0+x))/(1+exp(0+x))
+gen y_2 = (exp(0+3*x))/(1+exp(0+3*x))
+gen y_3 = (exp(0-x))/(1+exp(0-x))
+gen y_4 = (exp(2+x))/(1+exp(2+x))
+gen y_5 = (exp(-2+x))/(1+exp(-2+x))
 
 
+* You can clearly see that the probability is bounded between 0 and 1. The probability that Pr[y=1]=1/2 when xi=0. In general, the probability increases when x increases. The increase in probability is, however, not linear like in a linear regression model. For small values of x, the probability is really close to zero, and for large x the probability is nearly one.
+graph twoway (line y_1 x ), title(Logistic function)
+
+*To illustrate the role of the beta_2 parameter, we now change the size of this parameter. The new line shows the probability that y=1 in case β2 is three times as large. You can clearly see that the logistic function now is steeper:
+
+graph twoway (line y_1 x )(line y_2 x ), title(Logistic function)
+
+*Now we’ve made the β2 parameter negative. The new line shows a logit probability in case β2=−1. You can see that the logit probability is now a decreasing function of x. In fact, the probability plot is the mirror image of the original plot if you place a mirror vertically at x equal to 0.
+
+graph twoway (line y_1 x )(line y_3 x ), title(Logistic function)
+
+* Let us now change the value of the intercept parameter β1. The new line shows the logit probability where β1=2 instead of 0. You can see that the shape of the logit function stays the same, but that the location has changed. The graph has moved two units of x to the left. The logit probability is now 1/2 at x=−2, while in the original case, this happens at x equals 0. If we set β1=−2the graph moves two units to the right and the shape of the curve stays the same.
+
+graph twoway (line y_1 x )(line y_4 x )(line y_5 x ), title(Logistic function)
+
+*** Logit application ***
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/datalecture55.csv", encoding(UTF-8) 
+
+* This dataset contains the responses of 925 clients of a commercial bank to a direct marketing campaign for a new financial product.
+
+* Before constructing an econometric model, let us first look at the characteristics of the data.
+
+describe
+summarize
+mean activity
+mean male
+mean male if response == 1
+mean male if response == 0
+mean activity if response == 1
+mean activity if response == 0
+
+* Create a table in Stata
+* https://www.reed.edu/psychology/stata/gs/tutorials/tables.html
+
+table activity male, c(mean response) row col
 
 
+*** Specifying the model
+* Because of the binary character of our independent variable, we use the logit model to describe response. As explanatory variables will include the gender dummy, the activity status, age and age squared.
 
+* https://stats.idre.ucla.edu/stata/dae/logistic-regression/
+* https://stats.idre.ucla.edu/stata/webbooks/logistic/chapter1/logistic-regression-with-statachapter-1-introduction-to-logistic-regression-with-stata/
 
+logit response male activity age c.age#c.age
 
+* The p-values in the final column indicate that all parameters are significant at the five percent level, including the parameter belonging to the square of age.
 
+* A likelihood ratio test for the significance of the four parameters, excluding the intercept, gives the value of 78.35, which is significant at the 5 percent level based on the Chi-square distribution with 4 degrees of freedom. (You can see this test in the LR chi2(4) in the output.)
 
+* You can also exponentiate the coefficients and interpret them as odds-ratios. Stata will do this computation for yo
 
+logit , or
 
+* We may also wish to see measures of how well our model fits. This can be particularly useful when comparing competing models.  fitstat
+fitstat
+
+* In sample forecast analysis
+predict yfitted
+gen type=0
+replace type = 1 if response == 0 & yfitted < 0.5
+replace type = 2 if response == 0 & yfitted >= 0.5
+replace type = 3 if response == 1 & yfitted < 0.5
+replace type = 4 if response == 1 & yfitted >= 0.5
+count if type==1
+count if type==2
+count if type==3
+count if type==4
+
+*** Likelihood ratio test
+* https://www.stata.com/manuals13/rlrtest.pdf
+
+* We fit the following model:
+logit response male activity age c.age#c.age
+* We now wish to test the constraint that the coefficients on age, lwt, ptl, and ht are all zero or, equivalently here, that the odds ratios are all 1
+test male activity age
+* We save the current model:
+estimates store full
+* We then fit the constrained model, which here is the model omitting male and constant
+logit response activity age c.age#c.age, nocons
+* That done, lrtest compares this model with the model we previously stored
+lrtest full
+* We reject the null H0:β1=β2=0 at 5% level.
+
+* Anothe method https://stats.idre.ucla.edu/stata/faq/how-can-i-perform-the-likelihood-ratio-wald-and-lagrange-multiplier-score-test-in-stata/
+
+logit response male activity age c.age#c.age
+estimates store m1
+logit response activity age c.age#c.age, nocons
+estimates store m2
+lrtest m1 m2
+
+* https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
 
