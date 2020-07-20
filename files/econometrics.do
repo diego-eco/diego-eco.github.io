@@ -850,3 +850,89 @@ lrtest m1 m2
 
 * https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
 
+***** TIME SERIES *****
+
+
+* Time series data are a specific type of data that need a somewhat special treatment when using econometric methods. The specific aspect of time series variables is that they are sequentially observed. That is, one observation follows after another. The sequential nature of time series observations has important implications for modeling and especially for forecasting and this is different from the cross-sectional data that we have mostly looked at so far.
+
+*** Example Airline revenue
+* Simulated data set on yearly revenue passenger kilometers, 1975-2015 (estimation period 1976-2015, with pre-sample value for 1975).
+
+* First we import the dataset and define the date variable
+* https://www.ssc.wisc.edu/sscc/pubs/stata_dates.htm
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset61.csv", encoding(UTF-8) 
+
+*https://www.stata.com/manuals13/tstsset.pdf
+tsset year
+
+* The first graph gives the actual total number of kilometers traveled. The second graph is obtained when taking natural logs and the  third graph shows the yearly growth rates.
+gen x1a=log(rpk1)
+gen dx1a=x1a[_n]-x1a[_n-1]
+
+* https://www.stata.com/manuals/g-2graphtwowaytsline.pdf
+
+twoway tsline rpk2, title(rpk2 in level)
+twoway tsline x1, title(rpk2 in logarithm)
+twoway tsline dx1, title(rpk2 in growth rate)
+
+* he raw data on the left seems somewhat exponentially increasing, whereas the trend for the log of the time series seems more linear. The yearly growth rates fluctuate between minus 2% and plus 4%. 
+
+* A constant mean is one aspect of what we call stationarity. For a stationary time series like in the D.log(RPK1) graph here, we have a straightforward modeling strategy. But for non-stationary time series, we will first need to get rid of this non-stationarity.
+
+* This issue of trends is even more important when two time series show similar trending behavior. Look at this graph that depicts the revenue passenger kilometers of two airlines.
+
+twoway tsline rpk1 rpk2, title(rpk1 and rpk2 in level)
+twoway tsline x1 x2, title(rpk1 and rpk2 in logarithm)
+
+* Clearly, they seem to have the same trend, especially when you take logs. This feature can be useful for forecasting in the following way. You may use both time series to estimate the common trend, then you can forecast the trend. And finally, derive the individual forecast for each of the airlines.
+
+*** Example spurious regression
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexer61.csv", encoding(UTF-8) 
+
+* The datafile contains values of four series of length 250. Two of these series are uncorrelated white noise series denoted by ϵx,t and ϵy,t where both variables are NID(0,1) and E(ϵy,t,ϵx,s)=0 ∀t,s. The other two series are so-called random walks constructed from these two white noise series by xt=xt−1+ϵxt and yt=yt−1+ϵyt.
+
+* As ϵxt and ϵyt are independent for all values of t and s, the same holds true for all values of xt and yt The purpose of this exercise is to experience that, nonetheless, the regression of y on x indicates a highly significant relation between y and x if evaluated by standard regression tools. This kind of result is called spurious regression and is caused by the trending nature of the variables x and y.
+
+
+* Graph the time series plot of xt against time t, the time series plot of yt against time t, and the scatter plot of yt against xt
+* We create an index for each observation (date)
+generate date = _n
+tsset(date)
+
+graph twoway (line x date) , ytitle(x) xtitle(date) title(x in time) caption(Made with simulated data)
+
+graph twoway (line y date) , ytitle(x) xtitle(date) title(x in time) caption(Made with simulated data)
+
+graph twoway (scatter x y) , ytitle(y) xtitle(x) title(x vs y) caption(Made with simulated data)
+
+* The two variables X,Y have completly random movements up and down. And the scatter plot seems to have a negative relation, so we could use X to forecast Y, but we know that this is not the case, the scatterplot is misleading in this sense.
+
+* To check that the series ϵxt and ϵyt are uncorrelated, regress ϵyt on a constant and ϵxt. Report the t-value and p-value of the slope coefficient.
+
+regress epsy epsx
+
+* The t-value of the coefficient is around -1.32 and the p-value around 0.19, this shows that ϵxt and ϵyt have no significant relation.
+
+* Extend the analysis of part (b) by regressing ϵyt on a constant, ϵxt, and three lagged values of ϵyt and of ϵxt
+
+regress epsy L.epsy L2.epsy L3.epsy epsx L.epsx L2.epsx L3.epsx
+
+* We can see the F-statistic at the top of the output. F=0.55  and as is smaller of the critical value of 2. We do NOT reject the H0. This is correct as the value of ϵyt is independent of all other observations.
+
+* Regress y on a constant and x. Report the t-value and p-value of the slope coefficient. What conclusion would you be tempted to draw if you did not know how the data were generated?
+
+regress y x
+
+* t seems by looking at the large t-value of X that X has a relevant explanatory power over Y. We know that this is not the case, so the regression is misleading, due to the trending nature of both variables.
+
+* Let et be the residuals of the regression of part (d). Regress et on a constant and the one-period lagged residual et−1. What standard assumption of regression is clearly violated for the regression in part (d)?
+
+predict resid, residuals
+regress resid L.resid
+
+* This coefficient is significant at 99%, this shows that the residuals are very strongly correlated. Therefore violates the standar regression assumption A7 that the error terms should be uncorrelated.
+
