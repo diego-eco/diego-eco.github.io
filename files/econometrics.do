@@ -936,3 +936,171 @@ regress resid L.resid
 
 * This coefficient is significant at 99%, this shows that the residuals are very strongly correlated. Therefore violates the standar regression assumption A7 that the error terms should be uncorrelated.
 
+*** REPRESENTING TIME SERIES 
+
+* Back to airlines example
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset61.csv", encoding(UTF-8) 
+tsset year
+
+* Let us return now to the airline revenue passenger kilometers data. The data show a trend. And the growth rates do not.
+
+tsline x1, title("log(RPK2)")
+tsline dx1, title("D.log(RPK2)")
+
+* We plot the Autocorrelation Function (ACF) function and the Partial Autocorrelation Function (PACF)
+
+ac x1, title("Autocorrelation log(RPK2)")
+pac x1, title("Partial Autocorrelation log(RPK2)")
+
+ac dx1, title("Autocorrelation D.log(RPK2)")
+pac dx1, title("Partial Autocorrelation D.log(RPK2)")
+
+* The autocorrelations of the log series show a very slowly decaying pattern. And the partial autocorrelations are only large at lag 1. The values for the growth rates are not significant, as the number of observations is 39 and 2 divided by the square root of 39 is about 0.3.
+
+
+*** EVALUATION OF TIME SERIES ***
+* Example of Revenue Airline
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset61.csv", encoding(UTF-8) 
+tsset year
+
+* Consider again the two series on revenue passenger kilometers for two airlines. Clearly the two times series show a trending pattern. Note that we have transformed the original series here by taking natural logs, which makes their trends approximately linear.
+
+tsline x1 x2, title("log(RPK1) and log(RPK2)")
+
+* On the other hand, the first differences, which here can be interpreted as annual growth rates, seem stationary because they fluctuate around a constant mean.
+
+tsline dx1 dx2, title("D.log(RPK1) and D.log(RPK2)")
+
+
+*To save notation, we use yt for the logs of each of the series.
+
+*** 1. Check for stationarity
+
+* Dickey Fuller Test https://www.stata.com/manuals13/tsdfuller.pdf
+
+*In the ADF test equation, we include a constant (α), a deterministic trend term βt, and a single lag of ΔX1t
+dfuller x1, lags(1) trend regress
+
+*In the ADF test equation, we include a constant (α), a deterministic trend term βt, and a single lag of ΔX2t
+dfuller x2, lags(1) trend regress
+
+*** As both ADF t values are larger than the critical value -3.5 X1 and X2 are not stationary.
+
+* Now let’s test the first difference DX1 and DX2
+
+*In the ADF test equation, we include a constant (α), a deterministic trend term βt, and a single lag of ΔX1t and ΔX2t
+dfuller x1, lags(1) trend regress
+dfuller x2, lags(1) trend regress
+
+
+* When we analyze the growth rates, there is no reason to add any deterministic trend in the test regression.
+dfuller dx1, lags(1) regress
+dfuller dx2, lags(1) regress
+
+*** As both t values are smaller than the critical value -2.9, DX1 and DX2 are both stationary.
+
+
+**** 2. Check for causality
+
+* Next, we investigate if the two series are mutually linked. For that purpose we estimate two autoregressive distributed lag models, one for the growth rates of X1 (DX1) and the other for those of X2 (DX2)
+*We include two lags of each, and in the table you see the estimated coefficients, their t-statistics and the associated p-values.
+
+*We estimate the two following regressions:
+
+* Model for dx1
+regress dx1 L.dx1 L2.dx1 L1.dx2 L2.dx2
+
+* We can see from the results for the first regression that the p-values for the coefficients for lags of ΔX2,t tγ1=1.74 and tγ2=−1.27.
+* For a joint test (F-test)  _b[L1.dx2]=_b[L2.dx2]=0
+test _b[L1.dx2]=_b[L2.dx2]=0
+* "We do not reject H_0 at 0.95%" 
+* There’s no indication that DX2 is granger causal for DX1
+
+* Model for dx2
+regress dx2 L.dx2 L2.dx2 L1.dx1 L2.dx1
+test _b[L1.dx1]=_b[L2.dx1]=0
+
+*  "We reject H_0 at 0.95% in favor of H_1"
+* There’s evidence that DX1 is granger causal for DX2
+
+
+* Clearly, growth rates of X1 (DX1) can be predicted by their own past, and some of that past is also informative for DX2. So airline one is Granger causal for airline two, but not the other way around. And note that you need formal tests to establish this result, as the graphs are in no way informative in this respect.
+
+
+*** 2. Check for cointegration
+
+* Next, let us investigate whether the two series are cointegrated. The linear regression of X2 on X1 gives the candidate long-run equilibrium relation with a slope coefficient of 0.92
+regress x2 x1
+
+* Step 1 OLS : X2,t=0.01+0.92X1,t+et
+
+*  We add the residuals into the dataset
+predict res_eq, residuals
+* Perform ADF on residuals without constant
+dfuller res_eq, lags(1) noconstant regress
+
+* The ADF test is based on the estimate of −0.50 for the coefficient of e in period t−1 in the relevant auxiliary regression. And it equals t=−3.558. And as this is smaller than the 5% critical value −3.4, we can conclude that the residuals from the regression in step one are stationary. .
+
+* Step 2 ADF : Δet=0.00−0.50et−1+0.30Δet−1+rest
+
+
+** And thus, that X1 and X2 are co-integrated
+
+* When we now include the error correction term in the model for the growth rates of X1
+generate correc = L.x2-0.92*L.x1
+* ECM1 (after removing insignificant coefficients) and susbtituing
+regress dx1 L.dx1 correc
+
+* ECM2 (after removing insignificant coefficients) and susbtituing
+regress dx2 correc
+
+* When we now include the error correction term in the model for the growth rates of X1, we get an adjustment parameter of 0.46. And when we include it in the model for the growth rates of X2, we get −0.45.
+
+
+* The signs of these parameters imply that X1 and X2 cannot deviate too much from their equilibrium. For example, suppose that there is a positive deviation in period t−1. This will have an increasing effect on X1t in period t and a decreasing effect on X2t. And as a result, the deviation from equilibrium is expected to decline in period t. Note also that deviations from the equilibrium are corrected by changes in both X1t and X2t
+
+
+*** 3. ECM: Check for serial correlation and normality
+
+*Serial Correlation Test Breusch-Godfrey test for higher-order serial correlation.
+
+regress dx1 L.dx1 correc
+estat bgodfrey, lags(1)
+* Null: No autocorrelation not rejected
+
+regress dx2 correc
+estat bgodfrey, lags(1)
+* Null: No autocorrelation not rejected
+
+* Breusch-Godfrey test (1 lag) : BG1=0.29<3.9,BG2=1.23<3.9 No autocorrelation
+
+
+* Normality test Jarque Bera
+regress dx1 L.dx1 correc
+predict ecm1_res, residuals
+* Null: Normality not rejected 
+sktest ecm1_res
+
+regress dx2 correc
+predict ecm2_res, residuals
+* Null: Normality not rejected 
+sktest ecm2_res
+
+* Jarque-Bera test : JB1=0.38<6,JB2=1.82<6. Normality not rejected
+
+* The absence of such correlation is also visible from the sample autocorrelations of the residuals shown in this graph. Only 1 out of the 20 autocorrelations is outside the 95% confidence bound, and this is not unusual for a test with significance level 5%
+
+ac ecm1_res, title("Autocorrelation of residuals ecm1")
+ac ecm2_res, title("Autocorrelation of residuals ecm2")
+
+
+
+
+
+
+
+
