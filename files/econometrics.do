@@ -2,7 +2,12 @@
 * Diego López Tamayo. El Colegio de México diego.lopez@colmex.mx]
 * Based on [MOOC](https://www.coursera.org/learn/erasmus-econom) by Erasmus University Rotterdam
 
-*** SINGLE REGRESSION ***
+
+*********************************** 
+
+**************** SINGLE REGRESSION 
+
+***********************************
 
 * Parameter Estimation
 
@@ -145,7 +150,12 @@ replace game = 50 in 20
  regress ln_win_women game
  predict predic_log_women 
 
-*** MULTIPLE REGRESSION ***
+
+*********************************** 
+
+**************** MULTIPLE REGRESSION 
+
+***********************************
 
 *Simulated wage data set of 500 employees (fixed country, labor sector, and year).
 * Age: age in years (scale variable, 20-70)
@@ -291,7 +301,11 @@ regress lm1_res de2 de3 de4
 
 
 
-*** MODEL SPECIFICATION ***
+*********************************** 
+
+**************** MODEL SPECIFICATION
+
+***********************************
 
 
 clear
@@ -488,8 +502,12 @@ sktest model_residuals
 * The model does fairly well. Reset with p=1 does not reject the null of correct specification, and both Chow tests do not reject the null of no breaks. Only Jarque-Bera seem somewhat doubtful, as at 5%, we reject normality of the residuals. This may hint to some remaining specification problems.
 
 
-*** ENDOGENEITY ***
 
+*********************************** 
+
+**************** ENDOGENEITY 
+
+***********************************
 
 *** Consequences of endogeneity 
 
@@ -696,7 +714,11 @@ estat endogenous
 * If the test statistic is signignicant, the variables must be treated as endogenous
 
 
-*** BINARY CHOICE ***
+*********************************** 
+
+**************** BINARY CHOICE LOGISTIC REGRESSION
+
+***********************************
 
 * We will learn about econometric challenges when the dependent variable can take only two values.
 * When a dependent variable can only take two values, we often translate the outcomes into numerical values for notational convenience. In most applications, the values zero and one are used, but the researcher is free to use any two numbers.
@@ -850,7 +872,11 @@ lrtest m1 m2
 
 * https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqhow-are-the-likelihood-ratio-wald-and-lagrange-multiplier-score-tests-different-andor-similar/
 
-***** TIME SERIES *****
+*********************************** 
+
+**************** TIME SERIES 
+
+***********************************
 
 
 * Time series data are a specific type of data that need a somewhat special treatment when using econometric methods. The specific aspect of time series variables is that they are sequentially observed. That is, one observation follows after another. The sequential nature of time series observations has important implications for modeling and especially for forecasting and this is different from the cross-sectional data that we have mostly looked at so far.
@@ -1098,9 +1124,184 @@ ac ecm1_res, title("Autocorrelation of residuals ecm1")
 ac ecm2_res, title("Autocorrelation of residuals ecm2")
 
 
+***** Application on Production and CLI
+
+clear
+import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/dataset62.csv", encoding(UTF-8) 
+
+gen date_n = subinstr(yyyymm,"M","",.)
+gen int year = real(substr(date_n,1,4))
+gen int month = real(substr(date_n,5,2))
+gen date = ym(year,month)
+format date %tm
+tsset date
+
+
+tsline ip cli, title("IP and CLI levels")
+tsline logip logcli, title("IP and CLI logarithm")
+tsline logip logcli, title("IP and CLI logarithm")
+
+* At first glance, the series also seem to obey roughly similar cyclical behavior, which in this case can be associated with the business cycle. If you examine the two series in detail, you may observe that the turning points in this cycle occur earlier in the CLI than in industrial production. And this is exactly the feature that leads to the idea that the CLI may have relevant information for predicting industrial production.
+
+tsline grip grcli, title("IP and CLI Growht Rates")
+
+
+*** Separate data set
+* We take the period from 1986 until 2005 as our estimation sample so that 240 observations are available for estimation. And, we then use the 24 months in 2006 and 2007 as a holdout sample to evaluate our forecasts.
+
+* To filter by date we use the unformated date number date > tm(2005m1)
+
+
+*** Test unit root http://www.econ.uiuc.edu/~econ508/Stata/e-ta8_Stata.html
+
+*In the ADF test equation, we include a constant (α), a deterministic trend term βt, and three lags of ΔX2t
 
 
 
+dfuller logip if date > tm(1985m12) & date <= tm(2005m12), lags(3) trend regress
+dfuller logcli if date > tm(1985m12) & date <= tm(2005m12), lags(3) trend regress
+
+* The t-ratios of the coefficient tρ̂ =−1.603 for log(IP) and tρ̂ =−1.8197 for log(CLI) in the augmented Dickey-Fuller regression are both larger than the 5% critical value −3.5.
+
+* And hence, not surprisingly, the test confirms that the log series are not stationary.
+
+* Running the same auxiliary test regression for the growth rates, now without including a deterministic trend, gives two significant test statistics. And hence, the monthly growth rates are indeed stationary.
+
+dfuller grip if date > tm(1985m12) & date <= tm(2005m12), lags(3) 
+dfuller grcli if date > tm(1985m12) & date <= tm(2005m12), lags(3)
+
+* The t-ratios of the coefficient tρ̂ =−5.228 for GRIP and tρ̂ =−5.553 for GRCLI in the augmented Dickey-Fuller regression are both smaller than the 5% critical value −2.9.
+
+* And hence, the monthly growth rates are indeed stationary.
+
+*** Test for cointegration http://www.econ.uiuc.edu/~econ508/Stata/e-ta8_Stata.html
+
+* Step 1 test for long run equilibrium
+
+reg logip logcli if date > tm(1985m12) & date <= tm(2005m12)
+
+* Step 1 OLS : log(IP)=0.083+1.005log(CLI)+et−1
+
+predict residual, res
+ * Graph the residuals against lagged residuals.
+
+tsline residual if date > tm(1985m12) & date <= tm(2005m12) , title(Residuals vs. date)
+
+* Graph the residuals against lagged residuals.
+
+twoway (scatter residual L.residual) (lfit residual L.residual), title(Residuals vs. Lagged Residuals)
+
+* Proceed with a unit root test on the residuals, i.e. test whether the residuals are I(0)
+
+dfuller residual if date > tm(1985m12) & date <= tm(2005m12), lags(1) 
+
+* The t value is larger than the critical, implying that the two series are not cointegrated.
+
+* Another cointegation test
+
+vecrank logip logcli if date > tm(1985m12) & date <= tm(2005m12)
+
+
+*** Especify the model
+
+* The scatter diagrams with regression lines, suggest that GRIP can be predicted by the growth rates of the leading index three months ago. But the left hand graph also suggests that GRIP can be predicted by its own past.
+
+twoway (scatter grip L3.grip) (lfit grip L3.grip), title(GRIP Predicted by 3 lags)
+
+twoway (scatter grip L3.grcli) (lfit grip L3.grcli), title(GRIP Predicted by 3 GRCLI lags)
+
+* Because we wish to forecast three months ahead, only the lags of order three and larger are allowed in the models we are going to consider.
+
+*** Especify AR(p)
+
+* To get a hint of the appropriate number of lags, we compute the autocorrelations and partial autocorrelations up to lag 12.
+
+ac grip, lags(12) title("Autocorrelation of GRIP")
+pac grip, lags(12) title("Partial Autocorrelation GRIP")
+
+* The 95% confidence bounds are equal to plus and minus 0.13. And a first impression is that an AR(3) model may be useful. This is based on the significance of the partial autocorrelations up to order 3.
+
+* As our model may not use lags 1 and 2, we start with an autoregression that contains all lags from 3 to 12. And then, we delete lag terms that are not significant.
+
+regress grip L3.grip L4.grip L5.grip L6.grip L7.grip L8.grip L9.grip L10.grip L11.grip L12.grip
+
+* Start with L = 12: lags 4-12 individually not significant. They may, however, be jointly significant.
+
+test _b[L4.grip]=_b[L5.grip]=_b[L6.grip]=_b[L7.grip]=_b[L8.grip]=_b[L9.grip]=_b[L10.grip]=_b[L11.grip]=_b[L12.gripBreusch-Godfrey]=0
+
+* We do not reject H_0 at 0.95%
+
+* Test for serial autocorrelation
+
+estat bgodfrey, lags(6)
+
+*** Specify new model with L=3
+
+regress grip L3.grip
+
+predict ar3_res, residuals
+* JB test Null normality in residuals
+sktest ar3_res
+
+* Test for serial autocorrelation
+
+estat bgodfrey, lags(6)
+
+* No residual autocorrelation for the AR(3) model is rejected.
+
+* It seems that there four such large residuals in this case. It seems that there four such large residuals in this case. They associate with four isolated observations, for months with exceptionally positive or negative growth.
+
+* High growth: Feb 1996 (1.7%) and Aug 1998 (2.1%)
+* Large negative growth: Nov 1990 (-1.2%) and Sep 2005 (-1.8%)
+
+* As we do not see any particular strategy to deal with these four outliers, we simply proceed with our autoregressive model, where the estimated lag 3 parameter is statistically significant.
+
+
+*** Especify ADL(p,r)
+
+* The next question is, can this univariate model be improved by adding the Composite Leading Index? That is, is the variable CLI really leading, and if so, with how many lags?
+
+*To find out, we consider the autoregressive distributed lag model ALD(p,r), with p lags for GRIP and r lags for the leading index. Where we again start with lag three, as we wish to forecast three months ahead.
+
+* Our modeling cycle starts with p and r both equal to 6. And we work our way downwards by deleting insignificant lags.
+
+regress grip L3.grip L4.grip L5.grip L6.grcli L3.grcli L4.grcli L5.grcli L6.grcli
+
+predict res_adl66, residuals
+* JB test Null normality in residuals
+sktest res_adl66
+
+
+* When we do so, we arrive at a model with lag three of GRIP and lag six of the growth rate of the leading index.
+
+regress grip L3.grip L6.grcli
+
+* Test for serial autocorrelation
+estat bgodfrey, lags(6)
+
+predict adl36_res, residuals
+* JB test Null normality in residuals
+sktest adl36_res
+
+predict 
+
+*** Out of sample forecasting of models https://www.ssc.wisc.edu/~bhansen/460/stata.pdf
+
+* Expanding the Dataset Before Forecasting
+
+* tsappend, add(12)
+
+* We specify the models in the estimation period
+regress grip L3.grip if date > tm(1985m12) & date <= tm(2005m12)
+*And predict in the forecast period
+predict ar3_forecast if date > tm(2005m12)
+
+* We specify the models in the estimation period
+regress grip L3.grip L6.grcli if date > tm(1985m12) & date <= tm(2005m12)
+*And predict in the forecast period
+predict adl36_forecast if date > tm(2005m12)
+
+tsline grip ar3_forecast adl36_forecast if date > tm(2005m12), title(GRIP and forecasted AR(3): Red ADL(3,6): Green)
 
 
 
