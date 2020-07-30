@@ -1,0 +1,12 @@
+name: test_1
+title: test_1
+username:
+account: diego-lopezt
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2622338
+bundleId: 3452710
+url: https://diego-lopezt.shinyapps.io/test_1/
+when: 1596070935.58098
+asMultiple: FALSE
+asStatic: FALSE
