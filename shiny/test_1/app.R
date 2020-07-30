@@ -4,7 +4,7 @@ ui <-
     #navbarPage(title="Principales funciones y sus derivadas. Diego López. Colmex",
     fluidPage(
         #theme = "bootswatch-cerulean.css",
-    titlePanel("Principales funciones y sus derivadas"),
+    titlePanel("Funciones y sus derivadas"),
     tabsetPanel(
             tabPanel("Logarítmica",
                 sidebarLayout(position = "right",
