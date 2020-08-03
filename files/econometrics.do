@@ -33,6 +33,7 @@ summarize return
  * Train Exercice S1 for Hyp Test https://www.ssc.wisc.edu/sscc/pubs/sfs/sfs-ttest.htm
 clear 
 import delimited "https://raw.githubusercontent.com/diego-eco/diego-eco.github.io/master/downloads/trainexers1.csv", encoding(UTF-8) 
+
 summarize return
 * Hyp test for returns mean = 0 default 95%
 ttest return=0
