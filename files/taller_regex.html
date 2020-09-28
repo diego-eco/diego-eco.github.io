@@ -2874,6 +2874,7 @@ div.tocify {
 </div>
 
 
+<div style="page-break-after: always;"></div>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># Importamos las librerías necesarias.</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="co"># pacman las instala con las dependencias si es necesario.</span></span>
 <span id="cb1-3"><a href="#cb1-3"></a></span>
@@ -2941,9 +2942,184 @@ div.tocify {
 <span id="cb2-2"><a href="#cb2-2"></a>animales &lt;-<span class="st"> </span></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rivaquiroga/latinr-taller-regex/master/datos/animales.csv&quot;</span>)</span>
 <span id="cb2-4"><a href="#cb2-4"></a>camarones &lt;-<span class="st"> </span></span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rivaquiroga/latinr-taller-regex/master/datos/casen_camarones.csv&quot;</span>)</span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="st">  </span><span class="kw">read_delim</span>(<span class="st">&quot;https://raw.githubusercontent.com/rivaquiroga/latinr-taller-regex/master/datos/casen_camarones.csv&quot;</span>,<span class="st">&quot;;&quot;</span>)</span>
 <span id="cb2-6"><a href="#cb2-6"></a>telefonos &lt;-<span class="st"> </span></span>
 <span id="cb2-7"><a href="#cb2-7"></a><span class="st">  </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/rivaquiroga/latinr-taller-regex/master/datos/telefonos.csv&quot;</span>)</span></code></pre></div>
+<div id="ejemplo-con-paises" class="section level2">
+<h2>Ejemplo con paises</h2>
+<p>Veremos las posibilidades que existen con la función <code>filter()</code></p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">data</span>(paises)</span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a>paises <span class="op">%&gt;%</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="st">  </span><span class="kw">filter</span>(pais<span class="op">==</span><span class="st">&quot;México&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["pais"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["continente"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["int"],"align":["right"]},{"label":["esperanza_de_vida"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["poblacion"],"name":[5],"type":["int"],"align":["right"]},{"label":["pib_per_capita"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"México","2":"Américas","3":"1952","4":"50.789","5":"30144317","6":"3478.126"},{"1":"México","2":"Américas","3":"1957","4":"55.190","5":"35015548","6":"4131.547"},{"1":"México","2":"Américas","3":"1962","4":"58.299","5":"41121485","6":"4581.609"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Podemos filtrar con str_detect para buscar de manera más flexible en la base de datos, por ejemplo para encontrar el string “Corea” en nuestra columna de paises:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>paises <span class="op">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(pais,<span class="st">&quot;Corea&quot;</span>)) <span class="op">%&gt;%</span><span class="st">  </span><span class="kw">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["pais"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["continente"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["int"],"align":["right"]},{"label":["esperanza_de_vida"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["poblacion"],"name":[5],"type":["int"],"align":["right"]},{"label":["pib_per_capita"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"Corea, Rep. Dem.","2":"Asia","3":"1952","4":"50.056","5":"8865488","6":"1088.278"},{"1":"Corea, Rep. Dem.","2":"Asia","3":"1957","4":"54.081","5":"9411381","6":"1571.135"},{"1":"Corea, Rep. Dem.","2":"Asia","3":"1962","4":"56.656","5":"10917494","6":"1621.694"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Para buscar México con y sin acento en nuestra base de datos podemos usar <code>[ | ]</code> con <code>str_detect</code> dentro de <code>filter</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>paises <span class="op">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(pais,<span class="st">&quot;M[e|é]xico&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>(<span class="dv">3</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["pais"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["continente"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["int"],"align":["right"]},{"label":["esperanza_de_vida"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["poblacion"],"name":[5],"type":["int"],"align":["right"]},{"label":["pib_per_capita"],"name":[6],"type":["dbl"],"align":["right"]}],"data":[{"1":"México","2":"Américas","3":"1952","4":"50.789","5":"30144317","6":"3478.126"},{"1":"México","2":"Américas","3":"1957","4":"55.190","5":"35015548","6":"4131.547"},{"1":"México","2":"Américas","3":"1962","4":"58.299","5":"41121485","6":"4581.609"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="ejemplo-con-datos-de-teléfonos" class="section level2">
+<h2>Ejemplo con datos de teléfonos</h2>
+<p>Observemos nuestra base:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">head</span>(telefonos)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["nombre"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ciudad"],"name":[2],"type":["chr"],"align":["left"]},{"label":["numero_telefonico"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Pérez, María","2":"Valparaíso","3":"+56 981497134"},{"1":"Juan González","2":"Olmué","3":"928374591"},{"1":"Hernández, Lautaro","2":"quilpué","3":"56 964379583"},{"1":"Lobos, Antonia","2":"La Serena","3":"987654321"},{"1":"Martínez, José","2":"La Serena","3":"+56-983726153"},{"1":"Manuel Garrido","2":"valparaiso","3":"914230795"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Notar que no hay homogeneidad en la forma en que las personas escribieron sus datos, algunos utilizaron coma para los nombres, la ciudad con letra mayúscula, el número de teléfono con clave internacional etc.</p>
+<p>Esto lo podemos resolver con las herramientas de regex.</p>
+<div id="corregir-la-ciudad" class="section level3">
+<h3>Corregir la ciudad</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">count</span>(ciudad)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ciudad"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"La Serena","2":"2"},{"1":"Olmué","2":"2"},{"1":"quilpue","2":"1"},{"1":"quilpué","2":"3"},{"1":"Serena","2":"2"},{"1":"valparaiso","2":"1"},{"1":"Valparaiso","2":"1"},{"1":"valparaíso","2":"2"},{"1":"Valparaíso","2":"5"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Nos muestra las observaciones distintas para cada categoría. Nos permite observar las diferencias en las categorías.</p>
+<p>A continuación queremos identificar las observaciones de Quilpué con y sin acento:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(ciudad,<span class="st">&quot;quilpu[e|é]&quot;</span>))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["nombre"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ciudad"],"name":[2],"type":["chr"],"align":["left"]},{"label":["numero_telefonico"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Hernández, Lautaro","2":"quilpué","3":"56 964379583"},{"1":"Sanhueza, Pedro","2":"quilpué","3":"56 981408973"},{"1":"Aníbal García","2":"quilpue","3":"982733747"},{"1":"Gómez, Lirayén","2":"quilpué","3":"914257483"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Ahora buscamos Valparaíso en todas las formas posibles:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">filter</span>(<span class="kw">str_detect</span>(ciudad,<span class="st">&quot;[V|v]alpara[i|í]so&quot;</span>))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["nombre"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ciudad"],"name":[2],"type":["chr"],"align":["left"]},{"label":["numero_telefonico"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"Pérez, María","2":"Valparaíso","3":"+56 981497134"},{"1":"Manuel Garrido","2":"valparaiso","3":"914230795"},{"1":"Soto, Loreto","2":"valparaíso","3":"925479238"},{"1":"Pérez, Pedro","2":"valparaíso","3":"985740293"},{"1":"González, Camila","2":"Valparaiso","3":"56 973629584"},{"1":"Cayuqueo, Marina","2":"Valparaíso","3":"973629853"},{"1":"Jaime Espinoza","2":"Valparaíso","3":"56981359284"},{"1":"Hernández, Francisca","2":"Valparaíso","3":"56993418209"},{"1":"González, Olivia","2":"Valparaíso","3":"no tengo"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><code>str_detect</code> nos permite hacer las modificaciones necesarias para encontrar los distintos elementos.</p>
+<p>¿Cómo podemos arreglar? Con la función <code>case_when</code> de Tidyverse que nos permite modificar una variable basado en ciertas condiciones:</p>
+<ul>
+<li>Del lado izquierdo de <code>case_when</code> va lo que queremos encontrar (la condición) y del lado derecho a lo que queremos convertir. Con la función <code>mutate()</code> creamos la nueva columna ciudad_limpia para observar nuestras modificaciones.</li>
+</ul>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ciudad_limpia=</span><span class="kw">case_when</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="kw">str_detect</span>(ciudad,<span class="st">&quot;[V|v]alpara[i|í]so&quot;</span>) <span class="op">~</span><span class="st"> &quot;Valparaíso&quot;</span>,</span>
+<span id="cb10-4"><a href="#cb10-4"></a>    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(ciudad)</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  ))</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["nombre"],"name":[1],"type":["chr"],"align":["left"]},{"label":["ciudad"],"name":[2],"type":["chr"],"align":["left"]},{"label":["numero_telefonico"],"name":[3],"type":["chr"],"align":["left"]},{"label":["ciudad_limpia"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Pérez, María","2":"Valparaíso","3":"+56 981497134","4":"Valparaíso"},{"1":"Juan González","2":"Olmué","3":"928374591","4":"Olmué"},{"1":"Hernández, Lautaro","2":"quilpué","3":"56 964379583","4":"quilpué"},{"1":"Lobos, Antonia","2":"La Serena","3":"987654321","4":"La Serena"},{"1":"Martínez, José","2":"La Serena","3":"+56-983726153","4":"La Serena"},{"1":"Manuel Garrido","2":"valparaiso","3":"914230795","4":"Valparaíso"},{"1":"Soto, Loreto","2":"valparaíso","3":"925479238","4":"Valparaíso"},{"1":"Pérez, Pedro","2":"valparaíso","3":"985740293","4":"Valparaíso"},{"1":"González, Camila","2":"Valparaiso","3":"56 973629584","4":"Valparaíso"},{"1":"Jiménez, Luis","2":"Olmué","3":"925403948","4":"Olmué"},{"1":"Sanhueza, Pedro","2":"quilpué","3":"56 981408973","4":"quilpué"},{"1":"Aníbal García","2":"quilpue","3":"982733747","4":"quilpue"},{"1":"Gómez, Lirayén","2":"quilpué","3":"914257483","4":"quilpué"},{"1":"Cayuqueo, Marina","2":"Valparaíso","3":"973629853","4":"Valparaíso"},{"1":"Jaime Espinoza","2":"Valparaíso","3":"56981359284","4":"Valparaíso"},{"1":"Hernández, Francisca","2":"Valparaíso","3":"56993418209","4":"Valparaíso"},{"1":"López, Carla","2":"Serena","3":"56912338475","4":"Serena"},{"1":"Soto, Martina","2":"Serena","3":"925653948","4":"Serena"},{"1":"González, Olivia","2":"Valparaíso","3":"no tengo","4":"Valparaíso"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># Le estoy diciendo que para todas las observaciones que cumplan la condición las convierta en Valparaíso, y para todo lo demás, lo deje como caracter.</span></span></code></pre></div>
+<p>Notar que ahora todas las observaciones de Valparaíso están uniformes en mayúsculas y con tilde.</p>
+<p>Agregemos más condiciones para corregir el resto de ciudades y sobreescribimos nuestra base:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>telefonos &lt;-<span class="st"> </span>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">ciudad_limpia=</span><span class="kw">case_when</span>(</span>
+<span id="cb12-3"><a href="#cb12-3"></a>    <span class="kw">str_detect</span>(ciudad,<span class="st">&quot;[V|v]alpara[i|í]so&quot;</span>) <span class="op">~</span><span class="st"> &quot;Valparaíso&quot;</span>,</span>
+<span id="cb12-4"><a href="#cb12-4"></a>    <span class="kw">str_detect</span>(ciudad,<span class="st">&quot;quilpu[e|é]&quot;</span>) <span class="op">~</span><span class="st"> &quot;Quilpué&quot;</span>,</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="kw">str_detect</span>(ciudad,<span class="st">&quot;Serena&quot;</span>) <span class="op">~</span><span class="st"> &quot;La Serena&quot;</span>,</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="ot">TRUE</span> <span class="op">~</span><span class="st"> </span><span class="kw">as.character</span>(ciudad)</span>
+<span id="cb12-7"><a href="#cb12-7"></a>  ))</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>telefonos <span class="op">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">count</span>(ciudad_limpia)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ciudad_limpia"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"La Serena","2":"4"},{"1":"Olmué","2":"2"},{"1":"Quilpué","2":"4"},{"1":"Valparaíso","2":"9"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="separar-columnas-agrupando" class="section level2">
+<h2>Separar columnas agrupando</h2>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>peliculas &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;https://raw.githubusercontent.com/cienciadedatos/datos-de-miercoles/master/datos/2020/2020-02-19/ranking_imdb.csv&quot;</span>)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">head</span>(peliculas,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ranking"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["titulo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["puntaje"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["genero"],"name":[5],"type":["chr"],"align":["left"]},{"label":["votos"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["direccion"],"name":[7],"type":["chr"],"align":["left"]},{"label":["duracion"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ganancias"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"The Shawshank Redemption","3":"1994","4":"9.3","5":"Drama","6":"2011509","7":"Frank Darabont","8":"142","9":"28.34"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Acción, Crimen, Drama","6":"1980200","7":"Christopher Nolan","8":"152","9":"534.86"},{"1":"3","2":"Inception","3":"2010","4":"8.8","5":"Acción, Aventura, Ciencia Ficción","6":"1760209","7":"Christopher Nolan","8":"148","9":"292.58"},{"1":"4","2":"Fight Club","3":"1999","4":"8.8","5":"Drama","6":"1609459","7":"David Fincher","8":"139","9":"37.03"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Notar que en la columna género tenemos un género principal y los géneros secundarios después de la coma, entonces podemos agrupar.</p>
+<p>Utilizamos la función <code>separate</code> que requiere la columna principal y las columnas en las que queremos separar.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>pelis_sep &lt;-<span class="st"> </span>peliculas <span class="op">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">separate</span>(genero, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;genero_principal&quot;</span>,<span class="st">&quot;genero_secundario&quot;</span>),<span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">head</span>(pelis_sep,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ranking"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["titulo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["puntaje"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["genero_principal"],"name":[5],"type":["chr"],"align":["left"]},{"label":["genero_secundario"],"name":[6],"type":["chr"],"align":["left"]},{"label":["votos"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["direccion"],"name":[8],"type":["chr"],"align":["left"]},{"label":["duracion"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["ganancias"],"name":[10],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"The Shawshank Redemption","3":"1994","4":"9.3","5":"Drama","6":"NA","7":"2011509","8":"Frank Darabont","9":"142","10":"28.34"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Acción","6":"Crimen","7":"1980200","8":"Christopher Nolan","9":"152","10":"534.86"},{"1":"3","2":"Inception","3":"2010","4":"8.8","5":"Acción","6":"Aventura","7":"1760209","8":"Christopher Nolan","9":"148","10":"292.58"},{"1":"4","2":"Fight Club","3":"1999","4":"8.8","5":"Drama","6":"NA","7":"1609459","8":"David Fincher","9":"139","10":"37.03"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Notar que estamos perdiendo información para las películas que tienen más de dos géneros secundarios. Podemos ayudarnos del argumento <code>remove = T,F</code> que nos permite quitar la columna objetivo, la fijamos en Falso para darnos cuenta de la pérdida de datos.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>pelis_sep &lt;-<span class="st"> </span>peliculas <span class="op">%&gt;%</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">separate</span>(genero, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;genero_principal&quot;</span>,<span class="st">&quot;genero_secundario&quot;</span>),<span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>, <span class="dt">remove =</span> F)</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">head</span>(pelis_sep,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ranking"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["titulo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["puntaje"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["genero"],"name":[5],"type":["chr"],"align":["left"]},{"label":["genero_principal"],"name":[6],"type":["chr"],"align":["left"]},{"label":["genero_secundario"],"name":[7],"type":["chr"],"align":["left"]},{"label":["votos"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["direccion"],"name":[9],"type":["chr"],"align":["left"]},{"label":["duracion"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ganancias"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"The Shawshank Redemption","3":"1994","4":"9.3","5":"Drama","6":"Drama","7":"NA","8":"2011509","9":"Frank Darabont","10":"142","11":"28.34"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Acción, Crimen, Drama","6":"Acción","7":"Crimen","8":"1980200","9":"Christopher Nolan","10":"152","11":"534.86"},{"1":"3","2":"Inception","3":"2010","4":"8.8","5":"Acción, Aventura, Ciencia Ficción","6":"Acción","7":"Aventura","8":"1760209","9":"Christopher Nolan","10":"148","11":"292.58"},{"1":"4","2":"Fight Club","3":"1999","4":"8.8","5":"Drama","6":"Drama","7":"NA","8":"1609459","9":"David Fincher","10":"139","11":"37.03"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>El argumento <code>extra</code> nos permite controlar cuando hay más de dos “piezas”, por defecto viene en “warn” que nos avisa cuando elimina todos los valores extra, con “merge” junta todo lo que sobra.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>pelis_sep &lt;-<span class="st"> </span>peliculas <span class="op">%&gt;%</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">separate</span>(genero, <span class="dt">into=</span><span class="kw">c</span>(<span class="st">&quot;genero_principal&quot;</span>,<span class="st">&quot;genero_secundario&quot;</span>),<span class="dt">sep =</span> <span class="st">&quot;, &quot;</span>, <span class="dt">remove =</span> F, <span class="dt">extra =</span> <span class="st">&quot;merge&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">head</span>(pelis_sep,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ranking"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["titulo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["puntaje"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["genero"],"name":[5],"type":["chr"],"align":["left"]},{"label":["genero_principal"],"name":[6],"type":["chr"],"align":["left"]},{"label":["genero_secundario"],"name":[7],"type":["chr"],"align":["left"]},{"label":["votos"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["direccion"],"name":[9],"type":["chr"],"align":["left"]},{"label":["duracion"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["ganancias"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"The Shawshank Redemption","3":"1994","4":"9.3","5":"Drama","6":"Drama","7":"NA","8":"2011509","9":"Frank Darabont","10":"142","11":"28.34"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Acción, Crimen, Drama","6":"Acción","7":"Crimen, Drama","8":"1980200","9":"Christopher Nolan","10":"152","11":"534.86"},{"1":"3","2":"Inception","3":"2010","4":"8.8","5":"Acción, Aventura, Ciencia Ficción","6":"Acción","7":"Aventura, Ciencia Ficción","8":"1760209","9":"Christopher Nolan","10":"148","11":"292.58"},{"1":"4","2":"Fight Club","3":"1999","4":"8.8","5":"Drama","6":"Drama","7":"NA","8":"1609459","9":"David Fincher","10":"139","11":"37.03"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Ahora tenemos todos los géneros secundarios en nuestra columna de genero_secundario.</p>
+</div>
+<div id="separar-filas" class="section level2">
+<h2>Separar filas</h2>
+<p>Podemos separar nuestras observaciones de acuerdo a una característica repitiendo todas las demás variables.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>pelis_row &lt;-<span class="st"> </span>peliculas <span class="op">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="st">  </span><span class="kw">separate_rows</span>(genero, <span class="dt">sep=</span><span class="st">&quot;, &quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">head</span>(pelis_row,<span class="dv">5</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["ranking"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["titulo"],"name":[2],"type":["chr"],"align":["left"]},{"label":["anio"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["puntaje"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["genero"],"name":[5],"type":["chr"],"align":["left"]},{"label":["votos"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["direccion"],"name":[7],"type":["chr"],"align":["left"]},{"label":["duracion"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["ganancias"],"name":[9],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"The Shawshank Redemption","3":"1994","4":"9.3","5":"Drama","6":"2011509","7":"Frank Darabont","8":"142","9":"28.34"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Acción","6":"1980200","7":"Christopher Nolan","8":"152","9":"534.86"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Crimen","6":"1980200","7":"Christopher Nolan","8":"152","9":"534.86"},{"1":"2","2":"The Dark Knight","3":"2008","4":"9.0","5":"Drama","6":"1980200","7":"Christopher Nolan","8":"152","9":"534.86"},{"1":"3","2":"Inception","3":"2010","4":"8.8","5":"Acción","6":"1760209","7":"Christopher Nolan","8":"148","9":"292.58"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Observamos que género se transformó y ahora tenemos una observación para cada género que tiene una película.</p>
+<p>Debemos tener cuidado con la codificación de nuestra base de datos (ASCII, UTF-8,)</p>
+</div>
+<div id="transformar-dataset" class="section level2">
+<h2>Transformar dataset</h2>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">head</span>(animales,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["especie"],"name":[1],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2019_enero"],"name":[2],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2020_enero"],"name":[3],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2019_abril"],"name":[4],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2020_abril"],"name":[5],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2019_agosto"],"name":[6],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2020_agosto"],"name":[7],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2019_diciembre"],"name":[8],"type":["chr"],"align":["left"]},{"label":["s1_monitoreo2020_diciembre"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"puma","2":"3","3":"2","4":"3","5":"2","6":"4","7":"4","8":"2","9":"2"},{"1":"guanaco","2":"22, 3, 45","3":"35; 10;21, 1","4":"13, 11, 2","5":"8, 2 /19","6":"2,2,1,5","7":"2;3, 2","8":"23, 25, 30","9":"21;15;24"},{"1":"ñandú","2":"3","3":"4","4":"4;5","5":"6, 4","6":"3, 4","7":"5;7","8":"3, 2","9":"1,6"},{"1":"zorro","2":"1","3":"3","4":"1","5":"4","6":"4","7":"2","8":"2","9":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Notar el problema que tenemos para algunas observaciones como guanaco donde la variable s1 para año y mes tiene distintos datos:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>animales_limpio &lt;-<span class="st"> </span>animales <span class="op">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="st">  </span><span class="kw">pivot_longer</span>(<span class="kw">starts_with</span>(<span class="st">&quot;s&quot;</span>),</span>
+<span id="cb24-3"><a href="#cb24-3"></a>               <span class="dt">names_pattern=</span><span class="st">&quot;(.*)_monitoreo(.*)_(.*)&quot;</span>,</span>
+<span id="cb24-4"><a href="#cb24-4"></a>               <span class="dt">names_to=</span><span class="kw">c</span>(<span class="st">&quot;sitio&quot;</span>,<span class="st">&quot;año&quot;</span>,<span class="st">&quot;mes&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="st">  </span><span class="kw">separate_rows</span>(value)</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">head</span>(animales_limpio,<span class="dv">4</span>)</span></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["especie"],"name":[1],"type":["chr"],"align":["left"]},{"label":["sitio"],"name":[2],"type":["chr"],"align":["left"]},{"label":["año"],"name":[3],"type":["chr"],"align":["left"]},{"label":["mes"],"name":[4],"type":["chr"],"align":["left"]},{"label":["value"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"puma","2":"s1","3":"2019","4":"enero","5":"3"},{"1":"puma","2":"s1","3":"2020","4":"enero","5":"2"},{"1":"puma","2":"s1","3":"2019","4":"abril","5":"3"},{"1":"puma","2":"s1","3":"2020","4":"abril","5":"2"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
 </div>
 <div class="footnotes">
 <hr />
