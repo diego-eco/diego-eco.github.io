@@ -86,7 +86,7 @@ bcuse hprice1
 ***** Graphs in Stata
 
 ** To save matrix (after graph is produced)
-*graph export mygraph1.png, replace
+* graph export mygraph1.png, replace
 * Use replace at the end to overwrite file
 
 *** Simple Two Way Scatterplot
