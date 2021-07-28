@@ -17,8 +17,6 @@ header:
 - \usepackage[spanish]{babel}
 - \selectlanguage{spanish}
 ---
-\renewcommand{\tablename}{Tabla} 
----
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
@@ -30,7 +28,7 @@ pacman::p_load(tidyverse,
                readxl,
                jtools,
                ggplot2,
-               derivmkts,
+               derivmkts
                )
 ```
 
